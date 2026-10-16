@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#f4efe6" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<title>가족 명리노트</title>
+<style>
+:root{
+  --bg:#f6f2ea;--card:#fffdf8;--ink:#2f2a24;--muted:#786f66;--line:#e4dbcf;
+  --sage:#6f846a;--sage2:#e3ebe0;--amber:#aa6e32;--amber2:#f7ead8;--rose:#9a5555;--rose2:#f4e2e2;
+  --blue:#657d91;--blue2:#e6edf2;--shadow:0 9px 28px rgba(60,45,30,.075);--r:20px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;padding-bottom:calc(88px + env(safe-area-inset-bottom));}
+button,input,select{font:inherit}button{border:0;background:none;color:inherit;cursor:pointer}input,select{font-size:16px}
+.app{width:min(100%,980px);margin:0 auto;min-height:100vh}
+header{padding:calc(16px + env(safe-area-inset-top)) 16px 12px;position:sticky;top:0;background:rgba(246,242,234,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:20;border-bottom:1px solid rgba(228,219,207,.75)}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand h1{font-size:21px;margin:0;font-weight:850;letter-spacing:-.6px}.pill{padding:9px 12px;border-radius:999px;background:#ebe4d8;color:#554d45;font-size:12px;font-weight:750;white-space:nowrap}
+main{padding:14px 15px 26px}.section{display:none}.section.active{display:block}
+.hero{background:linear-gradient(145deg,#e3ece0,#faf2e6);border:1px solid #dce4d8;border-radius:27px;padding:20px;box-shadow:var(--shadow)}
+.hero small{color:var(--muted)}.hero h2{font-size:clamp(23px,5.7vw,30px);line-height:1.28;margin:8px 0;letter-spacing:-.8px}.hero p{font-size:14px;line-height:1.65;color:#5c544c;margin:0}
+.title{font-size:17px;font-weight:850;margin:22px 2px 10px;letter-spacing:-.3px}.sub{font-size:12px;color:var(--muted);font-weight:500}.row{display:flex;gap:10px}.between{justify-content:space-between;align-items:center}.wrap{flex-wrap:wrap}.mt{margin-top:14px}
+.scroller{display:flex;gap:9px;overflow-x:auto;padding:2px 1px 8px;scrollbar-width:none}.scroller::-webkit-scrollbar{display:none}.member-chip{flex:0 0 auto;padding:11px 14px;border:1px solid var(--line);border-radius:15px;background:var(--card);font-size:14px;font-weight:700}.member-chip.active{background:#354235;color:#fff;border-color:#354235}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:11px}.card h3{margin:0 0 6px;font-size:16px}.card p{margin:0;color:#615950;font-size:13px;line-height:1.62}
+.notice{font-size:12px;line-height:1.6;color:#70675e;background:#eee7dd;border-radius:15px;padding:12px}.notice.strong{background:#f6ead8;color:#765022;border:1px solid #ecd5b8}
+.badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.badge{font-size:12px;padding:7px 9px;border-radius:999px}.good{background:var(--sage2);color:#3d523b}.warn{background:var(--amber2);color:#7d4e1b}.danger{background:var(--rose2);color:#7d3c3c}.neutral{background:#eee8df;color:#5d554c}.blue{background:var(--blue2);color:#40596c}
+.btn{width:100%;padding:13px 14px;border-radius:15px;background:#364536;color:#fff;font-weight:800;min-height:48px}.btn.secondary{background:#ede6db;color:#3e372f}.btn.ghost{border:1px solid var(--line);background:var(--card);color:#4c443d}.btn.small{width:auto;padding:9px 11px;min-height:auto;font-size:12px}.btn:disabled{opacity:.45}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.kv{padding:13px;border:1px solid var(--line);border-radius:16px;background:#fcfaf5;min-width:0}.kv b{display:block;font-size:12px;margin-bottom:4px}.kv span{font-size:13px;color:#675e55;word-break:keep-all}
+label{font-size:12px;color:#6d655d;display:block;margin:11px 0 5px;font-weight:700}.field{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink);outline:none;min-height:46px}.field:focus{border-color:#869781;box-shadow:0 0 0 3px rgba(111,132,106,.12)}
+.radio-row{display:flex;gap:8px}.seg{flex:1;padding:11px 8px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:13px;font-weight:700;min-height:44px}.seg.active{background:#354236;color:white;border-color:#354236}.inlinecheck{display:flex;gap:9px;align-items:center;font-size:13px;color:#5d554d;margin-top:10px}.inlinecheck input{width:20px;height:20px}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.pillar{border:1px solid var(--line);border-radius:17px;padding:12px 6px;text-align:center;background:#fcfaf5}.pillar small{display:block;color:var(--muted);font-size:10px;margin-bottom:6px}.pillar strong{display:block;font-size:23px;line-height:1.1;letter-spacing:1px}.pillar em{font-style:normal;font-size:10px;color:var(--muted);display:block;margin-top:7px;min-height:14px}.pillar .stem,.pillar .branch{display:block}.wood{color:#52744f}.fire{color:#a85d48}.earth{color:#8c6b45}.metal{color:#6d7075}.water{color:#4f708d}
+.barrow{display:grid;grid-template-columns:32px 1fr 34px;gap:8px;align-items:center;margin:8px 0;font-size:12px}.bar{height:10px;border-radius:999px;background:#eee7df;overflow:hidden}.fill{height:100%;background:#798e75;border-radius:999px}.count{text-align:right;color:var(--muted)}
+.dayun-scroll{display:flex;gap:9px;overflow-x:auto;padding:2px 1px 8px;scrollbar-width:none}.dayun-scroll::-webkit-scrollbar{display:none}.dayun{flex:0 0 126px;padding:13px;border:1px solid var(--line);border-radius:17px;background:#fcfaf5}.dayun.current{border:2px solid #738a6f;background:#f2f7ef}.dayun b{display:block;font-size:20px}.dayun span{display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:4px}.dayun .ten{font-size:12px;color:#4c5b48;margin-top:7px;font-weight:700}
+.yearlist{display:grid;gap:8px}.yearitem{display:grid;grid-template-columns:54px 54px 1fr;gap:8px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fcfaf5}.yearitem.current{background:#f2f7ef;border-color:#bac9b6}.yearitem b{font-size:14px}.yearitem .gz{font-size:18px;font-weight:850}.yearitem .desc{font-size:12px;color:#645c54;line-height:1.45}.yearitem .desc strong{color:#3c4b3b}
+.monthgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.monthbox{padding:13px;border:1px solid var(--line);border-radius:16px;background:#fcfaf5}.monthbox b{font-size:13px}.monthbox strong{font-size:18px;margin-left:5px}.monthbox p{font-size:11px;margin-top:6px;line-height:1.5}
+.term{padding:15px 0;border-bottom:1px solid var(--line)}.term:last-child{border-bottom:0}.term b{font-size:15px}.term .easy{font-size:13px;color:#514940;margin-top:6px;line-height:1.58}.term .expert{font-size:11px;color:#8a8279;margin-top:5px}.search{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:15px;background:white;outline:none;font-size:16px}
+.lock{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:white;margin-bottom:10px}.lock .ico{font-size:22px}.lock b{font-size:13px}.lock small{display:block;color:var(--muted);margin-top:3px}.empty{text-align:center;color:var(--muted);padding:22px 8px;font-size:13px;line-height:1.6}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(255,253,248,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center}.navinner{width:min(980px,100%);display:grid;grid-template-columns:repeat(5,1fr);gap:2px}.navbtn{padding:6px 2px;border-radius:12px;color:#81786f;font-size:10px;min-height:52px}.navbtn span{display:block;font-size:19px;line-height:1.2}.navbtn.active{color:#2f4031;background:#edf1ea}
+.modal{position:fixed;inset:0;background:rgba(30,24,19,.38);z-index:50;display:none;align-items:flex-end}.modal.show{display:flex}.sheet{width:100%;max-width:680px;margin:0 auto;background:var(--bg);border-radius:26px 26px 0 0;padding:18px 18px calc(20px + env(safe-area-inset-bottom));max-height:91vh;overflow:auto}.handle{width:44px;height:5px;border-radius:999px;background:#cfc5b8;margin:0 auto 14px}.sheet h2{margin:0 0 4px;font-size:20px}
+.engine-status{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);margin-top:7px}.dot{width:8px;height:8px;border-radius:50%;background:#c89961}.dot.ok{background:#718c6c}.dot.err{background:#a75a5a}
+details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}summary{font-size:12px;font-weight:800;cursor:pointer}.micro{font-size:11px!important;color:var(--muted)!important;line-height:1.55!important;margin-top:7px!important}
+@media(min-width:700px){main{padding:18px 22px 34px}.hero{padding:25px}.desktop2{display:grid;grid-template-columns:1.08fr .92fr;gap:13px}.monthgrid{grid-template-columns:repeat(3,1fr)}.sheet{border-radius:26px;margin-bottom:18px}.grid2.wide{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:365px){.pillars{gap:5px}.pillar strong{font-size:20px}.grid2{gap:7px}.monthgrid{gap:7px}.brand h1{font-size:19px}}
+
+/* v3: 해석 엔진 */
+.analysis-grid{display:grid;gap:10px}.relation-list{display:grid;gap:8px}.relation-item{padding:12px;border:1px solid var(--line);border-radius:15px;background:#fcfaf5}.relation-item .top{display:flex;justify-content:space-between;gap:8px;align-items:center}.relation-item b{font-size:13px}.relation-item p{font-size:12px;margin-top:5px!important}.relation-tag{font-size:10px;font-weight:850;padding:5px 7px;border-radius:999px;white-space:nowrap}.relation-tag.connect{background:var(--sage2);color:#3f583d}.relation-tag.change{background:var(--amber2);color:#7a4c1e}.relation-tag.tension{background:var(--rose2);color:#7b3d3d}.relation-tag.adjust{background:var(--blue2);color:#40596c}
+.schoolgrid{display:grid;gap:9px}.school{border:1px solid var(--line);border-radius:17px;padding:14px;background:#fcfaf5}.school .schoolhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.school h4{margin:0;font-size:14px}.school .candidate{font-size:19px;font-weight:900;margin:7px 0}.school p{font-size:12px!important}.school small{display:block;color:var(--muted);line-height:1.5;margin-top:6px}.consensus{background:linear-gradient(145deg,#eef5eb,#fbf7ef);border:1px solid #d5e1d1;border-radius:18px;padding:15px}.consensus b{font-size:14px}.consensus strong{font-size:22px;margin-left:5px}.flowcard{border:1px solid var(--line);border-radius:18px;background:#fcfaf5;padding:14px;margin-bottom:9px}.flowcard.current{border:2px solid #8ca184;background:#f3f7f0}.flowhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.flowhead .gzbig{font-size:23px;font-weight:900}.flowhead .year{font-size:14px;font-weight:850}.flowmeta{font-size:11px;color:var(--muted);margin-top:3px}.flowline{font-size:13px;line-height:1.58;margin-top:9px;color:#514940}.tips{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.tip{padding:9px;border-radius:12px;font-size:11px;line-height:1.45}.tip.goodtip{background:var(--sage2);color:#40583e}.tip.warntip{background:var(--amber2);color:#795020}.grade{font-size:10px;font-weight:850;padding:5px 7px;border-radius:999px}.grade.up{background:var(--sage2);color:#40583e}.grade.mid{background:var(--blue2);color:#40596c}.grade.watch{background:var(--amber2);color:#795020}
+.source-card{border:1px solid var(--line);border-radius:17px;padding:14px;background:#fcfaf5;margin-bottom:9px}.source-card h4{font-size:14px;margin:0 0 4px}.source-card .meta{font-size:10px;color:var(--muted);margin-bottom:7px}.source-card p{font-size:12px!important}.source-card a{display:inline-block;margin-top:8px;color:#4d6750;font-size:11px;font-weight:800;text-decoration:none}.source-status{font-size:10px;padding:5px 7px;border-radius:999px;background:#eee8df;color:#665d54}.source-status.pd{background:var(--sage2);color:#40583e}.copyright-note{font-size:11px;color:#7a7168;line-height:1.6;background:#f1ece4;border-radius:14px;padding:11px}.legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.mini-legend{font-size:10px;padding:5px 7px;border-radius:999px;background:#f0ebe3;color:#665d55}.monthbox .grade{float:right}.monthbox .microline{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.45}.monthbox details{margin-top:8px}.monthbox summary{font-size:11px}.mobile-tabs{display:flex;gap:7px;overflow:auto;scrollbar-width:none;margin-bottom:10px}.mobile-tabs::-webkit-scrollbar{display:none}.mini-tab{white-space:nowrap;border:1px solid var(--line);background:#fff;padding:9px 11px;border-radius:999px;font-size:11px;font-weight:800}
+@media(min-width:700px){.analysis-grid{grid-template-columns:1fr 1fr}.schoolgrid{grid-template-columns:repeat(2,1fr)}.sourcegrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.source-card{margin-bottom:0}.tips{grid-template-columns:repeat(2,1fr)}}
+
+/* v4: 만세력 3중 검증 */
+.verify-card{border:1px solid var(--line);border-radius:18px;background:#fffdf8;padding:14px;margin:11px 0;box-shadow:var(--shadow)}
+.verify-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.verify-head h3{margin:0;font-size:15px}.verify-state{font-size:10px;font-weight:850;padding:6px 8px;border-radius:999px;white-space:nowrap}.verify-state.ok{background:var(--sage2);color:#40583e}.verify-state.pending{background:var(--blue2);color:#40596c}.verify-state.warn{background:var(--amber2);color:#795020}.verify-state.err{background:var(--rose2);color:#7b3d3d}
+.verify-grid{display:grid;gap:7px;margin-top:10px}.verify-engine{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fcfaf5}.verify-engine b{font-size:12px;display:block}.verify-engine .pills{font-size:16px;font-weight:900;letter-spacing:.8px;margin-top:4px}.verify-engine small{display:block;color:var(--muted);line-height:1.45;margin-top:4px}
+.verify-diff{margin-top:10px;padding:10px;border-radius:12px;background:var(--amber2);color:#745020;font-size:11px;line-height:1.55}.verify-ok{margin-top:10px;padding:10px;border-radius:12px;background:var(--sage2);color:#40583e;font-size:11px;line-height:1.55}
+@media(min-width:700px){.verify-grid{grid-template-columns:repeat(3,1fr)}}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><h1>가족 명리노트</h1><button class="pill" onclick="openMemberModal()">+ 가족 추가</button></div>
+  <div class="engine-status"><span class="dot" id="engineDot"></span><span id="engineStatus">만세력 엔진 불러오는 중…</span></div>
+</header>
+<main>
+<section id="home" class="section active">
+  <div class="hero" id="heroBox">
+    <small id="heroSmall">우리 가족</small>
+    <h2 id="heroTitle">가족의 흐름을<br>한곳에서 차분히 살펴봐요</h2>
+    <p id="heroText">가족을 선택하면 실제 생년월일을 바탕으로 사주 8자·오행·대운·세운을 계산해 보여줍니다.</p>
+    <div class="badges" id="heroBadges"><span class="badge good">쉬운 설명</span><span class="badge blue">실제 계산</span><span class="badge neutral">가족별 저장</span></div>
+  </div>
+  <div class="title">가족 구성원</div>
+  <div class="scroller" id="memberScroller"></div>
+  <div id="memberSummary"></div>
+  <div id="chartArea"></div>
+</section>
+
+<section id="flow" class="section">
+  <div class="title" style="margin-top:4px">대운 · 세운</div>
+  <div id="flowContent"><div class="empty">가족을 선택하고 생년월일을 입력하면 대운과 세운이 표시됩니다.</div></div>
+</section>
+
+<section id="calendar" class="section">
+  <div class="title" style="margin-top:4px">월별 흐름</div>
+  <div id="calendarContent"><div class="empty">가족을 선택하고 생년월일을 입력하면 월별 간지 흐름을 표시합니다.</div></div>
+</section>
+
+<section id="dictionary" class="section">
+  <div class="title" style="margin-top:4px">쉬운 사주용어 사전</div>
+  <input class="search" id="termSearch" placeholder="용신, 식상, 관재살… 검색" oninput="renderTerms()" />
+  <div class="card mt" id="termList"></div>
+</section>
+
+<section id="privacy" class="section">
+  <div class="title" style="margin-top:4px">가족 공간 & 보안</div>
+  <div class="notice strong"><b>현재 버전:</b> 가족 데이터는 이 브라우저의 로컬 저장소에만 저장됩니다. 실제 서비스 전환 때는 로그인 + familyId + 서버 보안규칙으로 가족별 접근을 강제 차단해야 합니다.</div>
+  <div class="title">공개 범위 설계</div>
+  <div class="lock"><div class="ico">🔒</div><div><b>나만 보기</b><small>개인 메모·민감 기록은 본인 계정만 접근</small></div></div>
+  <div class="lock"><div class="ico">👨‍👩‍👧</div><div><b>가족에게 공개</b><small>사주 기본정보·가족 공통 흐름만 선택 공유</small></div></div>
+  <div class="lock"><div class="ico">🛡️</div><div><b>다른 가족과 완전 분리</b><small>화면이 아니라 서버 보안규칙 단계에서 차단</small></div></div>
+  <div class="title">계산 기준 안내</div>
+  <div class="card"><p><b>한국형 3중 검증</b>을 사용합니다. ① KASI 정본 음력·정밀 절기표를 내장한 <b>manseryeok 2.0</b>을 기준 엔진으로 두고, ② <b>lunar-javascript</b>, ③ <b>@fullstackfamily/manseryeok</b> 결과를 서로 비교합니다. 세 엔진의 연·월·일·시주가 같으면 “3중 일치”로 표시하고, 다르면 해당 사주에 경계/기준 확인 경고를 냅니다.</p><details><summary>왜 KASI API를 브라우저에서 직접 부르지 않나요?</summary><p class="micro">공공데이터 API 인증키를 index.html에 넣으면 누구나 키를 볼 수 있어 보안상 좋지 않습니다. 현재 기준 엔진은 KASI 정본 음력과 KASI와 분 단위로 맞춘 절기 데이터를 내장한 라이브러리를 사용합니다. 정식 가족 서비스에서는 서버에서 KASI API를 추가 대조할 수 있도록 확장합니다.</p></details><details><summary>한국 출생시간 관련 주의</summary><p class="micro">23시 전후의 자시 처리, 진태양시 보정, 과거 한국 표준시처럼 학파·기준에 따라 달라질 수 있는 항목은 자동으로 “기준 확인 필요”로 표시합니다. 향후 출생지역과 자시 관법을 선택하도록 확장합니다.</p></details></div>
+  <div class="title">명리 지식원 <span class="sub">중국 고전 + 한국 자료</span></div>
+  <div class="copyright-note"><b>데이터 원칙</b><br>고전 공개 원문은 출처를 붙여 구조화하고, 현대 저작물은 원문을 복제하지 않고 핵심 이론을 우리말 요약 규칙으로만 저장합니다. 여러 문헌에서 겹치는 해석은 공통 주제로 묶고, 다른 해석은 학파별로 분리합니다.</div>
+  <div id="sourceLibrary" class="sourcegrid mt"></div>
+  <div class="title">현재 기기 데이터</div>
+  <button class="btn secondary" onclick="resetData()">이 기기의 가족 데이터 초기화</button>
+</section>
+</main>
+</div>
+
+<nav><div class="navinner">
+<button class="navbtn active" data-tab="home"><span>⌂</span>가족홈</button>
+<button class="navbtn" data-tab="flow"><span>⌁</span>대운·세운</button>
+<button class="navbtn" data-tab="calendar"><span>▦</span>월별운</button>
+<button class="navbtn" data-tab="dictionary"><span>⌕</span>용어사전</button>
+<button class="navbtn" data-tab="privacy"><span>⚿</span>지식·보안</button>
+</div></nav>
+
+<div class="modal" id="memberModal" onclick="if(event.target===this) closeMemberModal()">
+<div class="sheet"><div class="handle"></div>
+<h2 id="modalTitle">가족 추가</h2><div class="sub">입력값은 현재 이 기기에만 저장됩니다.</div>
+<input id="mId" type="hidden" />
+<label>이름 또는 별명</label><input id="mName" class="field" placeholder="예: 나, 남편, 첫째, 엄마" />
+<div class="grid2">
+  <div><label>관계</label><select id="mRelation" class="field"><option>본인</option><option>배우자</option><option>자녀</option><option>부모</option><option>형제자매</option><option>기타</option></select></div>
+  <div><label>성별 <span class="sub">대운 계산에 필요</span></label><select id="mGender" class="field"><option value="female">여성</option><option value="male">남성</option></select></div>
+</div>
+<label>달력</label><div class="radio-row"><button class="seg active" id="solarBtn" type="button" onclick="setCalendar('양력')">양력</button><button class="seg" id="lunarBtn" type="button" onclick="setCalendar('음력')">음력</button></div>
+<div id="lunarLeapWrap" style="display:none"><label class="inlinecheck"><input type="checkbox" id="mLeap" /> 음력 윤달</label></div>
+<label>생년월일</label><input id="mBirth" class="field" type="date" />
+<label>출생시간</label><input id="mTime" class="field" type="time" value="12:00" />
+<label class="inlinecheck"><input type="checkbox" id="mUnknownTime" onchange="toggleUnknownTime()" /> 출생시간을 모름 <span class="sub">(시주는 참고값으로 표시)</span></label>
+<label>공개범위</label><select id="mVisibility" class="field"><option value="family">가족에게 공개</option><option value="private">나만 보기</option></select>
+<div style="height:14px"></div><button class="btn" onclick="saveMember()">저장하고 계산하기</button>
+<div style="height:8px"></div><button class="btn ghost" onclick="closeMemberModal()">닫기</button>
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.min.js" onerror="loadFallbackEngine()"></script>
+<script>
+const STORAGE_KEY='family_myeongri_members_v2';
+const defaultMembers=[{id:'me',name:'나',relation:'본인',gender:'female',birth:'',time:'12:00',unknownTime:false,cal:'양력',leap:false,visibility:'family'}];
+let members=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')||defaultMembers;
+let current=members[0]?.id||'';let calendarType='양력';
+const verificationCache=new Map();
+window.__myeongriEngines={kasi:null,korean:null,ready:false,error:null};
+
+const STEM_EL={甲:'목',乙:'목',丙:'화',丁:'화',戊:'토',己:'토',庚:'금',辛:'금',壬:'수',癸:'수'};
+const STEM_YANG={甲:1,乙:0,丙:1,丁:0,戊:1,己:0,庚:1,辛:0,壬:1,癸:0};
+const BRANCH_EL={子:'수',丑:'토',寅:'목',卯:'목',辰:'토',巳:'화',午:'화',未:'토',申:'금',酉:'금',戌:'토',亥:'수'};
+const EL_CLASS={'목':'wood','화':'fire','토':'earth','금':'metal','수':'water'};
+const GEN={'목':'화','화':'토','토':'금','금':'수','수':'목'};
+const CTRL={'목':'토','토':'수','수':'화','화':'금','금':'목'};
+
+const terms=[
+ {t:'용신',easy:'사주의 균형을 잡는 데 도움이 된다고 보는 핵심 기운이에요. 쉽게 말하면 “내 사주에 필요한 보완재”에 가까워요.',expert:'격국·억부·조후 등 어떤 관법을 쓰느냐에 따라 용신 선정이 달라질 수 있습니다.'},
+ {t:'희신',easy:'용신을 도와주는 보조 기운이에요. 나에게 도움이 되는 두 번째 편처럼 생각하면 쉬워요.',expert:'용신을 생조하거나 전체 균형에 유리하게 작용한다고 보는 기운.'},
+ {t:'기신',easy:'사주의 치우침을 더 키운다고 보는 기운이에요. “무조건 나쁜 일”이 아니라 조절이 더 필요한 방향이라는 뜻이에요.',expert:'원국의 편중을 심화하거나 용신을 손상한다고 보는 기운.'},
+ {t:'십성',easy:'나를 기준으로 다른 기운과 어떤 관계인지 열 가지 역할로 나눈 것이에요. 사람관계·일·돈·표현·배움 같은 주제를 쉽게 분류하는 도구예요.',expert:'비견·겁재·식신·상관·편재·정재·편관·정관·편인·정인.'},
+ {t:'식상',easy:'내가 밖으로 표현하고 만들어내는 힘이에요. 말, 아이디어, 기술, 창작, 생산성과 연결해 봐요.',expert:'식신과 상관을 합쳐 부르는 말.'},
+ {t:'관성',easy:'직장, 규칙, 책임, 조직, 사회적 역할과 연결해서 보는 기운이에요.',expert:'정관과 편관(칠살)의 통칭.'},
+ {t:'재성',easy:'돈만 뜻하지 않아요. 재물, 현실적인 성과, 관리, 소유, 경제활동과 연결해 보는 기운이에요.',expert:'정재와 편재의 통칭.'},
+ {t:'인성',easy:'배움, 문서, 보호, 자격, 도움받는 힘과 연결해서 보는 기운이에요.',expert:'정인과 편인의 통칭.'},
+ {t:'비겁',easy:'나와 비슷한 사람, 동료, 형제자매, 경쟁, 독립성과 관련된 기운이에요.',expert:'비견과 겁재의 통칭.'},
+ {t:'비견',easy:'나와 같은 편·동료·자기주도성을 상징해요. 잘 쓰이면 독립심, 지나치면 고집이나 경쟁으로 읽기도 해요.',expert:'일간과 같은 오행·같은 음양.'},
+ {t:'겁재',easy:'비슷한 사람과의 경쟁·협업·나눔을 상징해요. 사람과 힘을 합치는 면도 있고 경쟁이 커지는 면도 있어요.',expert:'일간과 같은 오행·다른 음양.'},
+ {t:'식신',easy:'꾸준히 만들어내고 표현하는 힘이에요. 기술, 먹고사는 재주, 생산성, 편안한 표현과 연결해 봐요.',expert:'일간이 생하는 오행 중 같은 음양.'},
+ {t:'상관',easy:'생각과 표현이 빠르고 틀에 갇히기 싫어하는 힘이에요. 창의적으로 쓰이면 강점, 지나치면 말이나 규칙과 충돌로 보기도 해요.',expert:'일간이 생하는 오행 중 다른 음양.'},
+ {t:'편재',easy:'기회, 큰 흐름의 돈, 활동적인 경제감각, 넓은 인간관계와 연결해 봐요.',expert:'일간이 극하는 오행 중 같은 음양.'},
+ {t:'정재',easy:'꾸준한 수입, 계획적인 관리, 현실적인 생활기반과 연결해 봐요.',expert:'일간이 극하는 오행 중 다른 음양.'},
+ {t:'편관',easy:'압박·경쟁·책임이 강하게 들어오는 힘이에요. 잘 다루면 추진력과 결단력으로도 나타날 수 있어요.',expert:'칠살이라고도 하며 일간을 극하는 오행 중 같은 음양.'},
+ {t:'정관',easy:'규칙, 책임, 직장, 신뢰, 사회적 역할을 차분하게 맡는 힘이에요.',expert:'일간을 극하는 오행 중 다른 음양.'},
+ {t:'편인',easy:'독특한 배움, 직관, 깊은 생각, 비정형적인 지식과 연결해 봐요.',expert:'일간을 생하는 오행 중 같은 음양.'},
+ {t:'정인',easy:'공부, 자격, 문서, 보호, 안정적인 배움과 도움을 상징해요.',expert:'일간을 생하는 오행 중 다른 음양.'},
+ {t:'관재살',easy:'전통 명리에서 문서·규칙·분쟁·관청 관련 일을 평소보다 꼼꼼히 보라는 표현이에요. 소송이나 사고가 생긴다고 단정하는 말은 아니에요.',expert:'관재 관련 신살/통변 표현은 학파별 정의와 비중 차이가 큽니다.'},
+ {t:'합',easy:'두 기운이 서로 끌어당기거나 결합하는 관계로 보는 개념이에요.',expert:'천간합·지지육합·삼합·방합 등.'},
+ {t:'충',easy:'서로 맞부딪혀 변화·이동·재조정이 커지기 쉽다고 보는 관계예요. 무조건 나쁘다는 뜻은 아니에요.',expert:'지지육충 등을 중심으로 해석.'},
+ {t:'형',easy:'같은 문제가 반복되거나 긴장·마찰이 쌓이는 모습으로 읽기도 하는 관계예요.',expert:'삼형·자형 등 학파별 세부 해석 차이 존재.'},
+ {t:'파',easy:'기존의 방식이나 약속이 느슨해져 다시 정리해야 하는 흐름으로 풀이하기도 해요. 무조건 손실을 뜻하지는 않아요.',expert:'지지의 파(破). 적용 범위와 비중은 학파별 차이가 큽니다.'},
+ {t:'해',easy:'겉으로 크게 부딪치기보다는 오해·엇갈림·불편함처럼 보이지 않는 마찰을 상징한다고 봐요.',expert:'지지의 해(害). 단독으로 사건을 단정하지 않습니다.'},
+ {t:'조후',easy:'사주가 너무 춥거나 덥고, 건조하거나 습한지를 보고 균형을 맞추려는 관점이에요.',expert:'계절의 한난조습을 중시하며 궁통보감 계열 해석에서 중요하게 다룹니다.'},
+ {t:'격국',easy:'사주에서 어떤 역할과 구조가 중심인지 큰 틀을 잡아보는 방법이에요.',expert:'월령과 투출·통근 등을 바탕으로 격을 정하는 체계. 학파별 격국 성립 조건 차이 존재.'},
+ {t:'역마',easy:'이동, 출장, 여행, 이사, 환경 변화처럼 “움직임”과 연결해 보는 전통적인 신살이에요.',expert:'삼합국 기준 역마지를 산출. 신살 비중은 학파마다 다름.'},
+ {t:'도화',easy:'사람의 관심을 끌거나 관계·매력·표현력이 눈에 띄는 모습과 연결해 보는 전통 개념이에요.',expert:'함지/도화. 연애만으로 한정하지 않습니다.'},
+ {t:'대운',easy:'약 10년 단위로 보는 큰 인생 흐름이에요. 원래 사주 위에 긴 시간 동안 어떤 기운이 더해지는지 살펴봐요.',expert:'월주에서 순행·역행하며 기운 시점은 절기 간격으로 산정.'},
+ {t:'세운',easy:'해마다 바뀌는 1년 단위의 흐름이에요. 대운이라는 큰 배경 위에 올해의 기운이 들어온다고 생각하면 쉬워요.',expert:'통상 입춘을 한 해 간지의 경계로 사용.'},
+ {t:'월운',easy:'한 해 안에서도 달마다 달라지는 흐름이에요. 명리의 달은 음력 초하루가 아니라 절기 경계를 중심으로 바뀌어요.',expert:'월주는 절입 기준으로 변화.'}
+];
+
+
+const STEM_COMBOS={'甲己':'토','乙庚':'금','丙辛':'수','丁壬':'목','戊癸':'화'};
+const BRANCH_COMBOS=[['子','丑','육합'],['寅','亥','육합'],['卯','戌','육합'],['辰','酉','육합'],['巳','申','육합'],['午','未','육합']];
+const BRANCH_CLASH=[['子','午'],['丑','未'],['寅','申'],['卯','酉'],['辰','戌'],['巳','亥']];
+const BRANCH_HARM=[['子','未'],['丑','午'],['寅','巳'],['卯','辰'],['申','亥'],['酉','戌']];
+const BRANCH_BREAK=[['子','酉'],['丑','辰'],['寅','亥'],['卯','午'],['巳','申'],['未','戌']];
+const TRINES=[{a:['申','子','辰'],el:'수'},{a:['亥','卯','未'],el:'목'},{a:['寅','午','戌'],el:'화'},{a:['巳','酉','丑'],el:'금'}];
+const PUNISH_TRIPLES=[['寅','巳','申'],['丑','戌','未']];
+const SELF_PUNISH=['辰','午','酉','亥'];
+const ELEMENTS=['목','화','토','금','수'];
+const TEN_THEMES={
+ 비견:{good:'내 페이스로 일을 밀고 가거나 동료와 역할을 나누기 좋습니다.',warn:'고집·주도권 경쟁이 커지지 않도록 의견을 한 번 더 맞춰보세요.',tags:['자기주도','동료','독립']},
+ 겁재:{good:'사람과 힘을 합치거나 빠르게 판을 바꾸는 힘으로 쓰기 좋습니다.',warn:'경쟁·공동지출·즉흥적인 금전결정은 한 번 더 확인하세요.',tags:['협업','경쟁','공동재정']},
+ 식신:{good:'기술·생산·콘텐츠·돌봄처럼 꾸준히 만들어내는 일에 힘이 실립니다.',warn:'편안함에만 머물러 중요한 마감을 늦추지 않게 관리하세요.',tags:['생산','기술','표현']},
+ 상관:{good:'아이디어를 밖으로 꺼내고 기존 방식을 개선하는 데 활용하기 좋습니다.',warn:'말이 앞서거나 규칙·권위와 정면충돌하지 않도록 표현을 다듬어 보세요.',tags:['창의','발언','변화']},
+ 편재:{good:'새 기회·거래·활동범위를 넓히는 움직임에 관심이 커질 수 있습니다.',warn:'큰돈·충동지출·무리한 확장은 숫자와 계약조건을 먼저 확인하세요.',tags:['기회','거래','활동']},
+ 정재:{good:'예산·저축·생활기반처럼 현실적인 것을 차근차근 관리하기 좋습니다.',warn:'지나친 안정 집착이나 돈 문제로 관계가 딱딱해지지 않게 살펴보세요.',tags:['재정','관리','현실']},
+ 편관:{good:'압박을 결단력·집중력으로 바꾸면 어려운 일을 처리하는 힘이 생길 수 있습니다.',warn:'과로·성급한 판단·갈등 상황에서는 규칙과 절차를 지키는 쪽이 안전합니다.',tags:['책임','결단','압박']},
+ 정관:{good:'직장·계약·공식절차·책임을 안정적으로 정리하는 데 유리한 주제입니다.',warn:'해야 한다는 압박이 커지면 일정과 역할을 현실적으로 조정하세요.',tags:['직장','신뢰','책임']},
+ 편인:{good:'전문적인 공부·자료조사·독특한 아이디어에 깊게 몰입하기 좋습니다.',warn:'생각이 너무 많아 실행이 늦어지지 않도록 작은 결론부터 내보세요.',tags:['직관','전문성','연구']},
+ 정인:{good:'공부·자격·문서·도움받기·정리 같은 안정적인 축을 만들기 좋습니다.',warn:'준비만 길어지거나 타인의 도움에 지나치게 기대지 않도록 실행을 붙이세요.',tags:['배움','문서','보호']}
+};
+const SOURCE_DB=[
+ {title:'연해자평 (淵海子平)',author:'전통 자평명리 고전',era:'중국 고전',focus:'격국·십성·행운의 기본 틀',status:'공개 고전',pd:true,url:'https://zh.wikisource.org/zh-hant/%E6%B7%B5%E6%B5%B7%E5%AD%90%E5%B9%B3',summary:'자평명리의 기본 개념을 정리할 때 참고하는 고전 축으로 사용합니다.'},
+ {title:'삼명통회 (三命通會)',author:'만민영(萬民英)',era:'명대',focus:'관·인·재·식상·용신·신살의 종합',status:'공개 고전',pd:true,url:'https://zh.wikisource.org/zh-hant/%E4%B8%89%E5%91%BD%E9%80%9A%E6%9C%83',summary:'여러 선행 이론을 집대성한 자료로, 한 해석만 정답으로 두지 않고 비교할 때 활용합니다.'},
+ {title:'적천수천미 (滴天髓闡微)',author:'임철초(任鐵樵) 주석 계통',era:'청대 주석',focus:'오행의 기세·강약·순역·통관',status:'공개 고전',pd:true,url:'https://zh.wikisource.org/zh-hans/%E6%BB%B4%E5%A4%A9%E9%AB%93%E9%97%A1%E5%BE%AE',summary:'오행의 흐름과 강약을 보는 관점을 억부·기세 비교에 반영합니다.'},
+ {title:'자평진전 (子平真詮)',author:'심효첨(沈孝瞻) 계통',era:'청대',focus:'월령·격국·용신',status:'공개 고전',pd:true,url:'https://ctext.org/wiki.pl?if=gb&res=497863',summary:'월령과 격국을 중심으로 보는 관점의 출처 축으로 사용합니다.'},
+ {title:'궁통보감 (窮通寶鑑)',author:'전승 고전',era:'중국 고전',focus:'계절·조후·일간별 한난조습',status:'공개 고전',pd:true,url:'https://zh.wikisource.org/zh-hans/%E7%A9%B7%E9%80%9A%E5%AE%9D%E9%89%B4',summary:'너무 춥거나 덥고 건조·습한 계절 조건을 살피는 조후 관점의 핵심 자료로 둡니다.'},
+ {title:'신봉통고 (神峰通考)',author:'장남(張楠)',era:'명대',focus:'병약·왕쇠·손익·통변',status:'공개 고전',pd:true,url:'https://zh.wikisource.org/zh-hant/%E7%A5%9E%E5%B3%B0%E9%80%9A%E8%80%83',summary:'원국의 치우침을 병으로 보고 보완을 약으로 보는 병약 관점을 비교합니다.'},
+ {title:'사주첩경 관련 연구',author:'이석영 이론 / 2025 경기대 박사논문',era:'한국 현대 연구',focus:'육친·신살·궁위·육친화현법 등',status:'요약만 저장',pd:false,url:'https://www.riss.kr/search/detail/DetailView.do?control_no=aa3525b2d35d4e26ffe0bdc3ef48d419&p_mat_type=be54d9b8bc7cdb09',summary:'현대 연구자가 정리한 주요 이론의 범주와 특징만 참고하고, 보호받는 원문은 앱에 복제하지 않습니다.'},
+ {title:'명리요강',author:'도계 박재완',era:'한국 근현대',focus:'기초·격국·용신·일주 희기·실관',status:'요약만 저장',pd:false,url:'https://www.yes24.com/product/goods/42443746',summary:'한국 명리의 중요한 근현대 계보 중 하나로 분류하되, 저작권이 있는 본문은 저장하지 않고 이론 분류와 자체 요약만 사용합니다.'}
+];
+function producerOf(el){return ELEMENTS.find(e=>GEN[e]===el)}
+function controllerOf(el){return ELEMENTS.find(e=>CTRL[e]===el)}
+function pairHas(list,a,b){return list.some(x=>(x[0]===a&&x[1]===b)||(x[0]===b&&x[1]===a))}
+function stemCombo(a,b){const k1=a+b,k2=b+a;return STEM_COMBOS[k1]||STEM_COMBOS[k2]||null}
+function relationObject(type,chars,easy,tone='adjust'){return {type,chars,easy,tone}}
+function detectRelationsFromPillars(pillars){
+ const stems=pillars.map(x=>x[0]),branches=pillars.map(x=>x[1]),out=[];
+ for(let i=0;i<stems.length;i++)for(let j=i+1;j<stems.length;j++){const el=stemCombo(stems[i],stems[j]);if(el)out.push(relationObject('천간합',stems[i]+stems[j],`${stems[i]}와 ${stems[j]}가 서로 묶이는 관계예요. 전통적으로 결합·협력·관계의 집중을 살피며, 실제 변화 여부는 주변 조건을 함께 봅니다.`,'connect'))}
+ for(let i=0;i<branches.length;i++)for(let j=i+1;j<branches.length;j++){const a=branches[i],b=branches[j];
+  if(pairHas(BRANCH_COMBOS,a,b))out.push(relationObject('육합',a+b,'서로 연결되고 협력하려는 성향으로 보는 관계예요.','connect'));
+  if(pairHas(BRANCH_CLASH,a,b))out.push(relationObject('충',a+b,'변화·이동·재조정이 커지기 쉬운 관계로 봐요. 무조건 나쁜 사건을 뜻하지 않습니다.','change'));
+  if(pairHas(BRANCH_HARM,a,b))out.push(relationObject('해',a+b,'겉으로 큰 충돌보다 오해·엇갈림·숨은 불편을 점검하는 관계로 풀이하기도 해요.','tension'));
+  if(pairHas(BRANCH_BREAK,a,b))out.push(relationObject('파',a+b,'기존 방식이 느슨해지거나 계획을 다시 정리하는 계기로 보는 관계예요.','adjust'));
+  if((a==='子'&&b==='卯')||(a==='卯'&&b==='子'))out.push(relationObject('형',a+b,'규칙·관계·감정에서 반복되는 마찰을 점검하는 관계로 봅니다.','tension'));
+  if(a===b&&SELF_PUNISH.includes(a))out.push(relationObject('자형',a+b,'같은 기운이 반복되어 스스로 압박하거나 같은 패턴을 되풀이하는지 살펴봅니다.','tension'));
+ }
+ TRINES.forEach(t=>{if(t.a.every(x=>branches.includes(x)))out.push(relationObject('삼합',t.a.join(''),`${t.el} 기운으로 크게 연결되는 삼합 구성이 완성됩니다. 여러 영역이 한 방향으로 모이는지 살펴봅니다.`,'connect'))});
+ PUNISH_TRIPLES.forEach(a=>{if(a.every(x=>branches.includes(x)))out.push(relationObject('삼형',a.join(''),'세 지지가 함께 모여 긴장·압박·반복 과제를 크게 만드는지 살펴보는 구조입니다.','tension'))});
+ return dedupeRelations(out);
+}
+function dedupeRelations(arr){const seen=new Set();return arr.filter(x=>{const k=x.type+x.chars.split('').sort().join('');if(seen.has(k))return false;seen.add(k);return true})}
+function compareLuckRelations(pillars,gz){
+ const stems=pillars.map(x=>x[0]),branches=pillars.map(x=>x[1]),ls=gz[0],lb=gz[1],out=[];
+ stems.forEach(s=>{if(stemCombo(s,ls))out.push(relationObject('천간합',s+ls,`운의 ${ls}가 원국 ${s}와 합을 이룹니다. 새로운 연결·협력이나 한 주제에 집중되는 흐름을 살펴보세요.`,'connect'))});
+ branches.forEach(b=>{
+  if(pairHas(BRANCH_COMBOS,b,lb))out.push(relationObject('육합',b+lb,'운의 지지가 원국과 육합을 이루어 관계·협력·결합의 주제가 커질 수 있습니다.','connect'));
+  if(pairHas(BRANCH_CLASH,b,lb))out.push(relationObject('충',b+lb,'원국과 충이 생겨 이동·변경·재조정 같은 변화 주제가 커질 수 있습니다.','change'));
+  if(pairHas(BRANCH_HARM,b,lb))out.push(relationObject('해',b+lb,'원국과 해가 생겨 오해·엇갈림·불편한 소통은 한 번 더 확인하는 편이 좋습니다.','tension'));
+  if(pairHas(BRANCH_BREAK,b,lb))out.push(relationObject('파',b+lb,'원국과 파가 생겨 기존 계획이나 관계방식을 다시 정돈하는 흐름으로 볼 수 있습니다.','adjust'));
+  if((b==='子'&&lb==='卯')||(b==='卯'&&lb==='子'))out.push(relationObject('형',b+lb,'관계·규칙·감정에서 반복 마찰이 생기지 않는지 살펴보는 시기입니다.','tension'));
+  if(b===lb&&SELF_PUNISH.includes(b))out.push(relationObject('자형',b+lb,'같은 기운이 겹치므로 과도한 자기압박이나 반복 행동을 점검해 보세요.','tension'));
+ });
+ TRINES.forEach(t=>{const all=[...branches,lb];if(t.a.every(x=>all.includes(x)))out.push(relationObject('삼합',t.a.join(''),`${t.el} 삼합이 운에서 완성되어 여러 일이 한 방향으로 모이는지 살펴볼 수 있습니다.`,'connect'))});
+ PUNISH_TRIPLES.forEach(a=>{const all=[...branches,lb];if(a.every(x=>all.includes(x)))out.push(relationObject('삼형',a.join(''),'운에서 삼형 구성이 완성됩니다. 무리한 추진보다 규칙·일정·관계 경계를 분명히 하는 편이 좋습니다.','tension'))});
+ return dedupeRelations(out);
+}
+function strengthAnalysis(pillars){
+ const dayEl=STEM_EL[pillars[2][0]],monthBranch=pillars[1][1];let support=0,drain=0;
+ const chars=[];pillars.forEach((gz,i)=>{chars.push({el:STEM_EL[gz[0]],w:i===2?0:1});chars.push({el:BRANCH_EL[gz[1]],w:i===1?2.4:1})});
+ chars.forEach(x=>{if(!x.el)return;if(x.el===dayEl||GEN[x.el]===dayEl)support+=x.w;else drain+=x.w});
+ const ratio=support/(support+drain||1);const state=ratio>=.6?'강한 편':ratio<=.4?'약한 편':'중간';
+ let fav=state==='강한 편'?[GEN[dayEl],CTRL[dayEl],controllerOf(dayEl)]:state==='약한 편'?[dayEl,producerOf(dayEl)]:[producerOf(dayEl),GEN[dayEl]];
+ fav=[...new Set(fav.filter(Boolean))];const bad=ELEMENTS.filter(e=>!fav.includes(e)).sort((a,b)=>{const ca=elementCount(pillars,a),cb=elementCount(pillars,b);return cb-ca});
+ return {dayEl,monthBranch,support,drain,ratio,state,yong:fav[0],hee:fav[1]||fav[0],gisin:bad[0]||null};
+}
+function elementCount(pillars,el){let n=0;pillars.forEach(gz=>{if(STEM_EL[gz[0]]===el)n++;if(BRANCH_EL[gz[1]]===el)n++});return n}
+function climateCandidate(monthBranch){
+ if(['亥','子','丑'].includes(monthBranch))return {candidate:'화',reason:'겨울의 차가운 계절 축이라 먼저 따뜻하게 하는 화(火)를 검토합니다.'};
+ if(['巳','午','未'].includes(monthBranch))return {candidate:'수',reason:'여름의 뜨거운 계절 축이라 먼저 식혀 주는 수(水)를 검토합니다.'};
+ if(['寅','卯','辰'].includes(monthBranch))return {candidate:'세부검토',reason:'봄은 일간과 월령의 생극·건습을 함께 봐야 해 한 글자로 자동 확정하지 않습니다.'};
+ return {candidate:'세부검토',reason:'가을은 일간의 성질과 건조함·금기의 강약을 함께 봐야 해 한 글자로 자동 확정하지 않습니다.'};
+}
+function schoolComparison(pillars){
+ const st=strengthAnalysis(pillars),cl=climateCandidate(st.monthBranch),cnt=elementSummary(pillars),least=ELEMENTS.slice().sort((a,b)=>cnt[a]-cnt[b])[0];
+ const candidates=[st.yong,cl.candidate!=='세부검토'?cl.candidate:null,least].filter(Boolean);const freq={};candidates.forEach(x=>freq[x]=(freq[x]||0)+1);const consensus=Object.entries(freq).sort((a,b)=>b[1]-a[1])[0];
+ return {st,cl,least,consensus:consensus&&consensus[1]>=2?consensus[0]:null,schools:[
+  {name:'억부·강약 관점',candidate:st.yong,sub:`희신 ${st.hee} · 기신 후보 ${st.gisin}`,reason:`단순 강약 지표는 ${st.state}으로 계산되었습니다. 강약을 기준으로 지나친 기운을 덜거나 부족한 기운을 돕는 후보를 고른 1차 규칙입니다.`,source:'적천수 계열의 기세·강약 관점 참고'},
+  {name:'조후 관점',candidate:cl.candidate,sub:'한난조습 우선 검토',reason:cl.reason,source:'궁통보감 계열 참고'},
+  {name:'격국·월령 관점',candidate:'자동확정 안 함',sub:`월지 ${st.monthBranch}(${BRANCH_EL[st.monthBranch]}) 중심`,reason:'격국은 월령만으로 결정하지 않고 지장간의 투출·통근·파격 여부까지 봐야 해서 모바일 자동판에서는 억지로 확정하지 않습니다.',source:'자평진전·연해자평 계열 참고'},
+  {name:'오행 편중 보조지표',candidate:least,sub:'가장 적게 보이는 오행',reason:`8글자의 단순 분포에서 ${least}가 가장 적습니다. 이것은 용신 판정이 아니라 겹치는 해석을 확인하기 위한 보조 데이터입니다.`,source:'앱 자체 보조지표 · 고전 학파 아님'}
+ ]};
+}
+function fortuneInterpretation(gz,pillars){
+ const dayStem=pillars[2][0],tg=tenGod(dayStem,gz[0]),theme=TEN_THEMES[tg]||{good:'새로운 흐름을 관찰해 보세요.',warn:'중요한 결정은 한 번 더 확인하세요.',tags:['변화']},rels=compareLuckRelations(pillars,gz),sc=schoolComparison(pillars),els=[STEM_EL[gz[0]],BRANCH_EL[gz[1]]];let score=0;
+ els.forEach(e=>{if(e===sc.st.yong)score+=2;else if(e===sc.st.hee)score+=1;else if(e===sc.st.gisin)score-=1});rels.forEach(r=>{if(r.tone==='connect')score+=1;if(r.tone==='change'||r.tone==='tension')score-=1});
+ const grade=score>=2?{text:'활용도 높은 흐름',cls:'up'}:score<=-2?{text:'점검이 필요한 흐름',cls:'watch'}:{text:'균형·조정 흐름',cls:'mid'};
+ let relText=rels.length?rels.slice(0,2).map(r=>`${r.type}(${r.chars})`).join(' · '):'큰 합충 신호 없음';
+ return {tg,theme,rels,grade,score,relText,summary:`${tg}의 주제인 ${theme.tags.join('·')}가 눈에 띄는 때입니다. ${relText}${rels.length?'도 함께 작용합니다.':'을 기준으로 차분히 활용해 보세요.'}`};
+}
+function renderRelationCards(rels){if(!rels.length)return '<div class="empty">원국 8글자 사이에서 대표적인 합·충·형·파·해가 크게 잡히지 않았어요.</div>';return `<div class="relation-list">${rels.map(r=>`<div class="relation-item"><div class="top"><b>${r.type} · ${r.chars}</b><span class="relation-tag ${r.tone}">${r.tone==='connect'?'연결':r.tone==='change'?'변화':r.tone==='tension'?'주의':'재정비'}</span></div><p>${r.easy}</p></div>`).join('')}</div>`}
+function renderSchoolCompare(pillars){const s=schoolComparison(pillars);return `<div class="consensus"><b>학파 비교 요약</b>${s.consensus?`<strong>${s.consensus}</strong><p class="micro">서로 다른 자동 지표 2개 이상에서 같은 오행이 겹쳤습니다. 그래도 최종 용신 확정은 아닙니다.</p>`:`<p class="micro">학파별 후보가 한 방향으로 겹치지 않습니다. 이런 경우 하나를 억지로 정답으로 고르지 않고 관점별 결과를 따로 보는 것이 안전합니다.</p>`}</div><div class="schoolgrid mt">${s.schools.map(x=>`<div class="school"><div class="schoolhead"><h4>${x.name}</h4><span class="source-status">${x.source}</span></div><div class="candidate">${x.candidate}</div><p>${x.reason}</p><small>${x.sub}</small></div>`).join('')}</div><div class="notice mt"><b>중요:</b> 용신·희신·기신은 학파마다 판정 기준이 다릅니다. 이 화면은 비교용 규칙엔진이며 “정답 한 글자”를 강제로 만들지 않습니다.</div>`}
+function renderSources(){const el=document.getElementById('sourceLibrary');if(!el)return;el.innerHTML=SOURCE_DB.map(x=>`<div class="source-card"><div class="row between"><h4>${x.title}</h4><span class="source-status ${x.pd?'pd':''}">${x.status}</span></div><div class="meta">${x.author} · ${x.era} · ${x.focus}</div><p>${x.summary}</p><a href="${x.url}" target="_blank" rel="noopener">출처 확인 ↗</a></div>`).join('')}
+
+function loadFallbackEngine(){
+  const s=document.createElement('script');
+  s.src='https://unpkg.com/lunar-javascript@1.7.7/lunar.js';
+  s.onload=engineReady;s.onerror=()=>setEngineStatus(false,'만세력 엔진을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.');
+  document.head.appendChild(s);
+}
+function setEngineStatus(ok,msg){const dot=document.getElementById('engineDot'),t=document.getElementById('engineStatus');dot.className='dot '+(ok?'ok':'err');t.textContent=msg}
+function updateEngineStatus(){
+ const lunarOk=typeof Solar!=='undefined'&&typeof Lunar!=='undefined', extra=window.__myeongriEngines||{};
+ if(lunarOk&&extra.ready){setEngineStatus(true,'한국형 만세력 3중 검증 준비됨');return}
+ if(lunarOk){const dot=document.getElementById('engineDot');dot.className='dot';document.getElementById('engineStatus').textContent='기본 엔진 연결됨 · 교차검증 엔진 불러오는 중…';return}
+ setEngineStatus(false,'만세력 엔진 연결 실패');
+}
+function engineReady(){if(typeof Solar!=='undefined'&&typeof Lunar!=='undefined'){updateEngineStatus();renderAll()}else setEngineStatus(false,'만세력 엔진 연결 실패')}
+window.addEventListener('verification-engines-ready',()=>{updateEngineStatus();verificationCache.clear();renderAll()});
+window.addEventListener('verification-engines-error',()=>{updateEngineStatus();renderAll()});
+window.addEventListener('load',()=>setTimeout(()=>{if(typeof Solar!=='undefined')engineReady();else if(!document.getElementById('engineStatus').textContent.includes('못했습니다'))setEngineStatus(false,'엔진 연결 확인 중… 인터넷이 필요합니다.')},900));
+
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(members))}
+function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function currentMember(){return members.find(x=>x.id===current)||members[0]}
+function parseTime(v){const p=(v||'12:00').split(':');return {h:+p[0]||0,m:+p[1]||0}}
+function getLunarForMember(m){
+ if(!m?.birth||typeof Solar==='undefined'||typeof Lunar==='undefined')return null;
+ const [y,mo,d]=m.birth.split('-').map(Number),tm=parseTime(m.time);
+ if(m.cal==='음력'){
+   const lunarMonth=m.leap?-Math.abs(mo):mo;
+   return Lunar.fromYmdHms(y,lunarMonth,d,tm.h,tm.m,0);
+ }
+ return Solar.fromYmdHms(y,mo,d,tm.h,tm.m,0).getLunar();
+}
+function getChart(m){
+ try{
+  const lunar=getLunarForMember(m);if(!lunar)return null;
+  const ec=lunar.getEightChar();
+  return {lunar,solar:lunar.getSolar(),ec,pillars:[ec.getYear(),ec.getMonth(),ec.getDay(),ec.getTime()]};
+ }catch(e){console.warn(e);return {error:String(e?.message||e)}}
+}
+const KR_STEM={갑:'甲',을:'乙',병:'丙',정:'丁',무:'戊',기:'己',경:'庚',신:'辛',임:'壬',계:'癸'};
+const KR_BRANCH={자:'子',축:'丑',인:'寅',묘:'卯',진:'辰',사:'巳',오:'午',미:'未',신:'申',유:'酉',술:'戌',해:'亥'};
+function normalizeKoreanGz(v){
+ v=String(v||'').trim();if(!v)return '';
+ if(v.length>=2&&STEM_EL[v[0]]&&BRANCH_EL[v[1]])return v.slice(0,2);
+ const a=KR_STEM[v[0]],b=KR_BRANCH[v[1]];return a&&b?a+b:v.slice(0,2);
+}
+function memberKey(m){return [m.id,m.birth,m.time,m.cal,m.leap,m.unknownTime,m.gender].join('|')}
+function pillarsMatch(a,b,count=4){if(!a||!b)return false;for(let i=0;i<count;i++)if(a[i]!==b[i])return false;return true}
+function majorityPillars(sets,count=4){
+ const out=[];for(let i=0;i<count;i++){const tally={};sets.filter(Boolean).forEach(s=>{const v=s[i];if(v)tally[v]=(tally[v]||0)+1});const best=Object.entries(tally).sort((a,b)=>b[1]-a[1])[0];out.push(best||['',0])}return out;
+}
+async function calculateVerification(m){
+ const key=memberKey(m);if(verificationCache.has(key))return verificationCache.get(key);
+ const base=getChart(m),extra=window.__myeongriEngines||{};
+ if(!base||base.error) return {state:'error',message:'기본 만세력 계산 실패'};
+ if(!extra.ready||!extra.kasi||!extra.korean) return {state:'pending',message:'교차검증 엔진을 불러오는 중입니다.',engines:[{name:'lunar-javascript',pillars:base.pillars,note:'기본 계산 완료'}]};
+ try{
+  const [y,mo,d]=m.birth.split('-').map(Number),tm=parseTime(m.time),count=m.unknownTime?3:4;
+  const primary=extra.kasi.calculateFourPillars({year:y,month:mo,day:d,hour:tm.h,minute:tm.m,isLunar:m.cal==='음력',isLeapMonth:!!m.leap,gender:m.gender});
+  const po=primary.toObject?primary.toObject():primary;
+  const p1=[po.year,po.month,po.day,po.hour].map(normalizeKoreanGz);
+  const p2=base.pillars;
+  let sy=y,sm=mo,sd=d;
+  if(m.cal==='음력'){
+   const conv=extra.korean.lunarToSolar(y,mo,d,!!m.leap);sy=conv.solar.year;sm=conv.solar.month;sd=conv.solar.day;
+  }
+  const tertiary=extra.korean.calculateSaju(sy,sm,sd,tm.h,tm.m,{longitude:127,applyTimeCorrection:false});
+  const p3=[tertiary.yearPillar,tertiary.monthPillar,tertiary.dayPillar,tertiary.hourPillar].map(normalizeKoreanGz);
+  const all=pillarsMatch(p1,p2,count)&&pillarsMatch(p1,p3,count);
+  const maj=majorityPillars([p1,p2,p3],count);
+  const weak=maj.some(([,n])=>n<2);
+  const result={state:all?'ok':weak?'error':'warn',count,engines:[
+    {name:'KASI 정본 기반 manseryeok 2.0',pillars:p1,note:'KASI 정본 음력·정밀 절기표 기반 기준 엔진'},
+    {name:'lunar-javascript 1.7.7',pillars:p2,note:'범용 만세력 교차검증'},
+    {name:'한국형 manseryeok 1.0.8',pillars:p3,note:'독립 한국형 계산엔진 교차검증'}
+  ],majority:maj.map(x=>x[0]),message:all?'세 계산엔진의 사주 기둥이 모두 일치합니다.':'계산엔진 사이에 차이가 있습니다. 절기 경계·자시·시간보정 기준을 확인하세요.'};
+  verificationCache.set(key,result);return result;
+ }catch(e){console.warn('verification',e);return {state:'error',message:'교차검증 중 오류: '+String(e?.message||e),engines:[{name:'lunar-javascript',pillars:base.pillars,note:'기본 계산만 사용 가능'}]}}
+}
+function verificationHtml(v){
+ const cls=v.state==='ok'?'ok':v.state==='pending'?'pending':v.state==='warn'?'warn':'err';
+ const label=v.state==='ok'?'3중 일치':v.state==='pending'?'검증 준비 중':v.state==='warn'?'차이 발견':'확인 필요';
+ const names=['년','월','일','시'];
+ const rows=(v.engines||[]).map(e=>`<div class="verify-engine"><b>${esc(e.name)}</b><div class="pills">${(e.pillars||[]).slice(0,v.count||4).join(' · ')}</div><small>${esc(e.note||'')}</small></div>`).join('');
+ const detail=v.state==='ok'?`<div class="verify-ok"><b>검증 통과</b><br>${esc(v.message)} ${v.count===3?'출생시간 미상이라 년·월·일주만 비교했습니다.':''}</div>`:`<div class="verify-diff"><b>${v.state==='pending'?'잠시 후 자동검증':'정밀 확인 필요'}</b><br>${esc(v.message||'')} ${v.majority?`<br>다수 일치값: ${v.majority.map((x,i)=>names[i]+' '+x).join(' · ')}`:''}</div>`;
+ return `<div class="verify-card"><div class="verify-head"><h3>만세력 계산 검증</h3><span class="verify-state ${cls}">${label}</span></div><div class="verify-grid">${rows}</div>${detail}<details><summary>검증 기준 보기</summary><p class="micro">기준 엔진은 한국천문연구원(KASI) 정본 음력과 정밀 절기표를 내장한 manseryeok 2.0입니다. 공공데이터 API 키를 브라우저에 노출하지 않기 위해 현재는 KASI 데이터를 내장한 엔진을 사용하며, 정식 서버판에서는 공식 API 대조를 추가할 수 있습니다.</p></details></div>`;
+}
+async function renderVerification(m){
+ const holder=document.getElementById('verificationBox');if(!holder||!m?.birth)return;
+ holder.innerHTML=verificationHtml({state:'pending',count:m.unknownTime?3:4,message:'세 계산엔진을 비교하고 있습니다.',engines:[{name:'기본 계산',pillars:getChart(m)?.pillars||[],note:'우선 표시값'}]});
+ const v=await calculateVerification(m);if(currentMember()?.id!==m.id)return;const target=document.getElementById('verificationBox');if(target)target.innerHTML=verificationHtml(v);
+}
+function tenGod(dayStem,otherStem){
+ if(!dayStem||!otherStem)return '';
+ const d=STEM_EL[dayStem],o=STEM_EL[otherStem],same=STEM_YANG[dayStem]===STEM_YANG[otherStem];
+ if(d===o)return same?'비견':'겁재';
+ if(GEN[d]===o)return same?'식신':'상관';
+ if(CTRL[d]===o)return same?'편재':'정재';
+ if(CTRL[o]===d)return same?'편관':'정관';
+ if(GEN[o]===d)return same?'편인':'정인';
+ return '';
+}
+function easyTen(t){return {비견:'자기주도·동료',겁재:'경쟁·협업',식신:'생산·기술·표현',상관:'창의·발언·변화',편재:'기회·활동적 재정',정재:'꾸준한 재정·관리',편관:'압박·결단·책임',정관:'직장·규칙·신뢰',편인:'직관·전문지식',정인:'배움·문서·보호'}[t]||'변화'}
+function elementSummary(pillars){
+ const cnt={목:0,화:0,토:0,금:0,수:0};
+ pillars.forEach(gz=>{const a=gz?.[0],b=gz?.[1];if(STEM_EL[a])cnt[STEM_EL[a]]++;if(BRANCH_EL[b])cnt[BRANCH_EL[b]]++});
+ return cnt;
+}
+function elClass(ch){return EL_CLASS[STEM_EL[ch]||BRANCH_EL[ch]]||''}
+function isBoundaryWarning(m){
+ if(!m?.birth)return false;const [,mo,d]=m.birth.split('-').map(Number);return d<=9||(+parseTime(m.time).h===23);
+}
+
+function renderMembers(){
+ const s=document.getElementById('memberScroller');s.innerHTML='';
+ members.forEach(m=>{const b=document.createElement('button');b.className='member-chip'+(m.id===current?' active':'');b.textContent=m.name;b.onclick=()=>{current=m.id;renderAll()};s.appendChild(b)});
+}
+function renderSummary(){
+ const m=currentMember(),box=document.getElementById('memberSummary');
+ if(!m){box.innerHTML='<div class="empty">가족을 추가해 주세요.</div>';return}
+ const c=getChart(m);let status='생년월일 입력 필요',badge='warn';if(c&&!c.error){status='만세력 계산 완료';badge='good'}if(c?.error){status='입력값 확인 필요';badge='danger'}
+ box.innerHTML=`<div class="card"><div class="between row"><div><h3>${esc(m.name)} <span class="sub">· ${esc(m.relation)}</span></h3><p>${m.birth?esc(m.birth):'생년월일 미입력'} ${m.time&&!m.unknownTime?'· '+esc(m.time):m.unknownTime?'· 시간 모름':''} · ${esc(m.cal||'양력')}</p></div><span class="badge ${badge}">${status}</span></div><div class="badges"><span class="badge ${m.visibility==='private'?'danger':'good'}">${m.visibility==='private'?'나만 보기':'가족 공개'}</span>${isBoundaryWarning(m)?'<span class="badge warn">경계시간 정밀검증 권장</span>':''}</div><div style="height:10px"></div><div class="row"><button class="btn small secondary" onclick="editMember('${m.id}')">정보 수정</button>${members.length>1?`<button class="btn small ghost" onclick="deleteMember('${m.id}')">삭제</button>`:''}</div></div>`;
+}
+function renderChart(){
+ const m=currentMember(),area=document.getElementById('chartArea'),c=getChart(m);
+ if(!m?.birth){area.innerHTML='<div class="card"><div class="empty">생년월일을 입력하면 사주 8자와 오행을 실제 계산합니다.<br><button class="btn small secondary mt" onclick="editMember(\''+m.id+'\')">생년월일 입력하기</button></div></div>';return}
+ if(c?.error){area.innerHTML=`<div class="notice strong">계산하지 못했습니다. 날짜·윤달 여부를 확인해 주세요.<br><span class="sub">${esc(c.error)}</span></div>`;return}
+ if(!c){area.innerHTML='<div class="notice strong">만세력 엔진 연결이 필요합니다. 인터넷 연결을 확인해 주세요.</div>';return}
+ const {pillars,solar,lunar}=c,dayStem=pillars[2][0],counts=elementSummary(pillars),max=Math.max(...Object.values(counts),1),names=['년주','월주','일주','시주'];
+ const tg=[tenGod(dayStem,pillars[0][0]),tenGod(dayStem,pillars[1][0]),'나(일간)',tenGod(dayStem,pillars[3][0])];
+ const rels=detectRelationsFromPillars(pillars);
+ document.getElementById('heroSmall').textContent=`${m.name} · ${solar.toYmd()} 기준`;
+ document.getElementById('heroTitle').innerHTML=`${m.name}의 중심은 <span class="${elClass(dayStem)}">${dayStem}(${STEM_EL[dayStem]})</span> 일간<br><span style="font-size:.72em">큰 흐름부터 쉽게 살펴봐요</span>`;
+ document.getElementById('heroText').textContent='전문용어는 생활 언어로 먼저 설명하고, 필요할 때만 원래 명리용어와 근거를 펼쳐볼 수 있게 구성했습니다.';
+ document.getElementById('heroBadges').innerHTML=`<span class="badge good">일간 ${dayStem} · ${STEM_EL[dayStem]}</span><span class="badge blue">양력 ${solar.toYmd()}</span><span class="badge neutral">음력 ${Math.abs(lunar.getMonth())}월 ${lunar.getDay()}일</span>`;
+ area.innerHTML=`
+ <div class="title">사주 8자 <span class="sub">실제 계산</span></div>
+ <div class="card"><div class="pillars">${pillars.map((gz,i)=>`<div class="pillar"><small>${names[i]}</small><strong><span class="stem ${elClass(gz[0])}">${gz[0]}</span><span class="branch ${elClass(gz[1])}">${gz[1]}</span></strong><em>${tg[i]}</em></div>`).join('')}</div>${m.unknownTime?'<div class="notice strong mt">출생시간을 모르는 것으로 저장했습니다. 현재 시주는 정오(12:00) 임시값이므로 시주 관련 해석은 확정값으로 보면 안 됩니다.</div>':''}<details><summary>쉽게 읽는 법</summary><p class="micro">네 기둥은 년주·월주·일주·시주이고, 일주의 첫 글자(일간)를 “나”의 기준점으로 봅니다. 다른 글자가 나와 어떤 관계인지 십성으로 설명합니다.</p></details></div>
+ <div class="desktop2"><div><div class="title">오행 분포 <span class="sub">천간+지지 8글자 단순 분포</span></div><div class="card">${Object.entries(counts).map(([e,n])=>`<div class="barrow"><b class="${EL_CLASS[e]}">${e}</b><div class="bar"><div class="fill" style="width:${n/max*100}%"></div></div><span class="count">${n}</span></div>`).join('')}<p class="micro">이 그래프만으로 강약·용신을 단정하지 않습니다. 계절·월령·통근·조후 등을 함께 봐야 하기 때문입니다.</p></div></div><div><div class="title">십성 한눈에</div><div class="card"><div class="grid2 wide">${[0,1,3].map(i=>`<div class="kv"><b>${names[i]} 천간 · ${tg[i]}</b><span>${easyTen(tg[i])}</span></div>`).join('')}<div class="kv"><b>일간</b><span>${dayStem}(${STEM_EL[dayStem]}) · 나 자신을 보는 기준</span></div></div></div></div></div>
+ <div class="title">만세력 검증 <span class="sub">한국형 3중 교차검증</span></div><div id="verificationBox"></div>
+ <div class="title">합 · 충 · 형 · 파 · 해 <span class="sub">원국 안의 관계</span></div><div class="card">${renderRelationCards(rels)}<details><summary>이 관계들을 어떻게 봐야 하나요?</summary><p class="micro">합은 연결, 충은 변화, 형은 반복 마찰, 파는 재정비, 해는 오해·엇갈림을 살피는 전통적 분류입니다. 하나만 보고 사건을 예언하지 않고 대운·세운과 겹칠 때 주제가 강해지는지 확인합니다.</p></details></div>
+ <div class="title">용신 · 희신 · 기신 <span class="sub">여러 관점 비교</span></div>${renderSchoolCompare(pillars)}`;
+ renderVerification(m);
+}
+function renderFlow(){
+ const m=currentMember(),box=document.getElementById('flowContent'),c=getChart(m);
+ if(!m?.birth){box.innerHTML='<div class="empty">생년월일을 먼저 입력해 주세요.</div>';return}if(!c||c.error){box.innerHTML='<div class="empty">만세력 계산을 확인해 주세요.</div>';return}
+ try{
+  const gender=m.gender==='male'?1:0,ec=c.ec,yun=ec.getYun(gender,1),dayStem=ec.getDay()[0],da=yun.getDaYun(10),nowY=new Date().getFullYear(),pillars=c.pillars;
+  const useful=da.filter(d=>d.getIndex()>0),currentDY=useful.find(d=>nowY>=d.getStartYear()&&nowY<=d.getEndYear());
+  const currentDYGz=currentDY?.getGanZhi()||'';
+  const years=[];for(let y=nowY-2;y<=nowY+7;y++){const gz=Solar.fromYmdHms(y,7,1,12,0,0).getLunar().getYearInGanZhiExact();years.push({y,gz,...fortuneInterpretation(gz,pillars)})}
+  const dyInterp=currentDYGz?fortuneInterpretation(currentDYGz,pillars):null;
+  box.innerHTML=`<div class="card"><h3>${esc(m.name)}의 대운</h3><p>약 10년 단위의 큰 배경입니다. <b>${yun.isForward()?'순행':'역행'}</b>이며, 출생 후 약 <b>${yun.getStartYear()}년 ${yun.getStartMonth()}개월 ${yun.getStartDay()}일</b> 뒤 첫 대운이 시작되는 방식으로 계산되었습니다.</p><div class="badges"><span class="badge blue">기산일 ${yun.getStartSolar().toYmd()}</span><span class="badge neutral">성별 ${m.gender==='male'?'남':'여'}</span></div></div>
+  <div class="title">10년 대운 <span class="sub">각 대운의 주제까지 풀이</span></div><div class="dayun-scroll">${useful.map(d=>{const gz=d.getGanZhi(),it=fortuneInterpretation(gz,pillars),cur=currentDY&&currentDY.getIndex()===d.getIndex();return `<div class="dayun ${cur?'current':''}"><span>${d.getStartAge()}~${d.getEndAge()}세</span><b>${gz}</b><span>${d.getStartYear()}~${d.getEndYear()}</span><div class="ten">${it.tg} · ${easyTen(it.tg)}</div><span class="grade ${it.grade.cls}" style="display:inline-block;margin-top:7px">${it.grade.text}</span>${cur?'<span style="margin-top:7px;color:#496046;font-weight:800">현재 대운</span>':''}</div>`}).join('')}</div>
+  ${dyInterp?`<div class="title">현재 대운을 쉽게 보면</div><div class="card"><div class="flowhead"><div><div class="gzbig">${currentDYGz}</div><div class="flowmeta">${dyInterp.tg} · ${easyTen(dyInterp.tg)}</div></div><span class="grade ${dyInterp.grade.cls}">${dyInterp.grade.text}</span></div><div class="flowline">${dyInterp.summary}</div><div class="tips"><div class="tip goodtip"><b>활용</b><br>${dyInterp.theme.good}</div><div class="tip warntip"><b>조심</b><br>${dyInterp.theme.warn}</div></div>${dyInterp.rels.length?`<div class="mt">${renderRelationCards(dyInterp.rels)}</div>`:''}</div>`:''}
+  <div class="title">세운 <span class="sub">올해 전후 10년 · 쉬운 풀이</span></div>${years.map(v=>`<div class="flowcard ${v.y===nowY?'current':''}"><div class="flowhead"><div><div class="year">${v.y}년 ${v.y===nowY?'· 현재':''}</div><div class="gzbig">${v.gz}</div><div class="flowmeta">${v.tg} · ${easyTen(v.tg)} · ${v.relText}</div></div><span class="grade ${v.grade.cls}">${v.grade.text}</span></div><div class="flowline">${v.summary}</div><div class="tips"><div class="tip goodtip"><b>좋게 활용</b><br>${v.theme.good}</div><div class="tip warntip"><b>주의할 점</b><br>${v.theme.warn}</div></div><details><summary>합·충·형·파·해 근거 보기</summary>${v.rels.length?renderRelationCards(v.rels):'<p class="micro">원국과 이 세운 사이에 대표적인 합·충·형·파·해 신호가 크게 잡히지 않았습니다.</p>'}</details></div>`).join('')}
+  <div class="notice mt"><b>해석 방식:</b> 십성 주제 + 원국과의 합·충·형·파·해 + 억부 후보 오행을 겹쳐 생활 언어로 요약합니다. “좋은 해/나쁜 해”를 단정하지 않고, 어떤 영역을 활용하거나 점검할지 보여줍니다.</div>`;
+ }catch(e){console.warn(e);box.innerHTML=`<div class="notice strong">대운 계산 중 오류가 발생했습니다. 입력값을 다시 확인해 주세요.<br><span class="sub">${esc(e.message||e)}</span></div>`}
+}
+function renderCalendar(){
+ const m=currentMember(),box=document.getElementById('calendarContent'),c=getChart(m);if(!m?.birth){box.innerHTML='<div class="empty">생년월일을 먼저 입력해 주세요.</div>';return}if(!c||c.error){box.innerHTML='<div class="empty">만세력 계산을 확인해 주세요.</div>';return}
+ const year=new Date().getFullYear(),months=[];
+ try{for(let mo=1;mo<=12;mo++){const l=Solar.fromYmdHms(year,mo,15,12,0,0).getLunar(),gz=l.getMonthInGanZhiExact(),it=fortuneInterpretation(gz,c.pillars);months.push({mo,gz,...it})}
+ box.innerHTML=`<div class="card"><h3>${year}년 월별 흐름</h3><p>명리의 월은 음력 초하루가 아니라 절기 경계에서 바뀝니다. 현재 모바일판은 각 양력 월 <b>15일</b>의 월주를 대표값으로 사용하고, 그 달의 십성·합충 관계를 쉬운 말로 풀이합니다.</p></div><div class="monthgrid">${months.map(v=>`<div class="monthbox"><span class="grade ${v.grade.cls}">${v.grade.text.replace(' 흐름','')}</span><b>${v.mo}월</b><strong>${v.gz}</strong><p><b>${v.tg}</b> · ${easyTen(v.tg)}</p><div class="microline">${v.relText}</div><details><summary>이번 달 풀이</summary><p class="micro">${v.summary}</p><div class="tip goodtip"><b>활용</b><br>${v.theme.good}</div><div class="tip warntip" style="margin-top:6px"><b>주의</b><br>${v.theme.warn}</div></details></div>`).join('')}</div><div class="notice mt"><b>정확도 안내:</b> 월별 해석 로직은 작동하지만, 절기 교체일 바로 전후는 날짜별 월주가 달라질 수 있습니다. 다음 서버 버전에서는 실제 절입 시각을 캘린더에 표시해 일자별로 더 정밀하게 나누는 구조로 확장할 수 있습니다.</div>`;
+ }catch(e){box.innerHTML='<div class="notice strong">월운 계산 중 오류가 발생했습니다.</div>'}
+}
+function renderTerms(){const q=(document.getElementById('termSearch').value||'').trim();const list=document.getElementById('termList');const arr=terms.filter(x=>!q||x.t.includes(q)||x.easy.includes(q)||x.expert.includes(q));list.innerHTML=arr.length?arr.map(x=>`<div class="term"><b>${x.t}</b><div class="easy">${x.easy}</div><div class="expert">전문: ${x.expert}</div></div>`).join(''):'<div class="empty">검색 결과가 없어요.</div>'}
+function renderAll(){renderMembers();renderSummary();renderChart();renderFlow();renderCalendar();renderTerms();renderSources()}
+
+function openMemberModal(){
+ document.getElementById('modalTitle').textContent='가족 추가';document.getElementById('mId').value='';document.getElementById('mName').value='';document.getElementById('mRelation').value='본인';document.getElementById('mGender').value='female';document.getElementById('mBirth').value='';document.getElementById('mTime').value='12:00';document.getElementById('mUnknownTime').checked=false;document.getElementById('mLeap').checked=false;document.getElementById('mVisibility').value='family';setCalendar('양력');toggleUnknownTime();document.getElementById('memberModal').classList.add('show')
+}
+function editMember(id){const m=members.find(x=>x.id===id);if(!m)return;document.getElementById('modalTitle').textContent=m.name+' 정보 수정';document.getElementById('mId').value=m.id;document.getElementById('mName').value=m.name;document.getElementById('mRelation').value=m.relation||'기타';document.getElementById('mGender').value=m.gender||'female';document.getElementById('mBirth').value=m.birth||'';document.getElementById('mTime').value=m.time||'12:00';document.getElementById('mUnknownTime').checked=!!m.unknownTime;document.getElementById('mLeap').checked=!!m.leap;document.getElementById('mVisibility').value=m.visibility||'family';setCalendar(m.cal||'양력');toggleUnknownTime();document.getElementById('memberModal').classList.add('show')}
+function closeMemberModal(){document.getElementById('memberModal').classList.remove('show')}
+function setCalendar(v){calendarType=v;document.getElementById('solarBtn').classList.toggle('active',v==='양력');document.getElementById('lunarBtn').classList.toggle('active',v==='음력');document.getElementById('lunarLeapWrap').style.display=v==='음력'?'block':'none'}
+function toggleUnknownTime(){const ck=document.getElementById('mUnknownTime'),t=document.getElementById('mTime');t.disabled=ck.checked;if(ck.checked)t.value='12:00'}
+function saveMember(){
+ const name=document.getElementById('mName').value.trim(),birth=document.getElementById('mBirth').value;if(!name){alert('이름이나 별명을 입력해 주세요.');return}if(!birth){alert('생년월일을 입력해 주세요.');return}
+ const obj={id:document.getElementById('mId').value||'m'+Date.now(),name,relation:document.getElementById('mRelation').value,gender:document.getElementById('mGender').value,birth,time:document.getElementById('mTime').value||'12:00',unknownTime:document.getElementById('mUnknownTime').checked,cal:calendarType,leap:calendarType==='음력'&&document.getElementById('mLeap').checked,visibility:document.getElementById('mVisibility').value};
+ const test=getChart(obj);if(test?.error){alert('날짜를 계산할 수 없습니다. 음력 윤달 여부 또는 날짜를 다시 확인해 주세요.\n\n'+test.error);return}
+ const idx=members.findIndex(x=>x.id===obj.id);if(idx>=0)members[idx]=obj;else members.push(obj);current=obj.id;save();renderAll();closeMemberModal();
+}
+function deleteMember(id){const m=members.find(x=>x.id===id);if(!m||!confirm(m.name+' 정보를 이 기기에서 삭제할까요?'))return;members=members.filter(x=>x.id!==id);current=members[0]?.id||'';save();renderAll()}
+function resetData(){if(confirm('이 기기에 저장된 가족 데이터를 모두 초기화할까요?')){localStorage.removeItem(STORAGE_KEY);members=JSON.parse(JSON.stringify(defaultMembers));current='me';renderAll();alert('초기화했습니다.')}}
+
+document.querySelectorAll('.navbtn').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(btn.dataset.tab).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})});
+renderAll();
+</script>
+<script type="module">
+(async()=>{
+  try{
+    const [kasi,korean]=await Promise.all([
+      import('https://esm.sh/manseryeok@2.0.0?bundle'),
+      import('https://esm.sh/@fullstackfamily/manseryeok@1.0.8?bundle')
+    ]);
+    window.__myeongriEngines={kasi,korean,ready:true,error:null};
+    window.dispatchEvent(new Event('verification-engines-ready'));
+  }catch(e){
+    console.warn('교차검증 엔진 로드 실패',e);
+    window.__myeongriEngines={kasi:null,korean:null,ready:false,error:String(e?.message||e)};
+    window.dispatchEvent(new Event('verification-engines-error'));
+  }
+})();
+</script>
+</body>
+</html>
