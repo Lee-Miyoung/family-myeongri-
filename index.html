@@ -99,24 +99,31 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 .month-tabs{display:flex;gap:8px;overflow:auto;padding:14px 0}.month-tabs .year-pick{flex:0 0 auto}.calendar-day .day-role{font-size:16px}
 .future-years{display:flex;gap:12px;overflow:auto;padding:12px 2px 22px;scroll-snap-type:x proximity}.future-years .life-stop{scroll-snap-align:start}.chosen{border:2px solid var(--sage)!important;background:#eef4ea!important}.explore-profiles{display:flex;gap:8px;overflow:auto;padding:5px 0 14px}.quick-actions{margin-top:16px}.explore-breadcrumb{display:flex;align-items:center;gap:8px;margin:18px 0;font-weight:800;font-size:20px}.explore-breadcrumb button{padding:10px 12px;border-radius:12px;background:var(--sage2);min-height:48px}.year-control{display:flex;align-items:center;gap:12px;max-width:100%}.year-control input{width:130px}.calendar-weekdays,.calendar-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.calendar-weekdays{text-align:center;padding:15px 0 8px;color:var(--muted)}.calendar-day{min-height:86px;border:1px solid var(--line);border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#fffdf8;min-width:0;padding:7px 2px}.calendar-day b{font-size:20px}.calendar-day.selected{background:#354b3b;color:#fff;border:2px solid #354b3b;box-shadow:0 3px 12px #354b3b22}.calendar-day.is-today:not(.selected){border:2px solid var(--amber)}.day-role{font-size:14px;line-height:1.25;word-break:keep-all}.day-dots{display:flex;gap:4px;min-height:7px}.signal{height:7px;width:7px;border-radius:50%;display:inline-block}.signal.connect{background:#4f8556}.signal.adjust{background:#b46b2e}.signal.quiet{background:#beb6ab}.selected .signal{outline:1px solid #fff}.calendar-day.low-emphasis:not(.selected){background:#f4f0e9;color:#7a746a}.month-choice{text-align:left;min-height:140px;cursor:pointer}.month-choice p{font-size:16px}.peak-card{border-top:4px solid #b68b50}.daily-reading{scroll-margin-top:180px}.year-overview,.month-overview{margin-top:18px}.daily-calendar .between h3{margin:0}.calendar-days button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}.btn.small{min-height:44px}.navbtn{font-size:14px}header .engine-status{font-size:14px}main{padding-bottom:50px}.sheet{scroll-padding-bottom:40px}body:has(.modal.show){overflow:hidden}
 @media(max-width:480px){.calendar-day{min-height:78px;border-radius:10px}.calendar-days{gap:3px}.daily-calendar{padding:12px}.day-role{font-size:14px}.calendar-day b{font-size:19px}.month-picker{grid-template-columns:1fr 1fr}.month-choice{padding:12px;min-height:150px}.month-choice p{font-size:16px}.navbtn{font-size:12px}.explore-breadcrumb{gap:4px;font-size:18px}.explore-breadcrumb button{padding:10px}.quick-actions{gap:6px}}
+
+/* 오늘 작전실: 짧은 문장, 뚜렷한 행동, 사용자가 해낸 기록 */
+:root{--bg:#f7f5ef;--card:#fffef9;--ink:#23392e;--muted:#667369;--line:#dde3d7;--action-yellow:#ffd58a;--action-purple:#e9e1ff}
+body{font-size:18px;line-height:1.7}header{background:rgba(247,245,239,.97);padding:calc(12px + env(safe-area-inset-top)) 16px 10px}.brand{flex-wrap:nowrap}.brand h1{font-size:24px;line-height:1.2;white-space:nowrap}.brand-caption{display:block;font-size:14px;color:#667369;font-weight:500;letter-spacing:0;margin-top:5px}.header-actions{display:flex;gap:8px;align-items:center}.header-actions .pill{font-size:14px;padding:10px 12px;min-height:44px}.app-more{margin:0;border:0;padding:0}.app-more>summary{list-style:none;width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:#e9eee4;font-size:24px}.app-more>summary::-webkit-details-marker{display:none}.more-panel{position:absolute;right:16px;top:calc(72px + env(safe-area-inset-top));width:min(300px,calc(100vw - 32px));padding:18px;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 16px 50px #22382b24}.home-person-row>span{font-size:14px;font-weight:750;color:var(--muted)}.home-person-row .scroller{padding:6px 0 12px;margin:0}.member-chip{border-radius:999px;font-size:16px;padding:9px 16px}.member-chip.active{background:#244b3c}.today-hero{position:relative;overflow:hidden;background:#244b3c;color:#fffef5;border:0;border-radius:28px;padding:24px;box-shadow:0 14px 28px #244b3c1b}.today-hero::after{content:'✦';position:absolute;right:15px;top:14px;color:#ffd58a4a;font-size:100px;line-height:1;pointer-events:none}.today-hero small{color:#dbeddf;font-size:15px;position:relative;z-index:1;display:block;max-width:86%}.today-hero h2{font-size:clamp(28px,7.5vw,38px);line-height:1.35;letter-spacing:-1px;margin:12px 0 10px;position:relative;z-index:1}.today-hero p{font-size:18px;line-height:1.65;color:#edf5e7;max-width:680px}.strategy-mode{display:inline-block;padding:7px 13px;border-radius:999px;background:#e8efe2;color:#244b3c;font-size:15px;font-weight:850}.today-hero .strategy-mode{background:#ffd58a;color:#45391d}.day-switcher{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:8px;margin:17px 0}.day-switcher>button{min-height:48px;border-radius:15px;background:#e9eee4;font-size:23px}.day-switcher .day-reset{font-size:18px;font-weight:850;background:none}.day-reset small{display:block;font-size:14px;color:var(--muted);font-weight:500}.daily-action-board{display:grid;gap:18px}.caution-ticket{display:flex;gap:12px;padding:20px;border:1px solid #ebcc92;border-radius:24px;background:#fff0d6}.ticket-icon{flex:0 0 36px;font-size:29px;line-height:1.3}.eyebrow{display:block;font-size:14px;font-weight:850;letter-spacing:.4px;color:#596b5d}.caution-ticket .eyebrow{color:#77531f}.caution-ticket h3{font-size:22px;line-height:1.4;margin:5px 0 8px;color:#49371e}.caution-ticket p{font-size:18px;line-height:1.7;margin:0;color:#59472c}.caution-ticket details{border-color:#e6ceaa}.caution-ticket summary{font-size:16px}.caution-ticket blockquote{margin:12px 0 0;font-size:19px;font-weight:750;line-height:1.7;color:#49371e}.mission-card,.focus-card{padding:22px;background:#fffef9;border-radius:24px;border:1px solid var(--line);box-shadow:0 5px 18px #21342b06}.mission-card h3{font-size:24px;margin:4px 0 0}.mission-count{background:#e9e1ff;color:#514579;border-radius:15px;padding:9px 13px;font-size:20px;font-weight:850;white-space:nowrap}.mission-progress{height:9px;background:#eeeae2;border-radius:999px;margin:18px 0 12px;overflow:hidden}.mission-progress>span{display:block;width:var(--done);height:100%;background:#879e69;transition:width .25s ease;border-radius:inherit}.mission-list{display:grid;gap:5px}.mission-item{display:flex;gap:13px;align-items:flex-start;padding:15px 0;margin:0;border-bottom:1px solid #e5e8de;cursor:pointer;min-height:64px}.mission-item input{accent-color:#365e43;width:25px;height:25px;flex:0 0 25px;margin:5px 0 0}.mission-item>span{display:grid;gap:4px}.mission-item small{font-size:13px;letter-spacing:1px;color:#748364}.mission-item strong{font-size:20px;line-height:1.45;color:#283f31}.mission-item>span>span{font-size:17px;color:#5b675d;font-weight:500;line-height:1.7}.mission-item.completed strong{color:#55774b;text-decoration:line-through;text-decoration-thickness:1px}.mission-item.completed{background:#eff5e8;border-radius:14px;padding:15px 10px}.mission-status{font-size:17px;color:#47623c;margin:16px 0 0;font-weight:700}.mission-note{font-size:14px;color:#667166;margin:8px 0 0}.focus-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:13px 0 20px}.focus-tabs button{min-height:76px;border:1px solid #e2e5dc;border-radius:17px;font-size:16px;font-weight:750;background:#f4f5ee}.focus-tabs button>span{display:block;font-size:25px}.focus-tabs button[aria-pressed=true]{background:#e9e1ff;border:2px solid #9280be;color:#4e4271}.focus-heading{font-size:23px;line-height:1.5}.action-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.action-pair>div{padding:16px;border-radius:17px;background:#edf3e6}.action-pair>div+div{background:#f6efdf}.action-pair span{font-size:14px;font-weight:850;color:#4f6550}.action-pair p{font-size:18px;line-height:1.7;margin:5px 0 0}.daily-quote{display:flex;align-items:center;gap:12px;border-radius:22px;background:#e9e1ff;padding:20px;color:#534572}.daily-quote>span{font-size:32px}.daily-quote p{font-size:19px;margin:0;line-height:1.7;font-weight:750}.action-reasons{padding:15px 3px;margin:0}.action-reasons summary{font-size:16px;color:#667369}.action-reasons p{font-size:16px}.action-explore{margin-top:18px;background:#244b3c}.action-footnote{font-size:14px;color:#667369;line-height:1.65;margin:16px 6px}.future-drawer{background:#edf0e5;border:1px solid #dce2d2;padding:19px;border-radius:22px;margin:24px 0}.future-drawer>summary{font-size:21px}.future-drawer>summary>span{display:block;font-size:15px;color:#667369;font-weight:500;margin-top:6px}.strategy-reading{margin:16px 0 24px}.strategy-person{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:16px;color:#627166;margin-bottom:12px}.strategy-day-heading{padding:24px;border-radius:24px;background:#244b3c;color:#fff9e8;margin-bottom:16px}.strategy-day-heading>span{font-size:16px;color:#e8eee1}.strategy-day-heading h2{font-size:30px;line-height:1.4;margin:10px 0 0}.mini-strategy{border:1px solid var(--line);border-radius:22px;background:#fffef9;padding:20px}.mini-strategy h3{font-size:22px;line-height:1.5;margin:14px 0}.mini-strategy p{font-size:17px;line-height:1.7}.mini-caution{border-top:1px solid var(--line);padding-top:12px}.mini-strategy p>b{display:inline-block;font-size:14px;border-radius:8px;background:#edf3e6;padding:3px 7px;margin-right:6px}.mini-caution>b{background:#fff0d6!important}.calculation-drawer{margin-top:18px;box-shadow:none;background:#f3f3eb}.calculation-drawer>summary{font-size:16px}.strategy-reading .card p{font-size:17px}.brand h1,.navbtn{letter-spacing:-.3px}
+@media(min-width:700px){.today-hero{padding:30px}.home-person-row{display:flex;align-items:center;gap:18px}.home-person-row .scroller{padding:8px 0 14px;flex:1}.caution-ticket{padding:24px}.daily-action-board{grid-template-columns:1fr 1fr;align-items:start}.caution-ticket,.daily-quote,.action-reasons{grid-column:1/-1}.mission-card{grid-row:2/4}.focus-card{grid-column:2}.daily-action-board .daily-quote{grid-column:2}.day-switcher{max-width:460px;margin:20px auto}.action-pair{grid-template-columns:1fr}.mini-strategy{height:100%}}
+@media(max-width:480px){.action-pair{grid-template-columns:1fr}.mission-card,.focus-card{padding:18px}.caution-ticket{padding:18px;gap:8px}.ticket-icon{flex-basis:29px;font-size:25px}.caution-ticket h3{font-size:21px}.focus-tabs{gap:6px}.focus-tabs button{font-size:15px}.brand h1{font-size:22px}.header-actions .pill{padding:9px 10px;font-size:14px}.today-hero{padding:22px}.future-drawer{padding:16px}.mission-item>span>span{font-size:17px}.home-person-row .scroller{padding-bottom:10px}}
+@media(max-width:350px){.brand h1{font-size:20px}.header-actions{gap:5px}.header-actions .pill{font-size:13px;padding:8px}.app-more>summary{width:40px}.brand-caption{font-size:13px}.today-hero h2{font-size:27px}}
+@media(prefers-reduced-motion:reduce){.mission-progress>span{transition:none}}
+
+.hero-task-label{display:block;color:#ffd58a;font-size:14px;letter-spacing:.4px;margin-bottom:5px}.today-hero p,.caution-ticket p,.caution-ticket h3,.mission-item>span>span,.action-pair p,.daily-quote p,.mini-strategy p{word-break:keep-all;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div class="brand"><h1>가족 명리노트</h1><button class="pill" onclick="openMemberModal()">+ 가족 추가</button></div>
-  <div class="row wrap"><button class="btn small ghost" onclick="showTab('dictionary')">용어사전</button><button class="btn small ghost" onclick="showTab('privacy')">전문자료·보안</button></div><div class="engine-status"><span class="dot" id="engineDot"></span><span id="engineStatus">만세력 엔진 불러오는 중…</span></div>
+  <div class="brand"><h1>가족 명리노트<span class="brand-caption">나의 하루를 조금 더 잘</span></h1><div class="header-actions"><button class="pill" onclick="openMemberModal()">+ 가족 추가</button><details class="app-more"><summary aria-label="더 보기">☰</summary><div class="more-panel"><button class="btn ghost" onclick="this.closest('details').open=false;showTab('dictionary')">📚 용어사전</button><button class="btn ghost mt" onclick="this.closest('details').open=false;showTab('privacy')">전문자료·보안</button><div class="engine-status"><span class="dot" id="engineDot"></span><span id="engineStatus">만세력 엔진 불러오는 중…</span></div></div></details></div></div>
 </header>
 <main>
-<section id="home" class="section active">
+<section id="home" class="section active"><div class="home-person-row"><span>오늘 누구의 하루?</span><div class="scroller" id="memberScroller"></div></div>
   <div class="hero" id="heroBox">
     <small id="heroSmall">우리 가족</small>
     <h2 id="heroTitle">우리 가족 사주를<br>어려운 말 없이 살펴봐요</h2>
     <p id="heroText">가족을 선택하면 태어난 네 기둥과 여덟 글자부터 10년 흐름, 해마다·달마다 흐름까지 쉬운 말로 풀어줍니다.</p>
     <div class="badges" id="heroBadges"><span class="badge good">쉬운 설명</span><span class="badge blue">실제 계산</span><span class="badge neutral">가족별 저장</span></div>
   </div>
-  <label class="mt">함께 살펴볼 가족</label>
-  <div class="scroller" id="memberScroller"></div>
   <div id="lifeMap"></div><details id="expertPanel"><summary>사주팔자·오행·용신·계산 검증 자세히 보기</summary><div id="chartArea"></div></details>
 </section>
 
@@ -690,7 +697,7 @@ function saveMember(){
  const idx=members.findIndex(x=>x.id===obj.id);if(idx>=0)members[idx]=obj;else members.push(obj);current=obj.id;save();renderAll();closeMemberModal();
 }
 function deleteMember(id){const m=members.find(x=>x.id===id);if(!m||!confirm(m.name+' 정보를 이 기기에서 삭제할까요?'))return;if(!persistEvents(lifeEvents.filter(e=>e.memberId!==id)))return;members=members.filter(x=>x.id!==id);current=members[0]?.id||'';save();renderAll()}
-function resetData(){if(confirm('이 기기에 저장된 가족 정보와 인생기록을 모두 초기화할까요?')){localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(LIFE_EVENT_KEY);lifeEvents=[];members=JSON.parse(JSON.stringify(defaultMembers));current='me';renderAll();alert('초기화했습니다.')}}
+function resetData(){if(confirm('이 기기에 저장된 가족 정보와 인생기록을 모두 초기화할까요?')){localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(LIFE_EVENT_KEY);localStorage.removeItem(DAILY_ACTION_KEY);dailyActionLog={};lifeEvents=[];members=JSON.parse(JSON.stringify(defaultMembers));current='me';renderAll();alert('초기화했습니다.')}}
 
 document.querySelectorAll('.navbtn').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(btn.dataset.tab).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})});
 // 생활 해석은 전통 규칙의 비교 지표이며 사건 발생 확률이 아닙니다.
@@ -2266,13 +2273,13 @@ function shiftMonth(delta) {
   const p = kstParts(kstMillis(selectedYear, selectedMonth + delta, 1, 12));
   navigateExplore({ selectedYear: p.year, selectedMonth: p.month }, "month");
 }
-function dailyCard(data, t, { family = false } = {}) {
+function detailedDailyCard(data, t, { family = false } = {}) {
   const a = analyzeMoment(data, t),
     relevant = a.cats
       .filter((c) => interest === "전체" || c.name === interest)
       .filter((c) => c.hits > 0),
     hasRelations = a.layers[0].rels.length > 0;
-  return `<div class="card daily-reading" data-profile="${esc(data.m.id)}" data-date="${dateISO(t.year, t.month, t.day)}"><span class="badge blue">${esc(data.m.name)} · ${ageLabel(data, t)}</span><h3>${dateISO(t.year, t.month, t.day)} · ${a.it.theme.tags.join("·")}</h3><p class="map-lead">${a.it.theme.good}</p><p class="mt">${hasRelations ? (a.layers[0].rels.some((r) => r.tone === "change") ? "원래의 생활 틀을 조정하는 관계 신호가 있습니다. 이동·약속을 정리해 보세요." : a.layers[0].rels.some((r) => r.tone === "tension") ? "관계에서 오해나 반복되는 긴장을 점검하는 신호가 있습니다." : "원국과 연결·협력의 관계 신호가 있습니다.") : "원국과 대표적인 합·충·형·파·해 관계는 계산되지 않았습니다. 없는 관계를 덧붙여 해석하지 않습니다."}</p><div class="badges">${
+  return `<div class="card daily-calculation" data-profile="${esc(data.m.id)}" data-date="${dateISO(t.year, t.month, t.day)}"><span class="badge blue">${esc(data.m.name)} · ${ageLabel(data, t)}</span><h3>${dateISO(t.year, t.month, t.day)} · ${a.it.theme.tags.join("·")}</h3><p class="map-lead">${a.it.theme.good}</p><p class="mt">${hasRelations ? (a.layers[0].rels.some((r) => r.tone === "change") ? "원래의 생활 틀을 조정하는 관계 신호가 있습니다. 이동·약속을 정리해 보세요." : a.layers[0].rels.some((r) => r.tone === "tension") ? "관계에서 오해나 반복되는 긴장을 점검하는 신호가 있습니다." : "원국과 연결·협력의 관계 신호가 있습니다.") : "원국과 대표적인 합·충·형·파·해 관계는 계산되지 않았습니다. 없는 관계를 덧붙여 해석하지 않습니다."}</p><div class="badges">${
     relevant
       .slice(0, 4)
       .map(
@@ -2313,7 +2320,7 @@ function renderExplorer() {
   }
   normalizeSelection();
   const t = selectedMoment();
-  box.innerHTML = `${profilePicker()}${shortcuts()}<div class="explore-breadcrumb" aria-label="현재 선택"><button onclick="selectYear(${selectedYear})">${selectedYear}년</button><span>›</span><button onclick="selectMonth(${selectedMonth})">${selectedMonth}월</button><span>›</span><button onclick="selectDay(${selectedDay})">${selectedDay}일</button></div><div class="row wrap between"><button class="btn small ghost" onclick="exploreBack()">← 이전 단계</button><label class="year-control">탐색 연도 <input class="field" aria-label="탐색 연도" type="number" min="1800" max="2200" value="${selectedYear}" onchange="selectYear(this.value)"></label></div>${fieldPicker()}${exploreLevel === "year" ? yearOverview(data, selectedYear) + '<div class="title">' + selectedYear + "년 12개월</div>" + monthSelector(data, selectedYear) : compactMonthPicker() + monthOverview(data, selectedYear, selectedMonth)}${exploreLevel !== "year" ? calendarGrid(data, selectedYear, selectedMonth) : ""}${exploreLevel === "week" ? weekView(data) : exploreLevel === "day" ? boundaryNotice(t, data) + dailyCard(data, t) + familyDayComparison(t) : ""}${settingsPanel()}${rulesDisclosure()}`;
+  box.innerHTML = `${profilePicker()}${shortcuts()}<div class="explore-breadcrumb" aria-label="현재 선택"><button onclick="selectYear(${selectedYear})">${selectedYear}년</button><span>›</span><button onclick="selectMonth(${selectedMonth})">${selectedMonth}월</button><span>›</span><button onclick="selectDay(${selectedDay})">${selectedDay}일</button></div><div class="row wrap between"><button class="btn small ghost" onclick="exploreBack()">← 이전 단계</button><label class="year-control">탐색 연도 <input class="field" aria-label="탐색 연도" type="number" min="1800" max="2200" value="${selectedYear}" onchange="selectYear(this.value)"></label></div>${fieldPicker()}${exploreLevel==='day'?dailyCard(data,t)+`<details class="calendar-drawer card"><summary>📆 다른 날짜의 작전 보기</summary>${compactMonthPicker()}${monthOverview(data,selectedYear,selectedMonth)}${calendarGrid(data,selectedYear,selectedMonth)}</details><details class="card"><summary>👨‍👩‍👧 같은 날, 가족의 작전은?</summary>${familyDayComparison(t)}</details><details class="card"><summary>시각·절기 경계 안내</summary>${boundaryNotice(t,data)}</details>`:exploreLevel==='week'?weekView(data):exploreLevel==='year'?yearOverview(data,selectedYear)+'<div class="title">'+selectedYear+'년 12개월</div>'+monthSelector(data,selectedYear):compactMonthPicker()+monthOverview(data,selectedYear,selectedMonth)+calendarGrid(data,selectedYear,selectedMonth)}${settingsPanel()}${rulesDisclosure()}`;
   wireProfilePickers();
 }
 function yearAgeRange(data, y) {
@@ -2353,17 +2360,27 @@ function renderFutureHome() {
     return;
   }
   const age = exactAge(data.birth, now),
-    moment = transitAt(now.year, now.month, now.day, 12, 0),
-    period = periodAt(data, moment.ms),
-    annual = annualReading(data, now.year);
-  document.getElementById("heroTitle").innerHTML =
-    `${age < 0 ? "출생 전이에요" : `지금 만 ${age}세`}<br><span style="font-size:.85em">앞으로의 나는?</span>`;
-  document.getElementById("heroText").textContent = period
-    ? `현재 10년은 ${fortuneInterpretation(period.gz, data.pillars).theme.tags.join("·")}을 삶의 주제로 살펴볼 시기입니다. 올해부터 하루까지 나의 흐름을 탐색해 보세요.`
-    : "첫 대운이 시작되기 전의 생활 바탕을 살펴봅니다. 올해부터 하루 단위까지 흐름을 탐색해 보세요.";
+    t = hubMoment(),
+    plan = buildActionPlan(data, t);
+  const relative =
+    dailyHubOffset === 0
+      ? "오늘"
+      : dailyHubOffset === 1
+        ? "내일"
+        : dailyHubOffset === -1
+          ? "어제"
+          : `${t.month}월 ${t.day}일`;
+  document.getElementById("heroBox").classList.add("today-hero");
+  document.getElementById("heroSmall").textContent =
+    `${m.name} · ${age < 0 ? "출생 전" : `만 ${age}세`} · ${relative}의 추천 전략`;
+  document.getElementById("heroTitle").innerHTML = plan.play.headline
+    .split("\n")
+    .join("<br>");
+  document.getElementById("heroText").innerHTML =
+    `<strong class="hero-task-label">딱 하나만 한다면</strong>${esc(plan.play.doText)}`;
   document.getElementById("heroBadges").innerHTML =
-    `<span class="badge blue">양력 생일 ${dateISO(data.birth.year, data.birth.month, data.birth.day)}</span><span class="badge neutral">${period ? "대운 명리 계산 나이 " + period.age + "~" + period.endAge : "현재 만 나이와 대운 나이는 달라요"}</span>`;
-  box.innerHTML = `${shortcuts()}<div class="notice mt">현재 나이는 양력 생일을 기준으로 계산한 만 나이입니다. 대운의 ‘명리 계산 나이’와 구분합니다. 전통 해석은 실제 사건을 확정하거나 과학적 예측을 뜻하지 않습니다.${data.m.timeMode === "unknown" ? " 출생시간 미상: 시주 제외, 대운 시작은 임시 시각의 참고값입니다." : ""}</div><div class="title">올해와 내년, 무엇을 주목할까?</div><div class="map-grid">${[
+    `<span class="strategy-mode">${plan.play.emoji} ${plan.play.mode}</span>`;
+  box.innerHTML = `${dailyHubHTML(data)}<p class="action-footnote">전통 명리에서 가져온 생활 제안이에요. 내 상황과 판단이 먼저입니다.</p><details class="future-drawer"><summary>🧭 앞으로의 인생지도 펼치기<span>올해·내년 · 전성기 · 3년·5년·10년</span></summary><div class="notice mt">현재 나이는 양력 생일을 기준으로 계산한 만 나이입니다. 대운의 ‘명리 계산 나이’와 구분합니다. 전통 해석은 실제 사건을 확정하거나 과학적 예측을 뜻하지 않습니다.${data.m.timeMode === "unknown" ? " 출생시간 미상: 시주 제외, 대운 시작은 임시 시각의 참고값입니다." : ""}</div><div class="title">올해와 내년, 무엇을 주목할까?</div><div class="map-grid">${[
     now.year,
     now.year + 1,
   ]
@@ -2373,8 +2390,9 @@ function renderFutureHome() {
     })
     .join(
       "",
-    )}</div><div class="title">지금 내 나이부터 미래로</div><div class="row wrap">${[3, 5, 10].map((n) => `<button class="year-pick" aria-pressed="${futureSpan === n}" onclick="futureSpan=${n};renderFutureHome()">앞으로 ${n}년</button>`).join("")}</div>${upcomingYears(data, futureSpan)}<div class="title">앞으로 남은 분야별 전성기 후보</div>${futurePeaksHTML(data)}${rulesDisclosure()}<details class="card"><summary>나는 어떤 사람인가 · 기본 성향</summary><p>${STEM_INFO[data.pillars[2][0]].meaning}에 비유하는 성향으로 해석합니다. 실제 성격은 경험과 환경을 함께 살펴보세요.</p><p class="micro">전문용어: 일간 ${stemLabel(data.pillars[2][0])} · ${elementLabel(STEM_EL[data.pillars[2][0]])}</p></details><button class="btn secondary" onclick="explorerTab('records')">내 실제 인생기록과 비교하기</button><button class="btn ghost mt" onclick="explorerTab('wholelife')">전체 인생지도 · 초년·중년·말년</button>`;
+    )}</div><div class="title">지금 내 나이부터 미래로</div><div class="row wrap">${[3, 5, 10].map((n) => `<button class="year-pick" aria-pressed="${futureSpan === n}" onclick="futureSpan=${n};renderFutureHome()">앞으로 ${n}년</button>`).join("")}</div>${upcomingYears(data, futureSpan)}<div class="title">앞으로 남은 분야별 전성기 후보</div>${futurePeaksHTML(data)}${rulesDisclosure()}<details class="card"><summary>나는 어떤 사람인가 · 기본 성향</summary><p>${STEM_INFO[data.pillars[2][0]].meaning}에 비유하는 성향으로 해석합니다. 실제 성격은 경험과 환경을 함께 살펴보세요.</p><p class="micro">전문용어: 일간 ${stemLabel(data.pillars[2][0])} · ${elementLabel(STEM_EL[data.pillars[2][0]])}</p></details><button class="btn secondary" onclick="explorerTab('records')">내 실제 인생기록과 비교하기</button><button class="btn ghost mt" onclick="explorerTab('wholelife')">전체 인생지도 · 초년·중년·말년</button></details>`;
 }
+
 function renderFutureFlow() {
   const data = profileData(),
     box = document.getElementById("flowContent");
@@ -2451,6 +2469,424 @@ history.replaceState(explorationState(), "");
 document
   .querySelectorAll(".navbtn")
   .forEach((b) => (b.onclick = () => explorerTab(b.dataset.tab)));
+
+// 행동 카드: 계산된 십성과 관계 신호를 구체적인 생활 제안으로 번역합니다.
+const DAILY_ACTION_KEY = "family_myeongri_daily_actions_v1";
+let dailyActionLog = {};
+try {
+  const v = JSON.parse(localStorage.getItem(DAILY_ACTION_KEY) || "{}");
+  if (v && typeof v === "object" && !Array.isArray(v)) dailyActionLog = v;
+} catch {}
+let dailyHubOffset = 0,
+  dailyFocus = "work";
+const actionBoardModels = new Map();
+const ACTION_PLAYBOOK = {
+  비견: {
+    emoji: "🧭",
+    mode: "내 페이스 모드",
+    headline: "남의 속도 말고,\n내 할 일 하나",
+    lead: "남과 비교하기 전에 오늘 끝낼 내 일을 하나 고르세요.",
+    doTitle: "미뤄 둔 내 일, 25분만",
+    doText: "메모에 오늘 끝낼 일 하나를 적고, 알림을 끈 뒤 25분만 해보세요.",
+    avoid: "혼자 다 맡겠다는 말",
+    response:
+      "새 부탁은 바로 맡지 말고, 지금 할 일과 바꿀 수 있는지 확인하세요.",
+    say: "지금 하는 일을 마친 뒤, 가능한 시간을 알려드릴게요.",
+    quote: "내 속도를 지키는 것도 실력입니다.",
+  },
+  겁재: {
+    emoji: "🤝",
+    mode: "팀플 조율 모드",
+    headline: "같이 할수록,\n역할은 또렷하게",
+    lead: "사람과 함께하는 일은 누가 무엇을 맡는지 먼저 맞춰보세요.",
+    doTitle: "역할과 비용, 먼저 한 줄로",
+    doText: "함께하는 일 하나를 골라 담당·마감·비용을 메시지로 정리하세요.",
+    avoid: "분위기에 휩쓸린 공동지출",
+    response: "돈을 보태거나 약속하기 전에 내 부담액과 정산일을 물어보세요.",
+    say: "제 몫은 얼마이고, 언제 정산하면 될까요?",
+    quote: "좋은 협업은 선명한 약속에서 시작됩니다.",
+  },
+  식신: {
+    emoji: "🛠️",
+    mode: "작게 완성 모드",
+    headline: "생각 한 바퀴보다,\n작은 완성 하나",
+    lead: "구상만 늘리기보다 눈에 보이는 결과물 하나를 남겨보세요.",
+    doTitle: "완성본 하나 만들기",
+    doText:
+      "요리·정리·글·업무 중 하나를 골라 30분 안에 끝낼 크기로 줄여보세요.",
+    avoid: "편한 일만 하며 마감 미루기",
+    response:
+      "가장 쉬운 일만 반복하고 있다면, 마감이 가까운 일의 첫 단계부터 하세요.",
+    say: "완벽하게 늘리기보다, 이 버전부터 끝내볼게요.",
+    quote: "작아도 완성하면 다음 길이 보입니다.",
+  },
+  상관: {
+    emoji: "💡",
+    mode: "아이디어 편집 모드",
+    headline: "생각은 자유롭게,\n말은 한 번 더",
+    lead: "떠오른 아이디어는 적어두고, 전달할 말은 짧게 다듬어보세요.",
+    doTitle: "아이디어를 제안 한 장으로",
+    doText:
+      "바꾸고 싶은 일 하나를 골라 문제·해결안·첫 행동을 각각 한 줄로 적으세요.",
+    avoid: "감정이 실린 메시지 바로 보내기",
+    response:
+      "반박하고 싶으면 초안을 저장하고 10분 뒤 요구사항만 남겨 다시 읽으세요.",
+    say: "제안 하나 해도 될까요? 이렇게 바꾸면 어떨까요?",
+    quote: "표현을 다듬으면 아이디어가 더 멀리 갑니다.",
+  },
+  편재: {
+    emoji: "🔎",
+    mode: "기회 점검 모드",
+    headline: "솔깃할수록,\n숫자부터 확인",
+    lead: "새 제안은 반갑게 보되, 지출과 조건을 먼저 확인하세요.",
+    doTitle: "좋아 보이는 제안, 세 줄 검토",
+    doText: "구매나 제안 하나의 총비용·유지비·취소 조건을 적어 비교해보세요.",
+    avoid: "지금뿐이라는 말에 즉시 결제",
+    response:
+      "선택 가능한 시간을 확인하고, 생활비를 건드리는 결정은 검토 시간을 두세요.",
+    say: "총비용과 취소 조건을 확인한 뒤 답드릴게요.",
+    quote: "기회를 살피는 눈과 멈추는 손을 함께 쓰세요.",
+  },
+  정재: {
+    emoji: "🪙",
+    mode: "살림 정돈 모드",
+    headline: "더 벌 궁리 전에,\n새는 곳 한 군데",
+    lead: "수입의 크기보다 내 손에 남는 돈을 한 번 살펴보세요.",
+    doTitle: "고정지출 10분 점검",
+    doText: "자동결제·구독·고정비 중 하나를 확인하고 다음 결제일을 메모하세요.",
+    avoid: "작은 지출이라며 확인 없이 넘기기",
+    response:
+      "오늘 결제할 것이 있다면 금액·수량·환불 조건을 마지막에 다시 보세요.",
+    say: "예산을 확인하고, 필요한 것부터 정할게요.",
+    quote: "작은 정리가 내 생활의 여유를 만듭니다.",
+  },
+  편관: {
+    emoji: "🎯",
+    mode: "우선순위 방어 모드",
+    headline: "다 해내기보다,\n급한 것 하나부터",
+    lead: "해야 할 일이 많게 느껴지면, 오늘 꼭 필요한 한 가지만 먼저 정하세요.",
+    doTitle: "일 세 개를 하나로 줄이기",
+    doText:
+      "오늘 할 일 세 개를 적고, 반드시 할 하나·미룰 하나·도움받을 하나로 나누세요.",
+    avoid: "일정에 없는 일을 계속 얹기",
+    response:
+      "새 일을 받기 전에 기존 마감과 충돌하는지 확인하고 순서를 조율하세요.",
+    say: "이 일을 먼저 하면 기존 마감은 조정해도 될까요?",
+    quote: "일의 순서를 바꾸는 것도 문제를 푸는 방법입니다.",
+  },
+  정관: {
+    emoji: "📋",
+    mode: "신뢰 쌓기 모드",
+    headline: "멋진 말보다,\n약속 하나 지키기",
+    lead: "마감·절차·약속을 정리하고 상대가 기다리는 답부터 챙겨보세요.",
+    doTitle: "약속 하나 확정하기",
+    doText:
+      "일정이나 문서 하나를 골라 담당·날짜·제출 항목을 확인해 적어두세요.",
+    avoid: "확인하지 않은 조건에 동의하기",
+    response:
+      "서명·확인·전송 전 빠진 항목이 없는지 체크하고 모르는 조항은 질문하세요.",
+    say: "제가 이해한 조건이 맞는지 한 번 확인할게요.",
+    quote: "작게 지킨 약속이 신뢰를 만듭니다.",
+  },
+  편인: {
+    emoji: "🔬",
+    mode: "깊게 파기 모드",
+    headline: "생각은 깊게,\n결론은 작게",
+    lead: "궁금한 것을 깊게 보되, 오늘 확인할 질문은 하나로 좁혀보세요.",
+    doTitle: "질문 하나, 답 세 줄",
+    doText:
+      "알고 싶은 질문 하나를 정해 20분만 찾아보고 결론을 세 줄로 남기세요.",
+    avoid: "자료만 모으고 결정 미루기",
+    response:
+      "검색을 더 하기 전, 지금 아는 것으로 가능한 작은 행동부터 정하세요.",
+    say: "지금 확인된 내용으로 먼저 작게 해볼게요.",
+    quote: "알아낸 것을 한 번 써봐야 내 지식이 됩니다.",
+  },
+  정인: {
+    emoji: "📖",
+    mode: "배움 충전 모드",
+    headline: "조금 배우고,\n바로 한 번 써보기",
+    lead: "도움이나 자료를 활용해 필요한 것을 차분히 익혀보세요.",
+    doTitle: "배운 것 하나 써보기",
+    doText: "책·강의·메모를 20분 본 뒤, 오늘 생활에 적용할 것 하나를 적으세요.",
+    avoid: "준비만 하다가 시작 늦추기",
+    response:
+      "더 준비해야 한다는 생각이 들면, 10분 안에 할 수 있는 첫 단계를 해보세요.",
+    say: "완벽하진 않아도, 이 부분부터 시작해볼게요.",
+    quote: "배움은 일상에서 한 번 써볼 때 남습니다.",
+  },
+};
+function buildActionPlan(data, t) {
+  const a = analyzeMoment(data, t),
+    play = ACTION_PLAYBOOK[a.it.tg] || ACTION_PLAYBOOK.정인,
+    rels = a.layers[0].rels;
+  let caution = {
+    title: play.avoid,
+    action: play.response,
+    say: play.say,
+    reason: `이날 ${easyTen(a.it.tg)} 역할을 생활 행동으로 옮긴 제안입니다.`,
+    id: "role-" + a.it.tg,
+  };
+  const signal =
+    rels.find((r) => r.type === "충") ||
+    rels.find((r) => ["형", "자형", "삼형"].includes(r.type)) ||
+    rels.find((r) => r.type === "해") ||
+    rels.find((r) => r.type === "파") ||
+    rels.find((r) => r.tone === "connect");
+  if (signal?.type === "충")
+    caution = {
+      title: "바뀐 일정, 확인 없이 출발하기",
+      action:
+        "약속·이동이 있다면 출발 전 시간과 장소를 다시 확인하고, 준비에 15분 여유를 두세요.",
+      say: "시간과 장소가 그대로인지 한 번만 확인할게요.",
+      reason:
+        "원국과 일진에 충 관계가 계산되어 변화·재조정을 생활 점검으로 번역했습니다.",
+      id: "change",
+    };
+  else if (signal && ["형", "자형", "삼형"].includes(signal.type))
+    caution = {
+      title: "같은 말로 계속 밀어붙이기",
+      action:
+        "대화가 제자리라면 10분 쉬고, 요구사항을 하나로 줄여 다시 말해보세요.",
+      say: "잠깐 정리하고, 필요한 것 한 가지만 다시 이야기할게요.",
+      reason: "원국과 일진의 반복 마찰 관계를 대화 방식 점검으로 번역했습니다.",
+      id: "repeat",
+    };
+  else if (signal?.type === "해")
+    caution = {
+      title: "상대 뜻을 짐작해서 답하기",
+      action:
+        "서운하거나 애매한 말은 결론 내리기 전에, 내가 이해한 뜻이 맞는지 물어보세요.",
+      say: "제가 이렇게 이해했는데, 이 뜻이 맞을까요?",
+      reason: "원국과 일진의 해 관계를 오해·엇갈림 점검으로 번역했습니다.",
+      id: "clarify",
+    };
+  else if (signal?.type === "파")
+    caution = {
+      title: "예전 조건이 그대로일 거라 믿기",
+      action:
+        "오래된 약속이나 거래라면 달라진 가격·범위·기한이 있는지 다시 확인하세요.",
+      say: "전에 정한 조건에서 바뀐 부분이 있나요?",
+      reason: "원국과 일진의 파 관계를 기존 약속 재점검으로 번역했습니다.",
+      id: "recheck",
+    };
+  else if (signal?.tone === "connect")
+    caution = {
+      title: "좋은 분위기에 약속 늘리기",
+      action:
+        "제안이나 부탁을 받으면 내 일정부터 확인하고, 맡을 수 있는 범위만 답하세요.",
+      say: "함께하고 싶어요. 제가 맡을 수 있는 범위는 여기까지예요.",
+      reason:
+        "합의 연결 주제를 무조건 좋은 일로 단정하지 않고, 협업의 경계를 정하는 행동으로 번역했습니다.",
+      id: "boundaries",
+    };
+  const secondary = ACTION_PLAYBOOK[a.branchRole] || play;
+  const missions = [
+    { id: "do-" + a.it.tg, title: play.doTitle, text: play.doText },
+    {
+      id: "care-" + caution.id,
+      title: "실수 방지 장치 하나",
+      text: caution.action,
+    },
+    {
+      id: "reset-" + a.branchRole,
+      title: "오늘의 마무리 5분",
+      text:
+        secondary === play
+          ? "마친 일 하나와 내일 먼저 할 일 하나를 적고, 쉬는 시간을 정하세요."
+          : `${secondary.doTitle}에서 할 수 있는 첫 단계 하나를 메모하고, 오늘 마칠 시간을 정하세요.`,
+    },
+  ];
+  return {
+    a,
+    play,
+    caution,
+    missions,
+    key: JSON.stringify([
+      data.m.id,
+      dateISO(t.year, t.month, t.day),
+      a.gz,
+      data.pillars.join(""),
+    ]),
+    data,
+    t,
+  };
+}
+function focusAdvice(plan, field) {
+  const { a, play, caution } = plan,
+    roles = [a.it.tg, a.branchRole],
+    financial = roles.some((r) => ["정재", "편재", "겁재"].includes(r)),
+    change = a.layers[0].rels.some((r) => r.tone === "change");
+  const options = {
+    money: {
+      emoji: "🪙",
+      label: "돈",
+      title: financial ? "결제·거래부터 깔끔하게" : "돈은 작게 정리하기",
+      do: "오늘 쓸 돈의 한도를 정하고, 결제할 때 총액과 환불 조건을 확인하세요.",
+      pause: financial
+        ? "할인·추천만 보고 예산 밖 지출을 결정하지 마세요."
+        : "급한 결정이 없다면, 고정지출 한 항목만 확인해보세요.",
+    },
+    work: {
+      emoji: "🎯",
+      label: "일",
+      title: play.doTitle,
+      do: play.doText,
+      pause: play.avoid + "은 잠깐 멈춰보세요.",
+    },
+    relationship: {
+      emoji: "💬",
+      label: "관계",
+      title: "대답하기 전에 한 번 확인",
+      do: caution.say,
+      pause:
+        caution.id === "role-" + a.it.tg
+          ? "상대의 일정과 원하는 도움을 먼저 물어보세요."
+          : caution.action,
+    },
+    rest: {
+      emoji: "🌿",
+      label: "컨디션",
+      title: change ? "바쁜 일정 사이, 여유 한 칸" : "쉬는 시간도 일정에 넣기",
+      do: "오늘 쉴 시간 10분을 정해두고, 오래 앉아 있었다면 가볍게 움직여보세요.",
+      pause:
+        "피곤할 때 일정을 더 얹지 말고 수면과 휴식 시간을 먼저 확인하세요.",
+    },
+  };
+  return options[field] || options.work;
+}
+function focusPanelHTML(plan) {
+  const f = focusAdvice(plan, dailyFocus);
+  return `<div class="focus-heading">${f.emoji} <strong>${f.title}</strong></div><div class="action-pair"><div><span>이렇게 해보기</span><p>${esc(f.do)}</p></div><div><span>잠깐 멈추기</span><p>${esc(f.pause)}</p></div></div>`;
+}
+function setDailyFocus(field) {
+  if (!["money", "work", "relationship", "rest"].includes(field)) return;
+  dailyFocus = field;
+  document.querySelectorAll("[data-action-key]").forEach((el) => {
+    const plan = actionBoardModels.get(el.dataset.actionKey);
+    if (!plan) return;
+    el.querySelectorAll("[data-focus]").forEach((b) =>
+      b.setAttribute("aria-pressed", String(b.dataset.focus === field)),
+    );
+    const panel = el.querySelector(".action-focus-panel");
+    if (panel) panel.innerHTML = focusPanelHTML(plan);
+  });
+}
+function missionState(plan) {
+  const stored = dailyActionLog[plan.key];
+  return new Set(
+    Array.isArray(stored)
+      ? stored.filter((id) => plan.missions.some((m) => m.id === id))
+      : [],
+  );
+}
+function refreshMissionBoards(key) {
+  const plan = actionBoardModels.get(key);
+  if (!plan) return;
+  const done = missionState(plan);
+  document.querySelectorAll("[data-action-key]").forEach((el) => {
+    if (el.dataset.actionKey !== key) return;
+    el.querySelectorAll("[data-mission]").forEach((input) => {
+      input.checked = done.has(input.dataset.mission);
+      input.closest("label").classList.toggle("completed", input.checked);
+    });
+    const count = el.querySelector(".mission-count");
+    if (count) count.textContent = `${done.size} / 3`;
+    const bar = el.querySelector(".mission-progress");
+    if (bar) {
+      bar.setAttribute("aria-valuenow", String(done.size));
+      bar.style.setProperty("--done", (done.size / 3) * 100 + "%");
+    }
+    const status = el.querySelector(".mission-status");
+    if (status)
+      status.textContent =
+        done.size === 3
+          ? "🎉 오늘의 작전 완료! 해낸 나에게 작은 휴식을."
+          : done.size
+            ? "하나씩 해내고 있어요. 내 속도로 가면 됩니다."
+            : "세 개를 다 하지 않아도 괜찮아요. 하나부터 시작해요.";
+  });
+}
+function setMissionDone(input) {
+  const key = input.closest("[data-action-key]").dataset.actionKey,
+    plan = actionBoardModels.get(key);
+  if (!plan) return;
+  const next = missionState(plan);
+  input.checked
+    ? next.add(input.dataset.mission)
+    : next.delete(input.dataset.mission);
+  const log = { ...dailyActionLog, [key]: [...next] };
+  try {
+    localStorage.setItem(DAILY_ACTION_KEY, JSON.stringify(log));
+    dailyActionLog = log;
+    refreshMissionBoards(key);
+  } catch {
+    refreshMissionBoards(key);
+    const status = input
+      .closest("[data-action-key]")
+      .querySelector(".mission-status");
+    if (status)
+      status.textContent =
+        "체크를 저장하지 못했어요. 브라우저 저장 공간을 확인해 주세요.";
+  }
+}
+function actionBoardHTML(plan, { compact = false } = {}) {
+  actionBoardModels.set(plan.key, plan);
+  const done = missionState(plan),
+    { play, caution, a } = plan;
+  if (compact)
+    return `<div class="mini-strategy"><span class="strategy-mode">${play.emoji} ${play.mode}</span><h3>${play.headline.split("\n").join(" ")}</h3><p><b>할 일</b> ${play.doText}</p><p class="mini-caution"><b>조심</b> ${caution.title}. ${caution.action}</p></div>`;
+  return `<div class="daily-action-board" data-action-key="${esc(plan.key)}"><div class="caution-ticket"><span class="ticket-icon" aria-hidden="true">✋</span><div><span class="eyebrow">가장 조심할 것</span><h3>${caution.title}</h3><p>${caution.action}</p><details><summary>이럴 땐 이렇게 말해요</summary><blockquote>“${caution.say}”</blockquote></details></div></div><div class="mission-card"><div class="row between"><div><span class="eyebrow">작게 해내는 오늘</span><h3>오늘의 미션 3</h3></div><span class="mission-count">${done.size} / 3</span></div><div class="mission-progress" role="progressbar" aria-label="실천한 미션" aria-valuemin="0" aria-valuemax="3" aria-valuenow="${done.size}" style="--done:${(done.size / 3) * 100}%"><span></span></div><div class="mission-list">${plan.missions.map((m, i) => `<label class="mission-item ${done.has(m.id) ? "completed" : ""}"><input type="checkbox" data-mission="${m.id}" ${done.has(m.id) ? "checked" : ""} onchange="setMissionDone(this)"><span><small>MISSION 0${i + 1}</small><strong>${m.title}</strong><span>${m.text}</span></span></label>`).join("")}</div><p class="mission-status" role="status">${done.size === 3 ? "🎉 오늘의 작전 완료! 해낸 나에게 작은 휴식을." : done.size ? "하나씩 해내고 있어요. 내 속도로 가면 됩니다." : "세 개를 다 하지 않아도 괜찮아요. 하나부터 시작해요."}</p><p class="mission-note">체크는 내가 실천한 기록이에요. 운이나 성공 확률 점수가 아닙니다.</p></div><div class="focus-card"><span class="eyebrow">지금 궁금한 건?</span><div class="focus-tabs" role="group" aria-label="생활 주제 선택">${[
+    ["money", "🪙", "돈"],
+    ["work", "🎯", "일"],
+    ["relationship", "💬", "관계"],
+    ["rest", "🌿", "컨디션"],
+  ]
+    .map(
+      ([id, emoji, title]) =>
+        `<button data-focus="${id}" aria-pressed="${dailyFocus === id}" onclick="setDailyFocus('${id}')"><span>${emoji}</span>${title}</button>`,
+    )
+    .join(
+      "",
+    )}</div><div class="action-focus-panel">${focusPanelHTML(plan)}</div></div><div class="daily-quote"><span aria-hidden="true">✦</span><p>${play.quote}</p></div><details class="action-reasons"><summary>왜 나에게 이 작전인가요?</summary><p>${esc(plan.data.m.name)}님의 기준 글자와 ${dateISO(plan.t.year, plan.t.month, plan.t.day)}의 일진을 비교했습니다. 이날의 역할은 ${easyTen(a.it.tg)}, 지지 본기 역할은 ${easyTen(a.branchRole)}로 계산됩니다.</p><p>${caution.reason}</p><p>${a.layers[0].rels.length ? describeRelations(a.layers[0].rels) : "원국과 대표적인 합·충·형·파·해 관계는 계산되지 않았습니다. 없는 관계를 추가하지 않고 이날의 역할만 행동 제안으로 옮겼습니다."}</p><p>명리의 전통 규칙을 참고한 생활 제안입니다. 실제 상황과 나의 판단이 먼저이며, 사건을 예언하거나 특정 행동의 성과를 보장하지 않습니다.</p></details></div>`;
+}
+function dailyCard(data, t, { family = false } = {}) {
+  const plan = buildActionPlan(data, t);
+  return `<article class="daily-reading strategy-reading" data-profile="${esc(data.m.id)}" data-date="${dateISO(t.year, t.month, t.day)}"><div class="strategy-person"><span>${esc(data.m.name)} · ${ageLabel(data, t)}</span><time>${dateISO(t.year, t.month, t.day)}</time></div>${family ? actionBoardHTML(plan, { compact: true }) : `<div class="strategy-day-heading"><span>${plan.play.emoji} ${plan.play.mode}</span><h2>${plan.play.headline.split("\n").join("<br>")}</h2></div>${actionBoardHTML(plan)}`}<details class="card calculation-drawer"><summary>글자·오행·가족 흐름의 계산 근거</summary>${detailedDailyCard(data, t, { family: true })}${schoolViews(plan.a)}</details></article>`;
+}
+function hubMoment() {
+  const date = solarNextDate(todayKST(), dailyHubOffset),
+    time = parseTime(calendarSettings.time);
+  return transitAt(date.year, date.month, date.day, time.h, time.m);
+}
+function shiftDailyHub(n) {
+  dailyHubOffset = Math.max(-7, Math.min(7, dailyHubOffset + n));
+  renderFutureHome();
+}
+function resetDailyHub() {
+  dailyHubOffset = 0;
+  renderFutureHome();
+}
+function openHubDate() {
+  const t = hubMoment();
+  navigateExplore(
+    { selectedYear: t.year, selectedMonth: t.month, selectedDay: t.day },
+    "day",
+  );
+}
+function dailyHubHTML(data) {
+  const t = hubMoment(),
+    plan = buildActionPlan(data, t),
+    relative =
+      dailyHubOffset === 0
+        ? "오늘"
+        : dailyHubOffset === 1
+          ? "내일"
+          : dailyHubOffset === -1
+            ? "어제"
+            : `${t.month}월 ${t.day}일`;
+  return `<div class="day-switcher"><button aria-label="이전 날짜 작전" onclick="shiftDailyHub(-1)" ${dailyHubOffset <= -7 ? "disabled" : ""}>←</button><button class="day-reset" onclick="resetDailyHub()">${relative}의 작전 <small>${t.month}.${t.day} · ${calendarSettings.time} KST</small></button><button aria-label="다음 날짜 작전" onclick="shiftDailyHub(1)" ${dailyHubOffset >= 7 ? "disabled" : ""}>→</button></div>${actionBoardHTML(plan)}<button class="btn action-explore" onclick="openHubDate()">📆 이 날짜 자세히 · 가족과 비교</button>`;
+}
 
 renderAll();
 </script>
