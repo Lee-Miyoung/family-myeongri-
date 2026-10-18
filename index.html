@@ -90,13 +90,17 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 /* v5.1: 작은 보조글씨도 모바일에서 읽기 쉽게 */
 .navbtn{font-size:13px;min-height:62px}.source-card a{font-size:14px}.copyright-note{font-size:14px;line-height:1.65;padding:13px}.monthbox .microline{font-size:13px;line-height:1.55}.monthbox summary{font-size:14px}.mini-tab{font-size:14px}.mini-legend{font-size:12px}.school .schoolhead{flex-direction:column;align-items:flex-start}.source-status{line-height:1.35;white-space:normal}.pillars .pillar{min-width:0}.pillar strong{letter-spacing:0}.pillar strong .stem,.pillar strong .branch{word-break:keep-all}.radio-row{flex-wrap:wrap}.radio-row .seg{min-width:30%}
 @media(min-width:700px){.school .schoolhead{flex-direction:row;align-items:center}.radio-row{flex-wrap:nowrap}}
+
+/* 인생지도: 단일 파일 배포 유지 */
+.map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}.map-grid .card{margin:0}.life-line{display:flex;gap:12px;overflow:auto;padding:12px 3px 20px;scroll-snap-type:x proximity}.life-stop{flex:0 0 220px;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:16px;scroll-snap-align:start;min-height:150px}.life-stop.now{border:3px solid var(--sage);background:var(--sage2)}.life-stop.peak{box-shadow:inset 0 5px var(--amber)}.life-stop b,.life-stop span{display:block}.map-lead{font-size:19px!important}.map-chart{width:100%;height:120px;display:block}.life-event{border-left:4px solid var(--sage);padding:12px 16px;margin:12px 0;background:#f1f4ed;border-radius:10px}.navbtn{font-size:14px}.sheet{max-height:90dvh;overscroll-behavior:contain}.brand{flex-wrap:wrap}input,select,textarea{max-width:100%;min-width:0}textarea{font:inherit;min-height:100px}.pillar strong{font-size:clamp(18px,4.7vw,29px)}.flowhead,.verify-head{flex-wrap:wrap}.micro,.sub,.badge,.grade,.flowmeta,.dayun span,.pillar em,.pillar small,.source-card .meta,.school small,.verify-engine small,.mini-legend,.relation-tag{font-size:14px!important}.family-node{border-left:6px solid var(--profile);padding-left:12px}.navinner{max-width:980px}button:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}main{overflow-wrap:anywhere}.timeline-detail{scroll-margin-top:180px}.year-pick{padding:12px;border-radius:12px;border:1px solid var(--line);background:white;min-height:48px}.year-pick[aria-pressed=true]{background:var(--sage2)}
+@media(max-width:480px){.grid2,.tips,.relation-tips{grid-template-columns:1fr}.monthgrid{grid-template-columns:1fr}.navbtn{font-size:12px}.card{padding:16px}.sheet{padding:16px}.brand h1{font-size:25px}}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
   <div class="brand"><h1>가족 명리노트</h1><button class="pill" onclick="openMemberModal()">+ 가족 추가</button></div>
-  <div class="engine-status"><span class="dot" id="engineDot"></span><span id="engineStatus">만세력 엔진 불러오는 중…</span></div>
+  <div class="row wrap"><button class="btn small ghost" onclick="showTab('dictionary')">용어사전</button><button class="btn small ghost" onclick="showTab('privacy')">전문자료·보안</button></div><div class="engine-status"><span class="dot" id="engineDot"></span><span id="engineStatus">만세력 엔진 불러오는 중…</span></div>
 </header>
 <main>
 <section id="home" class="section active">
@@ -108,9 +112,7 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
   </div>
   <div class="title"><span class="easy-title">우리 가족</span><span class="pro-title">가족 구성원 선택</span></div>
   <div class="scroller" id="memberScroller"></div>
-  <div id="memberSummary"></div>
-  <div id="familyRelationArea"></div>
-  <div id="chartArea"></div>
+  <div id="lifeMap"></div><details id="expertPanel"><summary>사주팔자·오행·용신·계산 검증 자세히 보기</summary><div id="chartArea"></div></details>
 </section>
 
 <section id="flow" class="section">
@@ -123,6 +125,7 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
   <div id="calendarContent"><div class="empty">가족을 선택하고 생년월일을 입력하면 월별 간지 흐름을 표시합니다.</div></div>
 </section>
 
+<section id="records" class="section"><div id="recordsContent"></div></section><section id="family" class="section"><div class="title">우리 가족 인생지도</div><div id="memberSummary"></div><div id="familyYears"></div><div id="familyRelationArea"></div></section>
 <section id="dictionary" class="section">
   <div class="title" style="margin-top:4px"><span class="easy-title">어려운 사주말 쉽게 찾기</span><span class="pro-title">한자 읽는 법과 뜻까지 함께 설명해요</span></div>
   <input class="search" id="termSearch" placeholder="예: 용신, 상생, 자시, 식상…" oninput="renderTerms()" />
@@ -148,11 +151,11 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 </div>
 
 <nav><div class="navinner">
-<button class="navbtn active" data-tab="home"><span>⌂</span>가족홈</button>
-<button class="navbtn" data-tab="flow"><span>⌁</span>대운·세운</button>
-<button class="navbtn" data-tab="calendar"><span>▦</span>월별운</button>
-<button class="navbtn" data-tab="dictionary"><span>⌕</span>용어사전</button>
-<button class="navbtn" data-tab="privacy"><span>⚿</span>배움·보안</button>
+<button class="navbtn active" data-tab="home"><span>⌂</span>인생지도</button>
+<button class="navbtn" data-tab="flow"><span>⌁</span>흐름</button>
+<button class="navbtn" data-tab="calendar"><span>▦</span>올해·월별</button>
+<button class="navbtn" data-tab="records"><span>✎</span>인생기록</button>
+<button class="navbtn" data-tab="family"><span>♧</span>가족</button>
 </div></nav>
 
 <div class="modal" id="memberModal" onclick="if(event.target===this) closeMemberModal()">
@@ -175,7 +178,7 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 </select><div class="hour-help">정확한 분은 몰라도 “미시쯤”, “축시쯤”처럼 알고 있다면 선택하세요. 해당 시간대의 대표시각으로 계산합니다.</div></div>
 <div id="timeUnknownWrap" class="notice mt" style="display:none">출생시간을 전혀 모르면 시주(時柱)는 확정하지 않고, 년주·월주·일주 중심으로 봅니다.</div>
 <input type="checkbox" id="mUnknownTime" style="display:none" />
-<label>공개범위</label><select id="mVisibility" class="field"><option value="family">가족에게 공개</option><option value="private">나만 보기</option></select>
+<label>공개범위</label><select id="mVisibility" class="field"><option value="family">가족에게 공개</option><option value="private">나만 보기</option><option value="selected">일부 공개 · 권한 미연결</option></select>
 <div style="height:14px"></div><button class="btn" onclick="saveMember()">저장하고 계산하기</button>
 <div style="height:8px"></div><button class="btn ghost" onclick="closeMemberModal()">닫기</button>
 </div></div>
@@ -184,7 +187,8 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 <script>
 const STORAGE_KEY='family_myeongri_members_v2';
 const defaultMembers=[{id:'me',name:'나',relation:'본인',gender:'female',birth:'',time:'12:00',timeMode:'exact',birthHourBranch:'午',unknownTime:false,cal:'양력',leap:false,visibility:'family'}];
-let members=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')||defaultMembers;
+function readLocal(key,fallback){try{const v=JSON.parse(localStorage.getItem(key)||'null');return Array.isArray(v)&&v.length?v:fallback}catch(e){return fallback}}
+let members=readLocal(STORAGE_KEY,defaultMembers);
 members=members.map(m=>({...m,timeMode:m.timeMode||(m.unknownTime?'unknown':'exact'),birthHourBranch:m.birthHourBranch||hourBranchFromTime(m.time||'12:00')}));
 let current=members[0]?.id||'';let calendarType='양력';
 const verificationCache=new Map();
@@ -484,10 +488,10 @@ function dayRelationBetween(a,b){
 function renderFamilyRelations(){
  const area=document.getElementById('familyRelationArea'),m=currentMember();if(!area)return;
  const others=members.filter(x=>x.id!==m?.id&&x.birth);if(!m?.birth||!others.length){area.innerHTML='';return}
- const cards=others.map(o=>{const r=dayRelationBetween(m,o);if(!r)return '';return `<div class="family-rel-card"><h3>${esc(m.name)} ↔ ${esc(o.name)}</h3><div class="pair">${stemLabel(r.sa)} · ${elementLabel(r.ea)} ↔ ${stemLabel(r.sb)} · ${elementLabel(r.eb)}</div><div class="rel-summary">${r.core}</div>${r.extras.length?`<div class="badges">${r.extras.map(x=>`<span class="badge neutral">${x}</span>`).join('')}</div>`:''}<div class="relation-tips"><div class="help"><b>서로 도움되는 점</b><br>${r.help}</div><div class="care"><b>서로 조심할 점</b><br>${r.care}</div></div></div>`}).join('');
+ const cards=others.map(o=>{const r=dayRelationBetween(m,o);if(!r)return '';return `<div class="family-rel-card"><h3>${esc(m.name)} ↔ ${esc(o.name)}</h3><div class="pair">${stemLabel(r.sa)} · ${elementLabel(r.ea)} ↔ ${stemLabel(r.sb)} · ${elementLabel(r.eb)}</div><div class="rel-summary">${esc(r.core)}</div>${r.extras.length?`<div class="badges">${r.extras.map(x=>`<span class="badge neutral">${x}</span>`).join('')}</div>`:''}<div class="relation-tips"><div class="help"><b>서로 도움되는 점</b><br>${esc(r.help)}</div><div class="care"><b>서로 조심할 점</b><br>${esc(r.care)}</div></div></div>`}).join('');
  area.innerHTML=`<div class="title"><span class="easy-title">우리 가족끼리는 어떻게 도움을 주고받을까?</span><span class="pro-title">가족 상호관계 · 오행 상생/상극 + 일간·일지 관계 참고</span></div><div class="notice">가족관계는 실제 대화와 경험이 가장 중요해요. 아래 내용은 전통 명리의 오행 관계를 쉽게 풀어 본 참고자료이며 사람의 관계를 좋다·나쁘다로 단정하지 않습니다.</div><div class="family-rel-grid mt">${cards}</div>`;
 }
-function renderSources(){const el=document.getElementById('sourceLibrary');if(!el)return;el.innerHTML=`<div class="school-note"><b>‘○○ 계열 해석’이란?</b><br>그 책이나 학자의 문장을 그대로 복사해 붙였다는 뜻이 아니에요. <b>그 자료가 중요하게 본 판단 기준</b>—예를 들면 전체 오행 흐름, 계절, 월령, 가족관계—을 우리 앱의 계산 결과에 대입해 비교했다는 뜻입니다. 서로 다른 계열의 결과가 겹치면 공통점을 우선 보여주고, 다르면 ‘학파별 의견 차이’로 따로 표시합니다.</div>`+SOURCE_DB.map(x=>`<div class="source-card"><div class="row between"><h4>${x.title}</h4><span class="source-status ${x.pd?'pd':''}">${x.status}</span></div><p class="source-easy">${x.easyTitle}</p><div class="meta">${x.author} · ${x.era}</div><div class="source-label">이게 뭐예요?</div><p>${x.what}</p><div class="source-label">우리 앱에서는 어떻게 써요?</div><p class="source-how">${x.how}</p><details><summary>전문용어 보기</summary><p class="micro">주요 관점: ${x.focus}</p></details><a href="${x.url}" target="_blank" rel="noopener">출처 확인 ↗</a></div>`).join('')}
+function renderSources(){const el=document.getElementById('sourceLibrary');if(!el)return;el.innerHTML=`<div class="school-note"><b>‘○○ 계열 해석’이란?</b><br>그 책이나 학자의 문장을 그대로 복사해 붙였다는 뜻이 아니에요. <b>그 자료가 중요하게 본 판단 기준</b>—예를 들면 전체 오행 흐름, 계절, 월령, 가족관계—을 우리 앱의 계산 결과에 대입해 비교했다는 뜻입니다. 서로 다른 계열의 결과가 겹치면 공통점을 우선 보여주고, 다르면 ‘학파별 의견 차이’로 따로 표시합니다.</div>`+SOURCE_DB.map(x=>`<div class="source-card"><div class="row between"><h4>${x.easyTitle}</h4><span class="source-status ${x.pd?'pd':''}">${x.status}</span></div><p class="source-easy">${x.title}</p><div class="meta">${x.author} · ${x.era}</div><div class="source-label">이게 뭐예요?</div><p>${x.what}</p><div class="source-label">우리 앱에서는 어떻게 써요?</div><p class="source-how">${x.how}</p><details><summary>전문용어 보기</summary><p class="micro">주요 관점: ${x.focus}</p></details><a href="${x.url}" target="_blank" rel="noopener">출처 확인 ↗</a></div>`).join('')}
 
 function loadFallbackEngine(){
   const s=document.createElement('script');
@@ -499,13 +503,14 @@ function setEngineStatus(ok,msg){const dot=document.getElementById('engineDot'),
 function updateEngineStatus(){
  const lunarOk=typeof Solar!=='undefined'&&typeof Lunar!=='undefined', extra=window.__myeongriEngines||{};
  if(lunarOk&&extra.ready){setEngineStatus(true,'한국형 만세력 3중 검증 준비됨');return}
+ if(lunarOk&&extra.error){setEngineStatus(false,'기본 계산 가능 · 교차검증 엔진 연결 실패');return}
  if(lunarOk){const dot=document.getElementById('engineDot');dot.className='dot';document.getElementById('engineStatus').textContent='기본 엔진 연결됨 · 교차검증 엔진 불러오는 중…';return}
  setEngineStatus(false,'만세력 엔진 연결 실패');
 }
 function engineReady(){if(typeof Solar!=='undefined'&&typeof Lunar!=='undefined'){updateEngineStatus();renderAll()}else setEngineStatus(false,'만세력 엔진 연결 실패')}
 window.addEventListener('verification-engines-ready',()=>{updateEngineStatus();verificationCache.clear();renderAll()});
 window.addEventListener('verification-engines-error',()=>{updateEngineStatus();renderAll()});
-window.addEventListener('load',()=>setTimeout(()=>{if(typeof Solar!=='undefined')engineReady();else if(!document.getElementById('engineStatus').textContent.includes('못했습니다'))setEngineStatus(false,'엔진 연결 확인 중… 인터넷이 필요합니다.')},900));
+window.addEventListener('load',()=>setTimeout(()=>{if(typeof Solar!=='undefined')updateEngineStatus();else if(!document.getElementById('engineStatus').textContent.includes('못했습니다'))setEngineStatus(false,'엔진 연결 확인 중… 인터넷이 필요합니다.')},900));
 
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(members))}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
@@ -523,8 +528,10 @@ function getLunarForMember(m){
 function getChart(m){
  try{
   const lunar=getLunarForMember(m);if(!lunar)return null;
-  const ec=lunar.getEightChar();
-  return {lunar,solar:lunar.getSolar(),ec,pillars:[ec.getYear(),ec.getMonth(),ec.getDay(),ec.getTime()]};
+  const ec=lunar.getEightChar();let pillars=[ec.getYear(),ec.getMonth(),ec.getDay(),ec.getTime()];
+  const primary=window.__myeongriEngines?.kasi;
+  if(primary){const [year,month,day]=m.birth.split('-').map(Number),tm=parseTime(m.time);const p=primary.calculateFourPillars({year,month,day,hour:tm.h,minute:tm.m,isLunar:m.cal==='음력',isLeapMonth:!!m.leap,dayBoundary:'splitJasi'}).toObject();pillars=[p.year,p.month,p.day,p.hour].map(normalizeKoreanGz)}
+  return {lunar,solar:lunar.getSolar(),ec,pillars};
  }catch(e){console.warn(e);return {error:String(e?.message||e)}}
 }
 const KR_STEM={갑:'甲',을:'乙',병:'丙',정:'丁',무:'戊',기:'己',경:'庚',신:'辛',임:'壬',계:'癸'};
@@ -543,13 +550,13 @@ async function calculateVerification(m){
  const key=memberKey(m);if(verificationCache.has(key))return verificationCache.get(key);
  const base=getChart(m),extra=window.__myeongriEngines||{};
  if(!base||base.error) return {state:'error',message:'기본 만세력 계산 실패'};
- if(!extra.ready||!extra.kasi||!extra.korean) return {state:'pending',message:'교차검증 엔진을 불러오는 중입니다.',engines:[{name:'lunar-javascript',pillars:base.pillars,note:'기본 계산 완료'}]};
+ if(!extra.ready||!extra.kasi||!extra.korean) return {state:extra.error?'error':'pending',count:(m.timeMode==='unknown'||m.unknownTime)?3:4,message:extra.error?'교차검증 엔진을 연결하지 못했습니다. 네트워크 연결을 확인해 주세요.':'교차검증 엔진을 불러오는 중입니다.',engines:[{name:'lunar-javascript',pillars:base.pillars,note:'기본 계산 완료'}]};
  try{
   const [y,mo,d]=m.birth.split('-').map(Number),tm=parseTime(m.time),count=(m.timeMode==='unknown'||m.unknownTime)?3:4;
-  const primary=extra.kasi.calculateFourPillars({year:y,month:mo,day:d,hour:tm.h,minute:tm.m,isLunar:m.cal==='음력',isLeapMonth:!!m.leap,gender:m.gender});
+  const primary=extra.kasi.calculateFourPillars({year:y,month:mo,day:d,hour:tm.h,minute:tm.m,isLunar:m.cal==='음력',isLeapMonth:!!m.leap,gender:m.gender,dayBoundary:'splitJasi'});
   const po=primary.toObject?primary.toObject():primary;
   const p1=[po.year,po.month,po.day,po.hour].map(normalizeKoreanGz);
-  const p2=base.pillars;
+  const independent=getLunarForMember(m).getEightChar();const p2=[independent.getYear(),independent.getMonth(),independent.getDay(),independent.getTime()];
   let sy=y,sm=mo,sd=d;
   if(m.cal==='음력'){
    const conv=extra.korean.lunarToSolar(y,mo,d,!!m.leap);sy=conv.solar.year;sm=conv.solar.month;sd=conv.solar.day;
@@ -620,13 +627,13 @@ function renderChart(){
  const tg=[tenGod(dayStem,pillars[0][0]),tenGod(dayStem,pillars[1][0]),'나(일간)',tenGod(dayStem,pillars[3][0])];
  const rels=detectRelationsFromPillars(analysisPillars);
  document.getElementById('heroSmall').textContent=`${m.name} · ${solar.toYmd()} 기준`;
- document.getElementById('heroTitle').innerHTML=`${m.name}의 중심은 <span class="${elClass(dayStem)}">${stemLabel(dayStem)} · ${elementLabel(STEM_EL[dayStem])}</span><br><span style="font-size:.66em">어려운 말 없이 하나씩 풀어볼게요</span>`;
+ document.getElementById('heroTitle').innerHTML=`${esc(m.name)}의 중심은 <span class="${elClass(dayStem)}">${stemLabel(dayStem)} · ${elementLabel(STEM_EL[dayStem])}</span><br><span style="font-size:.66em">어려운 말 없이 하나씩 풀어볼게요</span>`;
  document.getElementById('heroText').textContent='전문용어는 생활 언어로 먼저 설명하고, 필요할 때만 원래 명리용어와 근거를 펼쳐볼 수 있게 구성했습니다.';
  document.getElementById('heroBadges').innerHTML=`<span class="badge good">일간 ${dayStem} · ${STEM_EL[dayStem]}</span><span class="badge blue">양력 ${solar.toYmd()}</span><span class="badge neutral">음력 ${Math.abs(lunar.getMonth())}월 ${lunar.getDay()}일</span>`;
  area.innerHTML=`
  <div class="title"><span class="easy-title">태어난 순간의 네 기둥과 여덟 글자</span><span class="pro-title">사주팔자(四柱八字) · 실제 계산</span></div>
  <div class="card"><div class="pillars">${pillars.map((gz,i)=>{if(i===3&&(m.timeMode==='unknown'||m.unknownTime))return `<div class="pillar"><small>${names[i]}</small><strong style="font-size:20px;padding:18px 0">미상</strong><em>출생시간을 몰라 계산하지 않음</em></div>`;return `<div class="pillar"><small>${names[i]}</small><strong><span class="stem ${elClass(gz[0])}">${stemLabel(gz[0])}</span><span class="branch ${elClass(gz[1])}">${branchLabel(gz[1])}</span></strong><em>${tg[i]}${i===3?' · '+hourTextForMember(m):''}</em></div>`}).join('')}</div>${(m.timeMode==='unknown'||m.unknownTime)?'<div class="notice strong mt">출생시간을 모르므로 시주(時柱)는 확정하지 않습니다. 년주·월주·일주 중심으로 풀이합니다.</div>':m.timeMode==='branch'?`<div class="notice mt"><b>${hourTextForMember(m)}</b>로 알고 있는 경우라 ${m.time} 대표시각을 넣어 계산했습니다. 자시(子時)는 날짜 경계가 있어 특히 정밀 확인이 필요할 수 있습니다.</div>`:''}<details><summary>쉽게 읽는 법</summary><p class="micro">네 기둥은 년주·월주·일주·시주이고, 일주의 첫 글자(일간)를 “나”의 기준점으로 봅니다. 다른 글자가 나와 어떤 관계인지 십성으로 설명합니다.</p></details></div>
- <div class="title"><span class="easy-title">내 사주에 나온 한자, 어떻게 읽을까?</span><span class="pro-title">천간(天干) · 지지(地支) 읽기와 대표 이미지</span></div><div class="card">${renderHanjaCards(analysisPillars)}</div><div class="title"><span class="easy-title">다섯 기운은 서로 어떻게 돕고 조절할까?</span><span class="pro-title">오행(五行) · 상생(相生) · 상극(相剋)</span></div>${renderElementGuide()}<div class="desktop2"><div><div class="title"><span class="easy-title">내 사주에 다섯 기운이 얼마나 있을까?</span><span class="pro-title">오행(五行) 단순 분포 · 천간+지지 8글자</span></div><div class="card">${Object.entries(counts).map(([e,n])=>`<div class="barrow"><b class="${EL_CLASS[e]}">${e}</b><div class="bar"><div class="fill" style="width:${n/max*100}%"></div></div><span class="count">${n}</span></div>`).join('')}<p class="micro">이 개수만 보고 “좋다·나쁘다”나 필요한 기운을 정하지 않아요. 태어난 계절, 기운의 뿌리, 추위·더위까지 함께 봅니다. <b>(전문용어: 월령·통근·조후)</b></p></div></div><div><div class="title"><span class="easy-title">나와 다른 기운은 어떤 역할일까?</span><span class="pro-title">십성(十星) 한눈에</span></div><div class="card"><div class="grid2 wide">${[0,1,3].map(i=>`<div class="kv"><b>${names[i]} 천간 · ${tg[i]}</b><span>${easyTen(tg[i])}</span></div>`).join('')}<div class="kv"><b>일간</b><span>${dayStem}(${STEM_EL[dayStem]}) · 나 자신을 보는 기준</span></div></div></div></div></div>
+ <div class="title"><span class="easy-title">내 사주에 나온 한자, 어떻게 읽을까?</span><span class="pro-title">천간(天干) · 지지(地支) 읽기와 대표 이미지</span></div><div class="card">${renderHanjaCards(analysisPillars)}</div><div class="title"><span class="easy-title">다섯 기운은 서로 어떻게 돕고 조절할까?</span><span class="pro-title">오행(五行) · 상생(相生) · 상극(相剋)</span></div>${renderElementGuide()}<div class="desktop2"><div><div class="title"><span class="easy-title">내 사주에 다섯 기운이 얼마나 있을까?</span><span class="pro-title">오행(五行) 단순 분포 · 천간+지지 8글자</span></div><div class="card">${Object.entries(counts).map(([e,n])=>`<div class="barrow"><b class="${EL_CLASS[e]}">${e}</b><div class="bar"><div class="fill" style="width:${n/max*100}%"></div></div><span class="count">${n}</span></div>`).join('')}<p class="micro">이 개수만 보고 “좋다·나쁘다”나 필요한 기운을 정하지 않아요. 태어난 계절, 기운의 뿌리, 추위·더위까지 함께 봅니다. <b>(전문용어: 월령·통근·조후)</b></p></div></div><div><div class="title"><span class="easy-title">나와 다른 기운은 어떤 역할일까?</span><span class="pro-title">십성(十星) 한눈에</span></div><div class="card"><div class="grid2 wide">${[0,1,3].filter(i=>i!==3||!(m.timeMode==='unknown'||m.unknownTime)).map(i=>`<div class="kv"><b>${names[i]} 천간 · ${tg[i]}</b><span>${easyTen(tg[i])}</span></div>`).join('')}<div class="kv"><b>일간</b><span>${dayStem}(${STEM_EL[dayStem]}) · 나 자신을 보는 기준</span></div></div></div></div></div>
  <div class="title"><span class="easy-title">계산 결과가 맞는지 세 번 확인</span><span class="pro-title">만세력 3중 교차검증</span></div><div id="verificationBox"></div>
  <div class="title"><span class="easy-title">여덟 글자가 서로 만나면?</span><span class="pro-title">합(合) · 충(沖) · 형(刑) · 파(破) · 해(害)</span></div><div class="card">${renderRelationCards(rels)}<details><summary>이 관계들을 어떻게 봐야 하나요?</summary><p class="micro">합은 연결, 충은 변화, 형은 반복 마찰, 파는 재정비, 해는 오해·엇갈림을 살피는 전통적 분류입니다. 하나만 보고 사건을 예언하지 않고 대운·세운과 겹칠 때 주제가 강해지는지 확인합니다.</p></details></div>
  <div class="title"><span class="easy-title">나에게 균형을 더해주는 기운은?</span><span class="pro-title">용신(用神) · 희신(喜神) · 기신(忌神) · 여러 관점 비교</span></div>${renderSchoolCompare(analysisPillars)}`;
@@ -641,7 +648,7 @@ function renderFlow(){
   const currentDYGz=currentDY?.getGanZhi()||'';
   const years=[];for(let y=nowY-2;y<=nowY+7;y++){const gz=Solar.fromYmdHms(y,7,1,12,0,0).getLunar().getYearInGanZhiExact();years.push({y,gz,...fortuneInterpretation(gz,pillars)})}
   const dyInterp=currentDYGz?fortuneInterpretation(currentDYGz,pillars):null;
-  box.innerHTML=`<div class="card"><h3>${esc(m.name)}의 10년 큰 흐름 <span class="sub">대운(大運)</span></h3><p>대운은 약 10년 단위로 바뀌는 큰 배경이에요. <b>${yun.isForward()?'순행':'역행'}</b>이며, 출생 후 약 <b>${yun.getStartYear()}년 ${yun.getStartMonth()}개월 ${yun.getStartDay()}일</b> 뒤 첫 대운이 시작되는 방식으로 계산되었습니다.</p><div class="badges"><span class="badge blue">기산일 ${yun.getStartSolar().toYmd()}</span><span class="badge neutral">성별 ${m.gender==='male'?'남':'여'}</span></div></div>
+  box.innerHTML=`<div class="card"><h3>${esc(m.name)}의 10년 큰 흐름 <span class="sub">대운(大運)</span></h3><p>대운은 약 10년 단위로 바뀌는 큰 배경이에요. 대운 기산·진행과 월운은 lunar-javascript로 계산하며, 원국은 한국형 기준 엔진을 우선 사용합니다. 출생시간 미상일 때 기산일은 임시 대표시각에 따른 참고값입니다. <b>${yun.isForward()?'순행':'역행'}</b>이며, 출생 후 약 <b>${yun.getStartYear()}년 ${yun.getStartMonth()}개월 ${yun.getStartDay()}일</b> 뒤 첫 대운이 시작되는 방식으로 계산되었습니다.</p><div class="badges"><span class="badge blue">기산일 ${yun.getStartSolar().toYmd()}</span><span class="badge neutral">성별 ${m.gender==='male'?'남':'여'}</span></div></div>
   <div class="title"><span class="easy-title">10년씩 바뀌는 큰 흐름</span><span class="pro-title">대운(大運) · 각 시기의 주제를 쉽게 풀이</span></div><div class="dayun-scroll">${useful.map(d=>{const gz=d.getGanZhi(),it=fortuneInterpretation(gz,pillars),cur=currentDY&&currentDY.getIndex()===d.getIndex();return `<div class="dayun ${cur?'current':''}"><span>${d.getStartAge()}~${d.getEndAge()}세</span><b>${gz}</b><span>${gzReading(gz)} · ${d.getStartYear()}~${d.getEndYear()}</span><div class="ten">${it.tg} · ${easyTen(it.tg)}</div><span class="grade ${it.grade.cls}" style="display:inline-block;margin-top:7px">${it.grade.text}</span>${cur?'<span style="margin-top:7px;color:#496046;font-weight:800">현재 대운</span>':''}</div>`}).join('')}</div>
   ${dyInterp?`<div class="title"><span class="easy-title">지금 10년은 어떤 때일까?</span><span class="pro-title">현재 대운(大運) 쉬운 풀이</span></div><div class="card"><div class="flowhead"><div><div class="gzbig">${currentDYGz} <span class="sub">${gzReading(currentDYGz)}</span></div><div class="flowmeta">${dyInterp.tg} · ${easyTen(dyInterp.tg)}</div></div><span class="grade ${dyInterp.grade.cls}">${dyInterp.grade.text}</span></div><div class="flowline">${dyInterp.summary}</div><div class="tips"><div class="tip goodtip"><b>활용</b><br>${dyInterp.theme.good}</div><div class="tip warntip"><b>조심</b><br>${dyInterp.theme.warn}</div></div>${dyInterp.rels.length?`<div class="mt">${renderRelationCards(dyInterp.rels)}</div>`:''}</div>`:''}
   <div class="title"><span class="easy-title">해마다 달라지는 흐름</span><span class="pro-title">세운(歲運) · 올해 전후 10년</span></div>${years.map(v=>`<div class="flowcard ${v.y===nowY?'current':''}"><div class="flowhead"><div><div class="year">${v.y}년 ${v.y===nowY?'· 현재':''}</div><div class="gzbig">${v.gz} <span class="sub">${gzReading(v.gz)}</span></div><div class="flowmeta">${v.tg} · ${easyTen(v.tg)} · ${v.relText}</div></div><span class="grade ${v.grade.cls}">${v.grade.text}</span></div><div class="flowline">${v.summary}</div><div class="tips"><div class="tip goodtip"><b>좋게 활용</b><br>${v.theme.good}</div><div class="tip warntip"><b>주의할 점</b><br>${v.theme.warn}</div></div><details><summary>합·충·형·파·해 근거 보기</summary>${v.rels.length?renderRelationCards(v.rels):'<p class="micro">원국과 이 세운 사이에 대표적인 합·충·형·파·해 신호가 크게 잡히지 않았습니다.</p>'}</details></div>`).join('')}
@@ -656,7 +663,7 @@ function renderCalendar(){
  }catch(e){box.innerHTML='<div class="notice strong">월운 계산 중 오류가 발생했습니다.</div>'}
 }
 function renderTerms(){const q=(document.getElementById('termSearch').value||'').trim();const list=document.getElementById('termList');const arr=terms.filter(x=>!q||x.t.includes(q)||(x.hanja||'').includes(q)||(x.word||'').includes(q)||x.easy.includes(q)||x.expert.includes(q));list.innerHTML=arr.length?arr.map(x=>`<div class="term"><b>${x.t}${x.hanja?`<span class="term-hanja">${x.hanja}</span>`:''}</b>${x.word?`<div class="term-meaning">한자 뜻 · ${x.word}</div>`:''}<div class="easy">${x.easy}</div><div class="expert">전문용어로는: ${x.expert}</div></div>`).join(''):'<div class="empty">검색 결과가 없어요.</div>'}
-function renderAll(){renderMembers();renderSummary();renderChart();renderFamilyRelations();renderFlow();renderCalendar();renderTerms();renderSources()}
+function renderAll(){renderMembers();renderSummary();renderChart();renderFamilyRelations();renderFlow();renderCalendar();renderTerms();renderSources();renderLifeMap();renderRecords();renderFamilyMap()}
 
 function openMemberModal(){
  document.getElementById('modalTitle').textContent='가족 추가';document.getElementById('mId').value='';document.getElementById('mName').value='';document.getElementById('mRelation').value='본인';document.getElementById('mGender').value='female';document.getElementById('mBirth').value='';document.getElementById('mTime').value='12:00';document.getElementById('mHourBranch').value='午';document.getElementById('mLeap').checked=false;document.getElementById('mVisibility').value='family';setCalendar('양력');setTimeMode('exact');document.getElementById('memberModal').classList.add('show')
@@ -669,24 +676,671 @@ function syncBranchTime(){const br=document.getElementById('mHourBranch').value|
 document.getElementById('mTime').addEventListener('input',()=>{const br=hourBranchFromTime(document.getElementById('mTime').value),x=BRANCH_INFO[br],hint=document.getElementById('exactHourHint');if(hint&&x)hint.textContent=`${x.read}시(${br}時) · ${x.time} · ${x.animal} 시간대에 해당합니다.`});
 function saveMember(){
  const name=document.getElementById('mName').value.trim(),birth=document.getElementById('mBirth').value;if(!name){alert('이름이나 별명을 입력해 주세요.');return}if(!birth){alert('생년월일을 입력해 주세요.');return}
- const chosenBranch=document.getElementById('mHourBranch').value||hourBranchFromTime(document.getElementById('mTime').value||'12:00');const obj={id:document.getElementById('mId').value||'m'+Date.now(),name,relation:document.getElementById('mRelation').value,gender:document.getElementById('mGender').value,birth,time:document.getElementById('mTime').value||'12:00',timeMode,birthHourBranch:timeMode==='branch'?chosenBranch:hourBranchFromTime(document.getElementById('mTime').value||'12:00'),unknownTime:timeMode==='unknown',cal:calendarType,leap:calendarType==='음력'&&document.getElementById('mLeap').checked,visibility:document.getElementById('mVisibility').value};
+ const chosenBranch=document.getElementById('mHourBranch').value||hourBranchFromTime(document.getElementById('mTime').value||'12:00');const obj={id:document.getElementById('mId').value||'m'+Date.now(),...members.find(x=>x.id===document.getElementById('mId').value),name,relation:document.getElementById('mRelation').value,gender:document.getElementById('mGender').value,birth,time:document.getElementById('mTime').value||'12:00',timeMode,birthHourBranch:timeMode==='branch'?chosenBranch:hourBranchFromTime(document.getElementById('mTime').value||'12:00'),unknownTime:timeMode==='unknown',cal:calendarType,leap:calendarType==='음력'&&document.getElementById('mLeap').checked,visibility:document.getElementById('mVisibility').value};
  const test=getChart(obj);if(test?.error){alert('날짜를 계산할 수 없습니다. 음력 윤달 여부 또는 날짜를 다시 확인해 주세요.\n\n'+test.error);return}
  const idx=members.findIndex(x=>x.id===obj.id);if(idx>=0)members[idx]=obj;else members.push(obj);current=obj.id;save();renderAll();closeMemberModal();
 }
-function deleteMember(id){const m=members.find(x=>x.id===id);if(!m||!confirm(m.name+' 정보를 이 기기에서 삭제할까요?'))return;members=members.filter(x=>x.id!==id);current=members[0]?.id||'';save();renderAll()}
-function resetData(){if(confirm('이 기기에 저장된 가족 데이터를 모두 초기화할까요?')){localStorage.removeItem(STORAGE_KEY);members=JSON.parse(JSON.stringify(defaultMembers));current='me';renderAll();alert('초기화했습니다.')}}
+function deleteMember(id){const m=members.find(x=>x.id===id);if(!m||!confirm(m.name+' 정보를 이 기기에서 삭제할까요?'))return;if(!persistEvents(lifeEvents.filter(e=>e.memberId!==id)))return;members=members.filter(x=>x.id!==id);current=members[0]?.id||'';save();renderAll()}
+function resetData(){if(confirm('이 기기에 저장된 가족 정보와 인생기록을 모두 초기화할까요?')){localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(LIFE_EVENT_KEY);lifeEvents=[];members=JSON.parse(JSON.stringify(defaultMembers));current='me';renderAll();alert('초기화했습니다.')}}
 
 document.querySelectorAll('.navbtn').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(btn.dataset.tab).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})});
+// 생활 해석은 전통 규칙의 비교 지표이며 사건 발생 확률이 아닙니다.
+const LIFE_EVENT_KEY = "family_myeongri_life_events_v1";
+let lifeEvents = readLocal(LIFE_EVENT_KEY, []),
+  selectedLifeYear = new Date().getFullYear(),
+  horizon = "현재";
+const EVENT_TYPES =
+  "학업 입학 졸업 취업 퇴사 승진 이직 사업시작 사업확장 사업위기 돈 부동산구입 부동산매도 결혼 이별 출산 가족사건 부모관련 자녀관련 이사 해외 장거리이동 건강 사고 법률·분쟁 심리적변화 큰성공 큰실패 기타"
+    .split(" ")
+    .map(
+      (t) =>
+        ({ 심리적변화: "심리적 변화", 큰성공: "큰 성공", 큰실패: "큰 실패" })[
+          t
+        ] || t,
+    );
+const CATEGORIES = [
+  [
+    "돈·재정",
+    ["정재", "편재"],
+    "예산·현금흐름을 정리하고 거래 조건을 확인하세요.",
+    "큰 수입만 보지 말고 실제 남는 돈을 확인하세요.",
+  ],
+  [
+    "일·직업",
+    ["정관", "편관"],
+    "역할과 책임을 정리하고 경험을 성과로 연결해 보세요.",
+    "일정과 맡을 수 있는 범위를 먼저 합의하세요.",
+  ],
+  [
+    "사업·확장",
+    ["식신", "상관", "편재"],
+    "작은 시도로 수요를 확인한 뒤 활동 범위를 넓혀 보세요.",
+    "큰 투자와 동시 확장은 숫자와 계약부터 확인하세요.",
+  ],
+  [
+    "가족",
+    ["정인", "비견"],
+    "서로 필요한 도움과 역할을 말로 확인해 보세요.",
+    "한 사람에게 돌봄이 몰리지 않도록 나눠 보세요.",
+  ],
+  [
+    "부부·연애",
+    ["정재", "정관"],
+    "함께 보내는 시간과 생활의 우선순위를 맞춰 보세요.",
+    "상대의 마음을 짐작하기보다 직접 물어보세요.",
+  ],
+  [
+    "인간관계",
+    ["비견", "겁재"],
+    "협업할 때 역할과 보상을 미리 정해 보세요.",
+    "부탁을 받기 전에 내 여유부터 확인하세요.",
+  ],
+  [
+    "공부·자격",
+    ["정인", "편인"],
+    "필요한 공부를 작은 목표로 나누어 깊이를 더해 보세요.",
+    "준비에만 머물지 않고 실제로 써 보세요.",
+  ],
+  [
+    "문서·계약",
+    ["정인", "정관"],
+    "증빙·조건·기한을 모아 차분히 검토해 보세요.",
+    "중요한 약속은 글로 남기고 전문가에게 확인하세요.",
+  ],
+  [
+    "이사·이동",
+    ["상관", "편재"],
+    "환경을 바꾸기 전 비용과 생활 동선을 살펴보세요.",
+    "이동 일정에 여유를 두세요.",
+  ],
+  [
+    "변화·새 시작",
+    ["상관", "겁재"],
+    "익숙한 방식을 조금씩 바꾸며 반응을 확인해 보세요.",
+    "한 번에 모든 것을 바꾸지 않아도 됩니다.",
+  ],
+  [
+    "건강·컨디션",
+    [],
+    "수면·활동량·휴식을 일정에 함께 넣어 보세요.",
+    "과로와 스트레스가 쌓이지 않게 생활리듬을 살펴보세요.",
+  ],
+];
+function showTab(id) {
+  document
+    .querySelectorAll(".section")
+    .forEach((x) => x.classList.toggle("active", x.id === id));
+  document
+    .querySelectorAll(".navbtn")
+    .forEach((x) => x.classList.toggle("active", x.dataset.tab === id));
+  window.scrollTo(0, 0);
+}
+function knownPillars(m, c) {
+  return m.timeMode === "unknown" || m.unknownTime
+    ? c.pillars.slice(0, 3)
+    : c.pillars;
+}
+function lifeData(m = currentMember()) {
+  const c = getChart(m);
+  if (!c || c.error) return null;
+  const pillars = knownPillars(m, c),
+    birthYear = c.solar.getYear(),
+    periods = c.ec
+      .getYun(m.gender === "male" ? 1 : 0, 1)
+      .getDaYun(10)
+      .filter((d) => d.getIndex() > 0)
+      .map((d) => ({
+        start: d.getStartYear(),
+        end: d.getEndYear(),
+        age: d.getStartAge(),
+        endAge: d.getEndAge(),
+        gz: d.getGanZhi(),
+      }));
+  return { m, c, pillars, birthYear, periods };
+}
+function yearReading(data, y) {
+  const gz = Solar.fromYmdHms(y, 7, 1, 12, 0, 0)
+      .getLunar()
+      .getYearInGanZhiExact(),
+    it = fortuneInterpretation(gz, data.pillars),
+    period = data.periods.find((d) => y >= d.start && y <= d.end),
+    background = period ? fortuneInterpretation(period.gz, data.pillars) : null;
+  return { ...it, gz, period, background, y };
+}
+function emphasis(v, index) {
+  const cat = CATEGORIES[index],
+    roles = [v.tg, v.background?.tg];
+  return Math.min(
+    5,
+    Math.max(
+      1,
+      2 +
+        roles.filter((t) => cat[1].includes(t)).length +
+        (index === 8 || index === 9
+          ? v.rels.filter((r) => r.tone === "change").length
+          : 0) +
+        (index === 10 ? -v.rels.filter((r) => r.tone === "tension").length : 0),
+    ),
+  );
+}
+function evidence(v) {
+  return `<details><summary>왜 이렇게 읽었나요? · 전문근거</summary><p class="micro">대표일: ${v.y}년 7월 1일 · ${v.gz}(${gzReading(v.gz)}) · ${v.tg}: ${easyTen(v.tg)}. ${v.period ? `10년 배경: ${v.period.gz}(${gzReading(v.period.gz)}).` : "첫 대운 전 구간."} ${esc(v.relText)}. 각 연도는 입춘에서 바뀌므로 1월·입춘 전후는 별도 확인이 필요합니다. 역할의 겹침과 관계 신호를 비교한 참고 지표이며 실제 성과를 예측한 수치가 아닙니다.</p></details>`;
+}
+function plain(v) {
+  return `${v.theme.tags.join("·")}에 관심과 힘을 써 볼 시기로 해석합니다. ${v.theme.good}`;
+}
+function yearCard(data, y) {
+  const v = yearReading(data, y);
+  return `<div class="card"><h3>${y}년 · ${v.theme.tags.join("·")}</h3><p>${plain(v)}</p><div class="tips"><div class="tip goodtip">좋게 활용<br>${v.theme.good}</div><div class="tip warntip">조심하면 좋은 점<br>${v.theme.warn}</div></div>${evidence(v)}</div>`;
+}
+function lifeWave(data) {
+  const values = Array.from({ length: 81 }, (_, age) => ({
+    age,
+    v: yearReading(data, data.birthYear + age),
+  }));
+  const pts = values
+      .map(
+        ({ age, v }) =>
+          `${20 + age * 9.5},${70 - Math.max(-5, Math.min(5, (v.score + (v.background?.score || 0)) / 2)) * 8}`,
+      )
+      .join(" "),
+    nowAge = new Date().getFullYear() - data.birthYear;
+  return `<div class="card"><h3>인생 흐름의 파동</h3><svg class="map-chart" viewBox="0 0 800 120" role="img" aria-label="0세부터 80세까지 전통 규칙의 균형 참고 지표"><path d="M20 70H780" stroke="#d6ccbf"/><polyline points="${pts}" fill="none" stroke="#6f846a" stroke-width="3"/>${nowAge >= 0 && nowAge <= 80 ? `<path d="M${20 + nowAge * 9.5} 10V100" stroke="#aa6e32" stroke-dasharray="4"/><text x="${Math.min(720, Math.max(20, 20 + nowAge * 9.5))}" y="15" font-size="15">지금 여기</text>` : ""}${[0, 20, 40, 60, 80].map((a) => `<text x="${20 + a * 9.5}" y="118" text-anchor="middle" font-size="15">${a}세</text>`).join("")}</svg><p class="micro">대운·세운의 균형 규칙을 함께 그린 참고 그래프입니다. 높낮이는 인생의 가치·성공 확률·실제 행복을 뜻하지 않습니다. 나이는 연도 차이 기준이며 대운 카드는 엔진의 기산 나이를 사용합니다.</p></div>`;
+}
+function rankedPeriods(data) {
+  return data.periods
+    .filter((d) => d.age <= 80)
+    .map((d) => {
+      const readings = Array.from({ length: d.end - d.start + 1 }, (_, i) =>
+        yearReading(data, d.start + i),
+      );
+      return {
+        ...d,
+        rank:
+          readings.reduce(
+            (a, v) => a + v.score + (v.background?.score || 0),
+            0,
+          ) / readings.length,
+        kind: CATEGORIES.slice(0, 8)
+          .map((c, i) => ({
+            label: c[0],
+            score: readings.reduce((a, v) => a + emphasis(v, i), 0),
+          }))
+          .sort((a, b) => b.score - a.score)[0].label,
+      };
+    })
+    .sort((a, b) => b.rank - a.rank)
+    .slice(0, 3);
+}
+function renderLifeMap() {
+  const box = document.getElementById("lifeMap"),
+    data = lifeData(),
+    m = currentMember();
+  if (!data) {
+    document.getElementById('heroSmall').textContent=(m?.name||'나')+'님의 인생지도';
+    document.getElementById('heroTitle').textContent='내 인생지도를 시작해요';
+    document.getElementById('heroText').textContent='가족의 생년월일을 입력하고 나와 가족의 흐름을 함께 살펴보세요.';
+    document.getElementById('heroBadges').innerHTML='';
+    box.innerHTML =
+      '<div class="card"><h3>내 인생지도를 시작해요</h3><p>가족의 생년월일을 입력하면 인생 전체와 지금의 흐름을 함께 살펴볼 수 있어요.</p><button class="btn mt" onclick="openMemberModal()">가족 정보 입력</button></div>';
+    return;
+  }
+  const now = new Date().getFullYear(),
+    v = yearReading(data, now),
+    stem = data.c.pillars[2][0],
+    peaks = rankedPeriods(data);
+  document.getElementById("heroSmall").textContent = `${m.name}님의 인생지도`;
+  document.getElementById("heroTitle").textContent = "나는 어떤 사람인가";
+  document.getElementById("heroText").textContent =
+    STEM_INFO[stem].meaning +
+    "에 비유하는 사람입니다. 전통 명리에서는 이 이미지를 성향을 돌아보는 출발점으로 삼습니다.";
+  document.getElementById("heroBadges").innerHTML =
+    `<span class="badge neutral">전문용어: 일간 ${stemLabel(stem)} · ${elementLabel(STEM_EL[stem])}</span>`;
+  box.innerHTML = `<div class="notice mt">전통 명리의 해석 경향을 생활 언어로 풀었습니다. 미래의 사건·재산·관계·건강을 확정하지 않습니다. ${m.timeMode === "unknown" ? "출생시간 미상: 시주는 제외하며 대운 시작과 후보 순위는 시간에 따라 달라질 수 있습니다." : ""}</div><div class="title">내 인생 한눈에 보기</div><div class="map-grid">${[
+    ["성향", STEM_INFO[stem].meaning + "의 성향으로 해석합니다."],
+    ["재물", "수입의 크기와 함께 관리 습관·고정 지출을 돌아보세요."],
+    ["일·사업", TEN_THEMES[tenGod(stem, data.pillars[1][0])].good],
+    ["관계", "자신의 기준과 상대의 속도를 함께 살펴보세요."],
+    [
+      "배움",
+      "배운 내용을 작은 실행으로 연결하면 강점을 찾는 데 도움이 됩니다.",
+    ],
+    ["컨디션", "과로·수면·스트레스와 생활리듬을 함께 관리하세요."],
+  ]
+    .map(([t, p]) => `<div class="card"><h3>${t}</h3><p>${p}</p></div>`)
+    .join(
+      "",
+    )}</div><div class="title">현재 나는 어떤 시기인가</div>${yearCard(data, now)}<div class="title">내 인생 전체 지도</div>${lifeWave(data)}<p>0 → 10 → 20 → 30 → 40 → 50 → 60 → 70 → 80세<br>10년 카드를 누르면 연도 → 월별로 펼쳐집니다.</p><div class="life-line">${[{ start: data.birthYear, end: (data.periods[0]?.start || data.birthYear + 10) - 1, age: 0, endAge: (data.periods[0]?.age || 10) - 1, gz: "" }, ...data.periods.filter((d) => d.age <= 80)].map((d) => `<button class="life-stop ${now >= d.start && now <= d.end ? "now" : ""} ${peaks.some((p) => p.start === d.start) ? "peak" : ""}" onclick="openDecade(${d.start},${d.end})"><b>${now >= d.start && now <= d.end ? "📍 지금 여기 · " : ""}${d.age}~${d.endAge}세</b><span>${d.start}~${d.end}년</span><span>${d.gz ? fortuneInterpretation(d.gz, data.pillars).theme.tags.join("·") : "성장과 생활의 바탕"}</span>${peaks.some((p) => p.start === d.start) ? "<span>✦ 전성기 후보</span>" : ""}<span>기록 ${lifeEvents.filter((e) => e.memberId === m.id && e.year >= d.start && e.year <= d.end).length}개</span></button>`).join("")}</div><div id="lifeDrill" class="timeline-detail"></div><div class="title">내 인생의 큰 세 구간</div><div class="map-grid">${[
+    [0, 30, "초년운"],
+    [30, 60, "중년운"],
+    [60, 90, "말년운"],
+  ]
+    .map(([lo, hi, title]) => {
+      const ds = data.periods.filter((d) => d.age < hi && d.endAge >= lo),
+        ts = [
+          ...new Set(
+            ds.map(
+              (d) => fortuneInterpretation(d.gz, data.pillars).theme.tags[0],
+            ),
+          ),
+        ];
+      return `<div class="card"><h3>${title} · ${lo === 60 ? "60세 이후" : lo + "~" + hi + "세 전후"}</h3><p>이 구간은 ${ts.join("·") || "생활의 바탕"}을 삶의 주제로 살펴봅니다.</p>${[
+        [
+          "전체 분위기",
+          "여러 10년 흐름을 묶어 보는 넓은 구간이며 경계가 고정된 것은 아닙니다.",
+        ],
+        [
+          "일·직업",
+          ds
+            .map((d) => fortuneInterpretation(d.gz, data.pillars).theme.good)
+            .filter((x, i, a) => a.indexOf(x) === i)
+            .join(" "),
+        ],
+        ["돈", "수입·지출과 앞으로 필요한 자원을 함께 계획하세요."],
+        ["가족·관계", "생활 단계가 달라질 때 기대와 역할도 다시 맞춰 보세요."],
+        [
+          "변화·이동",
+          ds
+            .map(
+              (d) =>
+                `${d.start}~${d.end}년: ${fortuneInterpretation(d.gz, data.pillars).theme.tags.join("·")}`,
+            )
+            .join(" / "),
+        ],
+        [
+          "주의할 점",
+          ds
+            .map((d) => fortuneInterpretation(d.gz, data.pillars).theme.warn)
+            .filter((x, i, a) => a.indexOf(x) === i)
+            .join(" "),
+        ],
+        [
+          "잘 활용하는 방법",
+          "실제 경험을 기록하고 지금 필요한 선택과 연결해 보세요.",
+        ],
+      ]
+        .map(([t, p]) => `<p class="mt"><b>${t}</b><br>${p}</p>`)
+        .join("")}</div>`;
+    })
+    .join(
+      "",
+    )}</div><div class="title">내 전성기는 언제?</div><p>대운과 각 연도의 균형 참고 점수를 함께 비교한 상대적 후보입니다. 성공 확률이나 보장된 전성기가 아닙니다.</p><div class="map-grid">${peaks.map((d, i) => `<div class="card"><span class="badge good">후보 ${i + 1} · ${d.kind}</span><h3>${d.age}~${d.endAge}세</h3><p>${d.start}~${d.end}년<br>이 구간은 ${d.kind}의 주제에 상대적으로 힘이 실리는 것으로 해석합니다.</p><button class="btn secondary mt" onclick="openDecade(${d.start},${d.end});document.getElementById('lifeDrill').scrollIntoView()">연도별 근거 보기</button></div>`).join("")}</div><div class="title">생활 주제로 살펴보기</div><div class="row wrap">${["현재", "올해", "3년", "10년"].map((h) => `<button class="year-pick" onclick="horizon='${h}';renderCategories()">${h}</button>`).join("")}</div><div id="lifeCategories" class="map-grid mt"></div><div class="title">올해 나에게 중요한 것</div>${annualSummary(data, now)}<div class="title">앞으로 1년·3년·5년·10년</div><div class="map-grid">${[1, 3, 5, 10].map((n) => `<div class="card"><h3>${n}년 앞 · ${now + n}년</h3><p>${plain(yearReading(data, now + n))}</p>${evidence(yearReading(data, now + n))}</div>`).join("")}</div><div class="title">내 인생 실제 기록</div>${eventCards(data)}<button class="btn secondary" onclick="showTab('records')">인생기록 쓰기·시간 후보 비교</button>`;
+  renderCategories();
+}
+function renderCategories() {
+  const data = lifeData(),
+    box = document.getElementById("lifeCategories");
+  if (!data || !box) return;
+  const now = new Date().getFullYear(),
+    n = horizon === "3년" ? 3 : horizon === "10년" ? 10 : 1,
+    vs = Array.from({ length: n }, (_, i) => yearReading(data, now + i));
+  if(horizon==='현재'){
+    const date=new Date(),gz=Solar.fromYmdHms(now,date.getMonth()+1,date.getDate(),12,0,0).getLunar().getMonthInGanZhiExact();
+    vs[0]={...vs[0],...fortuneInterpretation(gz,data.pillars),gz};
+  }
+  box.innerHTML = CATEGORIES.map(
+    (cat, i) =>
+      `<div class="card"><h3>${cat[0]} · ${horizon}${horizon==="현재"?" (이번 달)":""}</h3><p>${vs.some((v) => cat[1].includes(v.tg) || cat[1].includes(v.background?.tg)) ? "이 기간에 관련 주제가 겹치는 것으로 해석합니다." : "일상의 계획과 균형을 점검하는 주제로 살펴보세요."}</p><p class="mt">좋게 활용: ${cat[2]}<br>조심: ${cat[3]}</p><details><summary>기간별 근거</summary>${vs.map((v) => `<p class="micro">${v.y}: ${v.theme.tags.join("·")} · ${v.gz}(${gzReading(v.gz)}) / ${v.period ? gzReading(v.period.gz) : "첫 대운 전"}</p>`).join("")}</details></div>`,
+  ).join("");
+}
+function annualSummary(data, y) {
+  const v = yearReading(data, y);
+  return `<div class="card"><h3>${y}년 핵심 5가지</h3>${[1, 0, 5, 9, 10].map((i) => `<p>${CATEGORIES[i][0]} <span aria-label="주제 강조 ${emphasis(v, i)}단계">${"★".repeat(emphasis(v, i))}${"☆".repeat(5 - emphasis(v, i))}</span></p>`).join("")}<p class="micro">별은 주제 강조 정도이며 길흉·건강 점수가 아닙니다.</p><h3 class="mt">올해 한 줄 요약</h3><p>${plain(v)}</p><div class="tips"><div class="tip goodtip">${v.theme.good}</div><div class="tip warntip">${v.theme.warn}</div></div>${evidence(v)}</div>`;
+}
+function openDecade(start, end) {
+  const data = lifeData();
+  const box = document.getElementById("lifeDrill");
+  box.innerHTML = `<div class="card"><h3>${start}~${end}년 · 연도를 선택하세요</h3><div class="row wrap">${Array.from({ length: end - start + 1 }, (_, i) => `<button class="year-pick" onclick="openLifeYear(${start + i})">${start + i}</button>`).join("")}</div></div><div id="lifeYearDetail"></div>`;
+  openLifeYear(Math.max(start, Math.min(end, new Date().getFullYear())));
+}
+function monthCards(data, y) {
+  return `<div class="monthgrid">${Array.from({ length: 12 }, (_, i) => {
+    const gz = Solar.fromYmdHms(y, i + 1, 15, 12, 0, 0)
+        .getLunar()
+        .getMonthInGanZhiExact(),
+      v = fortuneInterpretation(gz, data.pillars);
+    return `<div class="monthbox"><h3>${i + 1}월 · ${v.theme.tags.join("·")}</h3><p>${v.theme.good}</p><div class="tip warntip mt">조심: ${v.theme.warn}</div><details><summary>전문근거</summary><p class="micro">${y}년 ${i + 1}월 15일 대표값 · ${gz}(${gzReading(gz)}) · ${v.tg}. 절기 변경일 전후는 다른 월주가 적용됩니다. ${esc(v.relText)}</p></details></div>`;
+  }).join("")}</div>`;
+}
+function openLifeYear(y) {
+  selectedLifeYear = y;
+  const data = lifeData();
+  document.getElementById("lifeYearDetail").innerHTML =
+    yearCard(data, y) + eventCards(data, y) + monthCards(data, y);
+}
+const originalFlow=renderFlow;
+renderFlow=function(){
+ originalFlow();const data=lifeData();if(!data)return;
+ const box=document.getElementById('flowContent'),expert=box.innerHTML,peaks=rankedPeriods(data);
+ box.innerHTML=`<div class="card"><h3>10년씩 내 삶을 살펴봐요</h3><p>시기를 선택하면 연도별 설명과 12개월 흐름으로 이어집니다. 색상과 후보는 전통 규칙의 상대적 비교입니다.</p></div><div class="map-grid">${data.periods.filter(d=>d.age<=80).map(d=>`<div class="card"><h3>${d.age}~${d.endAge}세 · ${d.start}~${d.end}</h3><p>${fortuneInterpretation(d.gz,data.pillars).theme.good}</p>${peaks.some(p=>p.start===d.start)?'<span class="badge good">전성기 후보</span>':''}<button class="btn secondary mt" onclick="showTab('home');openDecade(${d.start},${d.end});document.getElementById('lifeDrill').scrollIntoView()">해마다·월별 보기</button></div>`).join('')}</div><details><summary>대운 기산·전문 분석과 기존 상세 풀이</summary>${expert}</details>`;
+};
+const originalCalendar = renderCalendar;
+renderCalendar = function () {
+  originalCalendar();
+  const data = lifeData();
+  if (data)
+    document.getElementById("calendarContent").innerHTML =
+      annualSummary(data, new Date().getFullYear()) +
+      monthCards(data, new Date().getFullYear());
+};
+function eventGroup(type) {
+  if (/학업|입학|졸업/.test(type)) return ["정인", "편인"];
+  if (/돈|부동산|사업/.test(type)) return ["정재", "편재", "식신", "상관"];
+  if (/취업|퇴사|승진|이직|법률/.test(type)) return ["정관", "편관"];
+  if (/이사|해외|이동|변화/.test(type)) return ["상관", "겁재"];
+  if (/결혼|출산|가족|부모|자녀|이별/.test(type))
+    return ["비견", "정인", "정재", "정관"];
+  return [];
+}
+function matchEvent(data, e) {
+  const v = yearReading(data, e.year),
+    group = eventGroup(e.type),
+    signals = [];
+  if (group.includes(v.tg))
+    signals.push("해당 연도" + "의 역할 주제가 사건 분류와 겹칩니다.");
+  if (v.background && group.includes(v.background.tg))
+    signals.push("10년 배경의 역할 주제가 사건 분류와 겹칩니다.");
+  if (
+    /이사|이동|해외|변화/.test(e.type) &&
+    v.rels.some((r) => r.tone === "change")
+  )
+    signals.push("환경 재조정 관계 신호가 함께 있습니다.");
+  return { v, signals, level: signals.length >= 2 ? "보통 근거" : "약한 근거" };
+}
+function eventCards(data, y) {
+  const es = lifeEvents
+    .filter((e) => e.memberId === data.m.id && (!y || e.year === y))
+    .sort((a, b) => b.year - a.year || (b.month || 0) - (a.month || 0));
+  return es.length
+    ? es
+        .map((e) => {
+          const r = matchEvent(data, e);
+          return `<div class="life-event"><b>${e.year}${e.month ? "." + e.month : ""}${e.day ? "." + e.day : ""} · ${esc(e.type)}</b><p>${esc(e.text)}</p><p class="micro">${esc(e.importance)} · ${esc(e.accuracy)} · ${r.level}</p><p>${r.signals.join(" ") || "이 규칙에서는 뚜렷한 부합 근거를 찾지 못했습니다."}</p>${evidence(r.v)}</div>`;
+        })
+        .join("")
+    : '<div class="empty">아직 이 구간의 인생기록이 없습니다.</div>';
+}
+function renderRecords() {
+  const box = document.getElementById("recordsContent");
+  box.innerHTML = `<div class="title">내 인생여정 기록</div><p>${esc(currentMember()?.name)}님의 실제 경험을 남겨 보세요. 해석과 맞지 않는 사건도 그대로 기록합니다.</p><div class="notice">기록은 현재 브라우저에만 저장됩니다. 같은 기기·브라우저를 함께 쓰면 기록도 함께 보입니다. 공개범위는 향후 서버 권한을 위한 표시이며 현재 접근을 차단하는 기능은 아닙니다.</div><form id="eventForm" class="card mt" onsubmit="saveLifeEvent(event)"><input type="hidden" id="eventId"><label for="eventYear">연도</label><input class="field" id="eventYear" type="number" min="1800" max="2200" required value="${new Date().getFullYear()}"><div class="grid2"><div><label for="eventMonth">월 · 모르면 생략</label><input class="field" id="eventMonth" type="number" min="1" max="12"></div><div><label for="eventDay">날짜 · 모르면 생략</label><input class="field" id="eventDay" type="number" min="1" max="31"></div></div><label for="eventType">사건 종류</label><select class="field" id="eventType">${EVENT_TYPES.map((t) => `<option>${t}</option>`).join("")}</select><label for="eventText">내용</label><textarea class="field" id="eventText" required maxlength="5000"></textarea><label for="eventImportance">중요도</label><select class="field" id="eventImportance"><option>작은 변화</option><option>중요한 사건</option><option>인생의 큰 전환점</option></select><label for="eventAccuracy">기억 정확도</label><select class="field" id="eventAccuracy"><option>대략 기억</option><option>꽤 확실</option><option>정확한 날짜</option><option>공식 기록 확인</option></select><label for="eventVisibility">공개범위 표시</label><select class="field" id="eventVisibility"><option value="private">나만보기</option><option value="selected">일부공개</option><option value="family">가족공개</option></select><button class="btn mt" type="submit">기록 저장</button><button class="btn ghost mt" type="button" onclick="renderRecords()">새 기록 / 수정 취소</button></form><div id="eventList"></div><div class="title">출생시간 후보 비교</div><div class="notice">12개 시간대의 대표시각을 과거 사건과 비교합니다. 출생시간을 확정하는 도구가 아닙니다. 단순 규칙 사이의 비교이므로 여러 학파의 독립 검증으로 볼 수 없습니다. 자시는 00:00을 대표값으로 사용하며 23시 날짜 경계는 별도 확인이 필요합니다.</div><button class="btn mt" onclick="compareBirthHours()">자시~해시 12개 후보 비교</button><div id="hourCandidates"></div>`;
+  const data = lifeData();
+  document.getElementById("eventList").innerHTML =
+    (data ? eventCards(data) : "") +
+    lifeEvents
+      .filter((e) => e.memberId === currentMember()?.id)
+      .map(
+        (e) =>
+          `<div class="row mt"><span>${e.year} · ${esc(e.type)}</span><button class="btn small secondary" data-edit-event="${esc(e.id)}">수정</button><button class="btn small ghost" data-delete-event="${esc(e.id)}">삭제</button></div>`,
+      )
+      .join("");
+  box
+    .querySelectorAll("[data-edit-event]")
+    .forEach((b) => (b.onclick = () => editLifeEvent(b.dataset.editEvent)));
+  box
+    .querySelectorAll("[data-delete-event]")
+    .forEach((b) => (b.onclick = () => deleteLifeEvent(b.dataset.deleteEvent)));
+}
+function persistEvents(next) {
+  try {
+    localStorage.setItem(LIFE_EVENT_KEY, JSON.stringify(next));
+    lifeEvents = next;
+    return true;
+  } catch (e) {
+    alert(
+      "저장 공간 또는 브라우저 권한을 확인해 주세요. 기록을 저장하지 못했습니다.",
+    );
+    return false;
+  }
+}
+function saveLifeEvent(ev) {
+  ev.preventDefault();
+  const get = (id) => document.getElementById(id).value,
+    year = +get("eventYear"),
+    month = +get("eventMonth") || null,
+    day = +get("eventDay") || null;
+  if (day && !month) {
+    alert("날짜를 입력하려면 월도 입력해 주세요.");
+    return;
+  }
+  if (
+    month &&
+    day &&
+    new Date(Date.UTC(year, month - 1, day)).getUTCMonth() !== month - 1
+  ) {
+    alert("해당 월에 없는 날짜입니다.");
+    return;
+  }
+  const id =
+      get("eventId") ||
+      "e" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    obj = {
+      id,
+      memberId: currentMember().id,
+      year,
+      month,
+      day,
+      type: get("eventType"),
+      text: get("eventText").trim(),
+      importance: get("eventImportance"),
+      accuracy: get("eventAccuracy"),
+      visibility: get("eventVisibility"),
+    };
+  if (!obj.text) return;
+  if (persistEvents([...lifeEvents.filter((e) => e.id !== id), obj]))
+    renderAll();
+}
+function editLifeEvent(id) {
+  const e = lifeEvents.find(
+    (e) => e.id === id && e.memberId === currentMember().id,
+  );
+  if (!e) return;
+  for (const [field, key] of Object.entries({
+    eventId: "id",
+    eventYear: "year",
+    eventMonth: "month",
+    eventDay: "day",
+    eventType: "type",
+    eventText: "text",
+    eventImportance: "importance",
+    eventAccuracy: "accuracy",
+    eventVisibility: "visibility",
+  }))
+    document.getElementById(field).value = e[key] || "";
+  document.getElementById("eventForm").scrollIntoView();
+  document.getElementById("eventText").focus();
+}
+function deleteLifeEvent(id) {
+  if (
+    confirm("이 인생기록을 삭제할까요?") &&
+    persistEvents(lifeEvents.filter((e) => e.id !== id))
+  )
+    renderAll();
+}
+function compareBirthHours() {
+  const m = currentMember(),
+    box = document.getElementById("hourCandidates"),
+    events = lifeEvents.filter((e) => e.memberId === m.id);
+  if (!m.birth || !lifeData()) {
+    box.innerHTML = "<p>먼저 유효한 생년월일과 계산엔진을 확인해 주세요.</p>";
+    return;
+  }
+  if (!events.length) {
+    box.innerHTML =
+      "<p>먼저 실제 인생사건을 기록해 주세요. 기록이 없으면 후보 순위를 만들지 않습니다.</p>";
+    return;
+  }
+  const results = Object.entries(BRANCH_INFO)
+    .map(([br, info]) => {
+      const candidate = {
+          ...m,
+          time: info.mid,
+          timeMode: "exact",
+          unknownTime: false,
+        },
+        data = lifeData(candidate),
+        rows = events.map((e) => {
+          const r = matchEvent(data, e);
+          const v = r.v,
+            day = data.pillars[2][0],
+            hourRole = tenGod(day, data.pillars[3][0]),
+            roleHit =
+              eventGroup(e.type).includes(hourRole) &&
+              eventGroup(e.type).includes(v.tg),
+            hourRel = compareLuckRelations([data.pillars[3]], v.gz).filter(
+              (r) => r.tone === "change",
+            ).length,
+            move = /이사|이동|해외|변화/.test(e.type);
+          return {
+            e,
+            r,
+            score:
+              r.signals.length + (roleHit ? 1 : 0) + (move && hourRel ? 1 : 0),
+            extra: roleHit
+              ? "후보 시주의 역할과 사건·연도 주제가 겹칩니다."
+              : move && hourRel
+                ? "후보 시주와 연도 사이에 이동 관련 관계 신호가 있습니다."
+                : "후보 시주를 구별하는 추가 신호는 없습니다.",
+          };
+        });
+      return { br, info, rows, score: rows.reduce((s, r) => s + r.score, 0) };
+    })
+    .sort((a, b) => b.score - a.score);
+  box.innerHTML = `<div class="notice mt">전체 12개 후보를 계산했습니다. 같은 점수는 공동 순위이며, 동점 후보의 표시 순서에는 의미가 없습니다. 현재 규칙에서는 ‘강한 근거’를 부여하지 않습니다. 사건의 날짜·중요도·기억 정확도는 기록으로 보존하며 점수를 증폭하는 데 사용하지 않습니다.</div>${results.map((r, i) => `<div class="card mt"><h3>${i === 0 || r.score !== results[i - 1].score ? i + 1 : results.findIndex((x) => x.score === r.score) + 1}순위 후보 · ${r.info.read}시(${r.br})</h3><p>${r.info.time} · 비교 신호 ${r.score}개</p><details${i < 3 ? " open" : ""}><summary>사건별 근거</summary>${r.rows.map((x) => `<p class="micro">${x.e.year} · ${esc(x.e.type)}: ${x.r.level}. ${x.r.signals.join(" ") || "뚜렷한 공통 신호 없음."} ${x.extra}</p>`).join("")}</details></div>`).join("")}`;
+}
+function renderFamilyMap() {
+  const box = document.getElementById("familyYears"),
+    now = new Date().getFullYear(),
+    valid = members.map((m) => lifeData(m)).filter(Boolean);
+  box.innerHTML = `<p>가족별 흐름은 전통 규칙의 참고 해석입니다. 실제 일정과 의견을 먼저 확인하세요.</p>${Array.from(
+    { length: 10 },
+    (_, i) => {
+      const y = now + i,
+        rows = valid.map((d, j) => ({ d, j, v: yearReading(d, y) })),
+        changing = rows.filter((r) =>
+          r.v.rels.some((x) => x.tone === "change"),
+        );
+      return `<div class="card"><h3>${y}년</h3><p>${changing.length >= 2 ? "여러 가족에게 환경 재조정의 주제가 겹칩니다. 함께 일정과 비용을 확인해 보세요." : changing.length ? "한 구성원의 변화 주제를 가족이 함께 살펴보세요." : "이 규칙에서 공통 이동 신호는 크지 않습니다. 실제 생활의 안정성을 보장하지 않습니다."}</p>${rows.map((r) => `<div class="family-node mt" style="--profile:${["#6f846a", "#657d91", "#aa6e32", "#9a5555"][r.j % 4]}"><b>${esc(r.d.m.name)}</b> · ${r.v.theme.tags.join("·")}<small class="sub"> / 10년 배경: ${r.v.background?.theme.tags.join("·") || "첫 대운 전"}</small></div>`).join("")}</div>`;
+    },
+  ).join("")}`;
+  // 기존의 선택 인물 중심 풀이를 모든 조합으로 확장합니다.
+  const pairs = [];
+  for (let i = 0; i < valid.length; i++)
+    for (let j = i + 1; j < valid.length; j++) {
+      const a = valid[i].m,
+        b = valid[j].m,
+        r = dayRelationBetween(a, b);
+      if (!r) continue;
+      const timing = Array.from({ length: 10 }, (_, k) => {
+        const y = now + k,
+          va = yearReading(valid[i], y),
+          vb = yearReading(valid[j], y);
+        return {
+          y,
+          change:
+            va.rels.some((r) => r.tone === "change") &&
+            vb.rels.some((r) => r.tone === "change"),
+          help:
+            va.rels.some((r) => r.tone === "connect") &&
+            vb.rels.some((r) => r.tone === "connect"),
+        };
+      });
+      pairs.push(
+        `<div class="family-rel-card"><h3>${esc(a.name)} ↔ ${esc(b.name)}</h3><p>${esc(r.core)}</p><div class="relation-tips"><div class="help"><b>잘 맞고 보완하는 부분</b><br>${esc(r.help)}</div><div class="care"><b>갈등·대화에서 살필 부분</b><br>${esc(r.care)}</div></div><p class="micro">서로 연결·협력 주제를 살펴볼 해: ${
+          timing
+            .filter((t) => t.help)
+            .map((t) => t.y)
+            .join(", ") || "공통 신호 없음"
+        }<br>변화가 겹쳐 예민함을 살펴볼 해: ${
+          timing
+            .filter((t) => t.change)
+            .map((t) => t.y)
+            .join(", ") || "공통 신호 없음"
+        }</p><details><summary>전문근거</summary><p>${r.extras.map(esc).join(" · ") || "일간의 오행 관계를 참고했습니다."}</p><p class="micro">연도 표시는 두 사람에게 각각 연결 또는 변화 신호가 겹치는지 비교한 것입니다. 관계의 실제 좋고 나쁨을 예측하지 않습니다.</p></details></div>`,
+      );
+    }
+  document.getElementById("familyRelationArea").innerHTML =
+    `<div class="title">가족 관계 지도</div><p>상생: 목 → 화 → 토 → 금 → 수 → 목<br>상극: 목 → 토 → 수 → 화 → 금 → 목<br>상극은 서로 견제·조절하는 관계입니다.</p><div class="family-rel-grid">${pairs.join("") || "<p>생년월일이 있는 가족 2명 이상을 등록하면 자동으로 표시합니다.</p>"}</div>`;
+}
+// 누락 용어 보강: 원문 복제 없이 자체 설명을 제공합니다.
+for (const [t, h, e] of [
+  ["오행", "五行", "성장·표현·기반·정리·흐름을 다섯 기운으로 나누어 보는 틀"],
+  ["목", "木", "나무에 빗대어 성장과 시작을 살피는 기운"],
+  ["화", "火", "불에 빗대어 표현과 활동을 살피는 기운"],
+  ["토", "土", "흙에 빗대어 기반과 중재를 살피는 기운"],
+  ["금", "金", "쇠에 빗대어 정리와 원칙을 살피는 기운"],
+  ["수", "水", "물에 빗대어 배움과 유연함을 살피는 기운"],
+  ["장성", "將星", "주도성·책임을 살펴보는 보조 신살"],
+  ["겁살", "劫殺", "경쟁과 자원 분산을 점검하는 보조 신살"],
+  ["재살", "災殺", "규칙과 주변 제약을 점검하는 보조 신살"],
+])
+  if (!terms.some((x) => x.t === t))
+    terms.push({
+      t,
+      hanja: h,
+      easy: e + "입니다.",
+      expert: "전체 구조를 함께 보며 단독으로 사건을 판단하지 않습니다.",
+    });
+const termHanja = {
+  비견: "比肩",
+  겁재: "劫財",
+  식신: "食神",
+  상관: "傷官",
+  정재: "正財",
+  편재: "偏財",
+  정관: "正官",
+  편관: "偏官",
+  정인: "正印",
+  편인: "偏印",
+  역마: "驛馬",
+  도화: "桃花",
+};
+terms.push({
+  t: "12운성",
+  hanja: "十二運星",
+  easy: "기운의 변화를 열두 단계로 비유한 표입니다. 십이운성과 같은 말입니다.",
+  expert:
+    "장생·목욕·관대·건록·제왕·쇠·병·사·묘·절·태·양. 실제 수명이나 질병을 뜻하지 않습니다.",
+});
+terms.forEach((t) => {
+  t.hanja = t.hanja || termHanja[t.t] || "";
+});
+const baseTerms = renderTerms;
+renderTerms = function () {
+  baseTerms();
+  const q = document.getElementById("termSearch").value.trim(),
+    shown = terms.filter(
+      (x) =>
+        !q ||
+        x.t.includes(q) ||
+        (x.hanja || "").includes(q) ||
+        (x.word || "").includes(q) ||
+        x.easy.includes(q) ||
+        x.expert.includes(q),
+    );
+  document.querySelectorAll("#termList .term").forEach((el, i) => {
+    const t = shown[i],
+      data = lifeData(),
+      hits = data
+        ? data.pillars.filter((gz) => tenGod(data.pillars[2][0], gz[0]) === t.t)
+            .length
+        : 0;
+    el.insertAdjacentHTML(
+      "beforeend",
+      `<p class="micro">읽는 법: ${esc(t.t)}<br>좋게 나타날 때: ${esc(TEN_THEMES[t.t]?.good || "설명한 특성을 실제 생활의 강점을 찾는 참고로 활용합니다.")}<br>주의해서 볼 때: ${esc(TEN_THEMES[t.t]?.warn || "이 용어 하나만으로 성격이나 사건을 단정하지 않습니다.")}<br>내 사주에서는: ${!data ? "생년월일 입력 후 살펴볼 수 있습니다." : TEN_THEMES[t.t] ? `알려진 기둥의 천간에서 ${hits}개 확인됩니다. 지장간을 포함한 종합 판정은 아닙니다.` : "위 전문 분석에서 관련 구조를 확인하세요. 이 용어의 개인별 성립 여부를 모두 자동 판정하지는 않습니다."}</p>`,
+    );
+  });
+};
+
 renderAll();
 </script>
 <script type="module">
 (async()=>{
   try{
     const [kasi,korean]=await Promise.all([
-      import('https://esm.sh/manseryeok@2.0.0?bundle'),
-      import('https://esm.sh/@fullstackfamily/manseryeok@1.0.8?bundle')
+      import('https://cdn.jsdelivr.net/npm/manseryeok@2.0.0/+esm').catch(()=>import('https://esm.sh/manseryeok@2.0.0?bundle')),
+      import('https://cdn.jsdelivr.net/npm/@fullstackfamily/manseryeok@1.0.8/+esm').catch(()=>import('https://esm.sh/@fullstackfamily/manseryeok@1.0.8?bundle'))
     ]);
-    window.__myeongriEngines={kasi,korean,ready:true,error:null};
+    window.__myeongriEngines={kasi:kasi.calculateFourPillars?kasi:kasi.default,korean:korean.calculateSaju?korean:korean.default,ready:true,error:null};
     window.dispatchEvent(new Event('verification-engines-ready'));
   }catch(e){
     console.warn('교차검증 엔진 로드 실패',e);
