@@ -94,6 +94,11 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 /* 인생지도: 단일 파일 배포 유지 */
 .map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}.map-grid .card{margin:0}.life-line{display:flex;gap:12px;overflow:auto;padding:12px 3px 20px;scroll-snap-type:x proximity}.life-stop{flex:0 0 220px;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:16px;scroll-snap-align:start;min-height:150px}.life-stop.now{border:3px solid var(--sage);background:var(--sage2)}.life-stop.peak{box-shadow:inset 0 5px var(--amber)}.life-stop b,.life-stop span{display:block}.map-lead{font-size:19px!important}.map-chart{width:100%;height:120px;display:block}.life-event{border-left:4px solid var(--sage);padding:12px 16px;margin:12px 0;background:#f1f4ed;border-radius:10px}.navbtn{font-size:14px}.sheet{max-height:90dvh;overscroll-behavior:contain}.brand{flex-wrap:wrap}input,select,textarea{max-width:100%;min-width:0}textarea{font:inherit;min-height:100px}.pillar strong{font-size:clamp(18px,4.7vw,29px)}.flowhead,.verify-head{flex-wrap:wrap}.micro,.sub,.badge,.grade,.flowmeta,.dayun span,.pillar em,.pillar small,.source-card .meta,.school small,.verify-engine small,.mini-legend,.relation-tag{font-size:14px!important}.family-node{border-left:6px solid var(--profile);padding-left:12px}.navinner{max-width:980px}button:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}main{overflow-wrap:anywhere}.timeline-detail{scroll-margin-top:180px}.year-pick{padding:12px;border-radius:12px;border:1px solid var(--line);background:white;min-height:48px}.year-pick[aria-pressed=true]{background:var(--sage2)}
 @media(max-width:480px){.grid2,.tips,.relation-tips{grid-template-columns:1fr}.monthgrid{grid-template-columns:1fr}.navbtn{font-size:12px}.card{padding:16px}.sheet{padding:16px}.brand h1{font-size:25px}}
+
+/* 현재 나이에서 하루까지 이어지는 탐색 화면 */
+.month-tabs{display:flex;gap:8px;overflow:auto;padding:14px 0}.month-tabs .year-pick{flex:0 0 auto}.calendar-day .day-role{font-size:16px}
+.future-years{display:flex;gap:12px;overflow:auto;padding:12px 2px 22px;scroll-snap-type:x proximity}.future-years .life-stop{scroll-snap-align:start}.chosen{border:2px solid var(--sage)!important;background:#eef4ea!important}.explore-profiles{display:flex;gap:8px;overflow:auto;padding:5px 0 14px}.quick-actions{margin-top:16px}.explore-breadcrumb{display:flex;align-items:center;gap:8px;margin:18px 0;font-weight:800;font-size:20px}.explore-breadcrumb button{padding:10px 12px;border-radius:12px;background:var(--sage2);min-height:48px}.year-control{display:flex;align-items:center;gap:12px;max-width:100%}.year-control input{width:130px}.calendar-weekdays,.calendar-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.calendar-weekdays{text-align:center;padding:15px 0 8px;color:var(--muted)}.calendar-day{min-height:86px;border:1px solid var(--line);border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#fffdf8;min-width:0;padding:7px 2px}.calendar-day b{font-size:20px}.calendar-day.selected{background:#354b3b;color:#fff;border:2px solid #354b3b;box-shadow:0 3px 12px #354b3b22}.calendar-day.is-today:not(.selected){border:2px solid var(--amber)}.day-role{font-size:14px;line-height:1.25;word-break:keep-all}.day-dots{display:flex;gap:4px;min-height:7px}.signal{height:7px;width:7px;border-radius:50%;display:inline-block}.signal.connect{background:#4f8556}.signal.adjust{background:#b46b2e}.signal.quiet{background:#beb6ab}.selected .signal{outline:1px solid #fff}.calendar-day.low-emphasis:not(.selected){background:#f4f0e9;color:#7a746a}.month-choice{text-align:left;min-height:140px;cursor:pointer}.month-choice p{font-size:16px}.peak-card{border-top:4px solid #b68b50}.daily-reading{scroll-margin-top:180px}.year-overview,.month-overview{margin-top:18px}.daily-calendar .between h3{margin:0}.calendar-days button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}.btn.small{min-height:44px}.navbtn{font-size:14px}header .engine-status{font-size:14px}main{padding-bottom:50px}.sheet{scroll-padding-bottom:40px}body:has(.modal.show){overflow:hidden}
+@media(max-width:480px){.calendar-day{min-height:78px;border-radius:10px}.calendar-days{gap:3px}.daily-calendar{padding:12px}.day-role{font-size:14px}.calendar-day b{font-size:19px}.month-picker{grid-template-columns:1fr 1fr}.month-choice{padding:12px;min-height:150px}.month-choice p{font-size:16px}.navbtn{font-size:12px}.explore-breadcrumb{gap:4px;font-size:18px}.explore-breadcrumb button{padding:10px}.quick-actions{gap:6px}}
 </style>
 </head>
 <body>
@@ -110,7 +115,7 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
     <p id="heroText">가족을 선택하면 태어난 네 기둥과 여덟 글자부터 10년 흐름, 해마다·달마다 흐름까지 쉬운 말로 풀어줍니다.</p>
     <div class="badges" id="heroBadges"><span class="badge good">쉬운 설명</span><span class="badge blue">실제 계산</span><span class="badge neutral">가족별 저장</span></div>
   </div>
-  <div class="title"><span class="easy-title">우리 가족</span><span class="pro-title">가족 구성원 선택</span></div>
+  <label class="mt">함께 살펴볼 가족</label>
   <div class="scroller" id="memberScroller"></div>
   <div id="lifeMap"></div><details id="expertPanel"><summary>사주팔자·오행·용신·계산 검증 자세히 보기</summary><div id="chartArea"></div></details>
 </section>
@@ -121,10 +126,11 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 </section>
 
 <section id="calendar" class="section">
-  <div class="title" style="margin-top:4px"><span class="easy-title">이번 해, 달마다 어떤 흐름일까?</span><span class="pro-title">월운(月運)</span></div>
+  <div class="title" style="margin-top:4px"><span class="easy-title">선택한 연도부터 하루까지 탐색해요</span><span class="pro-title">연도 → 월 → 일 · 개인별 흐름</span></div>
   <div id="calendarContent"><div class="empty">가족을 선택하고 생년월일을 입력하면 월별 간지 흐름을 표시합니다.</div></div>
 </section>
 
+<section id="wholelife" class="section"><div class="title">태어나서부터 전체 인생지도</div><button class="btn secondary" onclick="showTab('home')">지금부터 미래로 돌아가기</button><div id="wholeLifeContent"></div></section>
 <section id="records" class="section"><div id="recordsContent"></div></section><section id="family" class="section"><div class="title">우리 가족 인생지도</div><div id="memberSummary"></div><div id="familyYears"></div><div id="familyRelationArea"></div></section>
 <section id="dictionary" class="section">
   <div class="title" style="margin-top:4px"><span class="easy-title">어려운 사주말 쉽게 찾기</span><span class="pro-title">한자 읽는 법과 뜻까지 함께 설명해요</span></div>
@@ -136,11 +142,11 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
   <div class="title" style="margin-top:4px"><span class="easy-title">우리 가족 정보와 보안</span><span class="pro-title">가족별 공간 · 공개범위 · 계산 기준</span></div>
   <div class="notice strong"><b>현재 버전:</b> 가족 데이터는 이 브라우저의 로컬 저장소에만 저장됩니다. 실제 서비스 전환 때는 로그인 + familyId + 서버 보안규칙으로 가족별 접근을 강제 차단해야 합니다.</div>
   <div class="title">공개 범위 설계</div>
-  <div class="lock"><div class="ico">🔒</div><div><b>나만 보기</b><small>개인 메모·민감 기록은 본인 계정만 접근</small></div></div>
+  <div class="lock"><div class="ico">🔒</div><div><b>나만 보기</b><small>향후 로그인·서버 권한 연결 후 본인만 접근하도록 설계</small></div></div>
   <div class="lock"><div class="ico">👨‍👩‍👧</div><div><b>가족에게 공개</b><small>사주 기본정보·가족 공통 흐름만 선택 공유</small></div></div>
-  <div class="lock"><div class="ico">🛡️</div><div><b>다른 가족과 완전 분리</b><small>화면이 아니라 서버 보안규칙 단계에서 차단</small></div></div>
+  <div class="lock"><div class="ico">🛡️</div><div><b>다른 가족과 완전 분리</b><small>향후 서버 보안규칙에서 차단해야 하며 현재는 로컬 저장만 사용</small></div></div>
   <div class="title">계산 기준 안내</div>
-  <div class="card"><p><b>한국형 3중 검증</b>을 사용합니다. ① KASI 정본 음력·정밀 절기표를 내장한 <b>manseryeok 2.0</b>을 기준 엔진으로 두고, ② <b>lunar-javascript</b>, ③ <b>@fullstackfamily/manseryeok</b> 결과를 서로 비교합니다. 세 엔진의 연·월·일·시주가 같으면 “3중 일치”로 표시하고, 다르면 해당 사주에 경계/기준 확인 경고를 냅니다.</p><details><summary>왜 KASI API를 브라우저에서 직접 부르지 않나요?</summary><p class="micro">공공데이터 API 인증키를 index.html에 넣으면 누구나 키를 볼 수 있어 보안상 좋지 않습니다. 현재 기준 엔진은 KASI 정본 음력과 KASI와 분 단위로 맞춘 절기 데이터를 내장한 라이브러리를 사용합니다. 정식 가족 서비스에서는 서버에서 KASI API를 추가 대조할 수 있도록 확장합니다.</p></details><details><summary>한국 출생시간 관련 주의</summary><p class="micro">23시 전후의 자시 처리, 진태양시 보정, 과거 한국 표준시처럼 학파·기준에 따라 달라질 수 있는 항목은 자동으로 “기준 확인 필요”로 표시합니다. 향후 출생지역과 자시 관법을 선택하도록 확장합니다.</p></details></div>
+  <div class="card"><p><b>한국형 3중 검증</b>을 사용합니다. ① KASI 정본 음력·정밀 절기표를 내장한 <b>manseryeok 2.0</b>을 기준 엔진으로 두고, ② <b>lunar-javascript</b>, ③ <b>@fullstackfamily/manseryeok</b> 결과를 서로 비교합니다. 세 엔진의 연·월·일·시주가 같으면 “3중 일치”로 표시하고, 다르면 해당 사주에 경계/기준 확인 경고를 냅니다.</p><details><summary>왜 KASI API를 브라우저에서 직접 부르지 않나요?</summary><p class="micro">공공데이터 API 인증키를 index.html에 넣으면 누구나 키를 볼 수 있어 보안상 좋지 않습니다. 현재 기준 엔진은 KASI 정본 음력과 KASI와 분 단위로 맞춘 절기 데이터를 내장한 라이브러리를 사용합니다. 정식 가족 서비스에서는 서버에서 KASI API를 추가 대조할 수 있도록 확장합니다.</p></details><details><summary>한국 출생시간 관련 주의</summary><p class="micro">23시 전후의 자시 처리, 진태양시 보정, 과거 한국 표준시처럼 학파·기준에 따라 달라질 수 있는 항목은 자동으로 “기준 확인 필요”로 표시합니다. 날짜탐색의 계산 기준에서 자시 관법과 경도 보정을 선택할 수 있습니다. 과거 표준시·서머타임 복원은 별도 확인이 필요합니다.</p></details></div>
   <div class="title"><span class="easy-title">여러 책과 학자는 사주를 어떻게 다르게 볼까?</span><span class="pro-title">명리 지식원 · 중국 고전 + 한국 자료</span></div>
   <div class="copyright-note"><b>데이터 원칙</b><br>고전 공개 원문은 출처를 붙여 구조화하고, 현대 저작물은 원문을 복제하지 않고 핵심 이론을 우리말 요약 규칙으로만 저장합니다. 여러 문헌에서 겹치는 해석은 공통 주제로 묶고, 다른 해석은 학파별로 분리합니다.</div>
   <div id="sourceLibrary" class="sourcegrid mt"></div>
@@ -153,7 +159,7 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 <nav><div class="navinner">
 <button class="navbtn active" data-tab="home"><span>⌂</span>인생지도</button>
 <button class="navbtn" data-tab="flow"><span>⌁</span>흐름</button>
-<button class="navbtn" data-tab="calendar"><span>▦</span>올해·월별</button>
+<button class="navbtn" data-tab="calendar"><span>▦</span>날짜탐색</button>
 <button class="navbtn" data-tab="records"><span>✎</span>인생기록</button>
 <button class="navbtn" data-tab="family"><span>♧</span>가족</button>
 </div></nav>
@@ -178,7 +184,7 @@ label{font-size:15px;margin-top:14px}.field{font-size:17px;min-height:52px}.seg{
 </select><div class="hour-help">정확한 분은 몰라도 “미시쯤”, “축시쯤”처럼 알고 있다면 선택하세요. 해당 시간대의 대표시각으로 계산합니다.</div></div>
 <div id="timeUnknownWrap" class="notice mt" style="display:none">출생시간을 전혀 모르면 시주(時柱)는 확정하지 않고, 년주·월주·일주 중심으로 봅니다.</div>
 <input type="checkbox" id="mUnknownTime" style="display:none" />
-<label>공개범위</label><select id="mVisibility" class="field"><option value="family">가족에게 공개</option><option value="private">나만 보기</option><option value="selected">일부 공개 · 권한 미연결</option></select>
+<label>공개범위</label><select id="mVisibility" class="field"><option value="family">가족공개 표시 · 공유 미연결</option><option value="private">나만보기 표시 · 권한 미연결</option><option value="selected">일부 공개 · 권한 미연결</option></select>
 <div style="height:14px"></div><button class="btn" onclick="saveMember()">저장하고 계산하기</button>
 <div style="height:8px"></div><button class="btn ghost" onclick="closeMemberModal()">닫기</button>
 </div></div>
@@ -527,12 +533,15 @@ function getLunarForMember(m){
 }
 function getChart(m){
  try{
-  const lunar=getLunarForMember(m);if(!lunar)return null;
-  const ec=lunar.getEightChar();let pillars=[ec.getYear(),ec.getMonth(),ec.getDay(),ec.getTime()];
-  const primary=window.__myeongriEngines?.kasi;
-  if(primary){const [year,month,day]=m.birth.split('-').map(Number),tm=parseTime(m.time);const p=primary.calculateFourPillars({year,month,day,hour:tm.h,minute:tm.m,isLunar:m.cal==='음력',isLeapMonth:!!m.leap,dayBoundary:'splitJasi'}).toObject();pillars=[p.year,p.month,p.day,p.hour].map(normalizeKoreanGz)}
-  return {lunar,solar:lunar.getSolar(),ec,pillars};
- }catch(e){console.warn(e);return {error:String(e?.message||e)}}
+  if(!m?.birth||typeof Solar==='undefined')return null;
+  const birth=birthSolar(m),tm=parseTime(m.time),lunar=Solar.fromYmdHms(birth.year,birth.month,birth.day,tm.h,tm.m,0).getLunar(),ec=lunar.getEightChar();
+  ec.setSect(calendarSettings.dayBoundary==='jasi'?1:2);
+  const engine=window.__myeongriEngines?.kasi;
+  let primary=null,pillars;
+  if(engine){const [year,month,day]=m.birth.split('-').map(Number);primary=engine.calculateFourPillars({year,month,day,hour:tm.h,minute:tm.m,isLunar:m.cal==='음력',isLeapMonth:!!m.leap,gender:m.gender||'female',...calculationOptions()});const p=primary.toObject();pillars=[p.year,p.month,p.day,p.hour].map(normalizeKoreanGz);}
+  else pillars=transitAt(birth.year,birth.month,birth.day,tm.h,tm.m).pillars;
+  return {lunar,solar:lunar.getSolar(),ec,pillars,primary};
+ }catch(e){return {error:String(e?.message||e)}}
 }
 const KR_STEM={갑:'甲',을:'乙',병:'丙',정:'丁',무:'戊',기:'己',경:'庚',신:'辛',임:'壬',계:'癸'};
 const KR_BRANCH={자:'子',축:'丑',인:'寅',묘:'卯',진:'辰',사:'巳',오:'午',미:'未',신:'申',유:'酉',술:'戌',해:'亥'};
@@ -541,7 +550,7 @@ function normalizeKoreanGz(v){
  if(v.length>=2&&STEM_EL[v[0]]&&BRANCH_EL[v[1]])return v.slice(0,2);
  const a=KR_STEM[v[0]],b=KR_BRANCH[v[1]];return a&&b?a+b:v.slice(0,2);
 }
-function memberKey(m){return [m.id,m.birth,m.time,m.timeMode,m.birthHourBranch,m.cal,m.leap,m.unknownTime,m.gender].join('|')}
+function memberKey(m){return [m.id,m.birth,m.time,m.timeMode,m.birthHourBranch,m.cal,m.leap,m.unknownTime,m.gender,settingsStamp()].join('|')}
 function pillarsMatch(a,b,count=4){if(!a||!b)return false;for(let i=0;i<count;i++)if(a[i]!==b[i])return false;return true}
 function majorityPillars(sets,count=4){
  const out=[];for(let i=0;i<count;i++){const tally={};sets.filter(Boolean).forEach(s=>{const v=s[i];if(v)tally[v]=(tally[v]||0)+1});const best=Object.entries(tally).sort((a,b)=>b[1]-a[1])[0];out.push(best||['',0])}return out;
@@ -553,10 +562,10 @@ async function calculateVerification(m){
  if(!extra.ready||!extra.kasi||!extra.korean) return {state:extra.error?'error':'pending',count:(m.timeMode==='unknown'||m.unknownTime)?3:4,message:extra.error?'교차검증 엔진을 연결하지 못했습니다. 네트워크 연결을 확인해 주세요.':'교차검증 엔진을 불러오는 중입니다.',engines:[{name:'lunar-javascript',pillars:base.pillars,note:'기본 계산 완료'}]};
  try{
   const [y,mo,d]=m.birth.split('-').map(Number),tm=parseTime(m.time),count=(m.timeMode==='unknown'||m.unknownTime)?3:4;
-  const primary=extra.kasi.calculateFourPillars({year:y,month:mo,day:d,hour:tm.h,minute:tm.m,isLunar:m.cal==='음력',isLeapMonth:!!m.leap,gender:m.gender,dayBoundary:'splitJasi'});
+  const primary=extra.kasi.calculateFourPillars({year:y,month:mo,day:d,hour:tm.h,minute:tm.m,isLunar:m.cal==='음력',isLeapMonth:!!m.leap,gender:m.gender,...calculationOptions()});
   const po=primary.toObject?primary.toObject():primary;
   const p1=[po.year,po.month,po.day,po.hour].map(normalizeKoreanGz);
-  const independent=getLunarForMember(m).getEightChar();const p2=[independent.getYear(),independent.getMonth(),independent.getDay(),independent.getTime()];
+  const independent=getLunarForMember(m).getEightChar();independent.setSect(calendarSettings.dayBoundary==='jasi'?1:2);const p2=[independent.getYear(),independent.getMonth(),independent.getDay(),independent.getTime()];
   let sy=y,sm=mo,sd=d;
   if(m.cal==='음력'){
    const conv=extra.korean.lunarToSolar(y,mo,d,!!m.leap);sy=conv.solar.year;sm=conv.solar.month;sd=conv.solar.day;
@@ -568,8 +577,8 @@ async function calculateVerification(m){
   const weak=maj.some(([,n])=>n<2);
   const result={state:all?'ok':weak?'error':'warn',count,engines:[
     {name:'KASI 정본 기반 manseryeok 2.0',pillars:p1,note:'KASI 정본 음력·정밀 절기표 기반 기준 엔진'},
-    {name:'lunar-javascript 1.7.7',pillars:p2,note:'범용 만세력 교차검증'},
-    {name:'한국형 manseryeok 1.0.8',pillars:p3,note:'독립 한국형 계산엔진 교차검증'}
+    {name:'lunar-javascript 1.7.7',pillars:p2,note:'범용 계산·기본 시각 기준 (절기 표준시·경도·자시 관법 차이 가능)'},
+    {name:'한국형 manseryeok 1.0.8',pillars:p3,note:'독립 한국형 계산·시간보정 끔 (자시 관법 차이 가능)'}
   ],majority:maj.map(x=>x[0]),message:all?'세 계산엔진의 사주 기둥이 모두 일치합니다.':'계산엔진 사이에 차이가 있습니다. 절기 경계·자시·시간보정 기준을 확인하세요.'};
   verificationCache.set(key,result);return result;
  }catch(e){console.warn('verification',e);return {state:'error',message:'교차검증 중 오류: '+String(e?.message||e),engines:[{name:'lunar-javascript',pillars:base.pillars,note:'기본 계산만 사용 가능'}]}}
@@ -663,7 +672,7 @@ function renderCalendar(){
  }catch(e){box.innerHTML='<div class="notice strong">월운 계산 중 오류가 발생했습니다.</div>'}
 }
 function renderTerms(){const q=(document.getElementById('termSearch').value||'').trim();const list=document.getElementById('termList');const arr=terms.filter(x=>!q||x.t.includes(q)||(x.hanja||'').includes(q)||(x.word||'').includes(q)||x.easy.includes(q)||x.expert.includes(q));list.innerHTML=arr.length?arr.map(x=>`<div class="term"><b>${x.t}${x.hanja?`<span class="term-hanja">${x.hanja}</span>`:''}</b>${x.word?`<div class="term-meaning">한자 뜻 · ${x.word}</div>`:''}<div class="easy">${x.easy}</div><div class="expert">전문용어로는: ${x.expert}</div></div>`).join(''):'<div class="empty">검색 결과가 없어요.</div>'}
-function renderAll(){renderMembers();renderSummary();renderChart();renderFamilyRelations();renderFlow();renderCalendar();renderTerms();renderSources();renderLifeMap();renderRecords();renderFamilyMap()}
+function renderAll(){syncExploreProfile();renderMembers();renderSummary();renderChart();renderFamilyRelations();renderFlow();renderCalendar();renderTerms();renderSources();renderLifeMap();renderRecords();renderFamilyMap();if(activeSection==='wholelife')renderWholeLifeMap();activateSection(activeSection);wireProfilePickers()}
 
 function openMemberModal(){
  document.getElementById('modalTitle').textContent='가족 추가';document.getElementById('mId').value='';document.getElementById('mName').value='';document.getElementById('mRelation').value='본인';document.getElementById('mGender').value='female';document.getElementById('mBirth').value='';document.getElementById('mTime').value='12:00';document.getElementById('mHourBranch').value='午';document.getElementById('mLeap').checked=false;document.getElementById('mVisibility').value='family';setCalendar('양력');setTimeMode('exact');document.getElementById('memberModal').classList.add('show')
@@ -844,8 +853,8 @@ function lifeWave(data) {
           `${20 + age * 9.5},${70 - Math.max(-5, Math.min(5, (v.score + (v.background?.score || 0)) / 2)) * 8}`,
       )
       .join(" "),
-    nowAge = new Date().getFullYear() - data.birthYear;
-  return `<div class="card"><h3>인생 흐름의 파동</h3><svg class="map-chart" viewBox="0 0 800 120" role="img" aria-label="0세부터 80세까지 전통 규칙의 균형 참고 지표"><path d="M20 70H780" stroke="#d6ccbf"/><polyline points="${pts}" fill="none" stroke="#6f846a" stroke-width="3"/>${nowAge >= 0 && nowAge <= 80 ? `<path d="M${20 + nowAge * 9.5} 10V100" stroke="#aa6e32" stroke-dasharray="4"/><text x="${Math.min(720, Math.max(20, 20 + nowAge * 9.5))}" y="15" font-size="15">지금 여기</text>` : ""}${[0, 20, 40, 60, 80].map((a) => `<text x="${20 + a * 9.5}" y="118" text-anchor="middle" font-size="15">${a}세</text>`).join("")}</svg><p class="micro">대운·세운의 균형 규칙을 함께 그린 참고 그래프입니다. 높낮이는 인생의 가치·성공 확률·실제 행복을 뜻하지 않습니다. 나이는 연도 차이 기준이며 대운 카드는 엔진의 기산 나이를 사용합니다.</p></div>`;
+    nowAge = exactAge(data.birth,todayKST());
+  return `<div class="card"><h3>인생 흐름의 파동</h3><svg class="map-chart" viewBox="0 0 800 120" role="img" aria-label="0세부터 80세까지 전통 규칙의 균형 참고 지표"><path d="M20 70H780" stroke="#d6ccbf"/><polyline points="${pts}" fill="none" stroke="#6f846a" stroke-width="3"/>${nowAge >= 0 && nowAge <= 80 ? `<path d="M${20 + nowAge * 9.5} 10V100" stroke="#aa6e32" stroke-dasharray="4"/><text x="${Math.min(720, Math.max(20, 20 + nowAge * 9.5))}" y="15" font-size="15">지금 여기</text>` : ""}${[0, 20, 40, 60, 80].map((a) => `<text x="${20 + a * 9.5}" y="118" text-anchor="middle" font-size="15">${a}세</text>`).join("")}</svg><p class="micro">대운·세운의 균형 규칙을 함께 그린 참고 그래프입니다. 높낮이는 인생의 가치·성공 확률·실제 행복을 뜻하지 않습니다. 현재 위치는 실제 만 나이입니다. 그래프는 연 단위 참고값이고 대운 카드의 나이는 ‘명리 계산 나이’입니다.</p></div>`;
 }
 function rankedPeriods(data) {
   return data.periods
@@ -872,8 +881,8 @@ function rankedPeriods(data) {
     .sort((a, b) => b.rank - a.rank)
     .slice(0, 3);
 }
-function renderLifeMap() {
-  const box = document.getElementById("lifeMap"),
+function renderWholeLifeMap() {
+  const box = document.getElementById("wholeLifeContent"),
     data = lifeData(),
     m = currentMember();
   if (!data) {
@@ -910,7 +919,7 @@ function renderLifeMap() {
     .map(([t, p]) => `<div class="card"><h3>${t}</h3><p>${p}</p></div>`)
     .join(
       "",
-    )}</div><div class="title">현재 나는 어떤 시기인가</div>${yearCard(data, now)}<div class="title">내 인생 전체 지도</div>${lifeWave(data)}<p>0 → 10 → 20 → 30 → 40 → 50 → 60 → 70 → 80세<br>10년 카드를 누르면 연도 → 월별로 펼쳐집니다.</p><div class="life-line">${[{ start: data.birthYear, end: (data.periods[0]?.start || data.birthYear + 10) - 1, age: 0, endAge: (data.periods[0]?.age || 10) - 1, gz: "" }, ...data.periods.filter((d) => d.age <= 80)].map((d) => `<button class="life-stop ${now >= d.start && now <= d.end ? "now" : ""} ${peaks.some((p) => p.start === d.start) ? "peak" : ""}" onclick="openDecade(${d.start},${d.end})"><b>${now >= d.start && now <= d.end ? "📍 지금 여기 · " : ""}${d.age}~${d.endAge}세</b><span>${d.start}~${d.end}년</span><span>${d.gz ? fortuneInterpretation(d.gz, data.pillars).theme.tags.join("·") : "성장과 생활의 바탕"}</span>${peaks.some((p) => p.start === d.start) ? "<span>✦ 전성기 후보</span>" : ""}<span>기록 ${lifeEvents.filter((e) => e.memberId === m.id && e.year >= d.start && e.year <= d.end).length}개</span></button>`).join("")}</div><div id="lifeDrill" class="timeline-detail"></div><div class="title">내 인생의 큰 세 구간</div><div class="map-grid">${[
+    )}</div><div class="title">현재 나는 어떤 시기인가</div>${yearCard(data, now)}<div class="title">내 인생 전체 지도</div>${lifeWave(data)}<p>0 → 10 → 20 → 30 → 40 → 50 → 60 → 70 → 80세<br>10년 카드를 누르면 연도 → 월별로 펼쳐집니다.</p><div class="life-line">${[{ start: data.birthYear, end: (data.periods[0]?.start || data.birthYear + 10) - 1, age: 0, endAge: (data.periods[0]?.age || 10) - 1, gz: "" }, ...data.periods.filter((d) => d.age <= 80)].map((d) => `<button class="life-stop ${now >= d.start && now <= d.end ? "now" : ""} ${peaks.some((p) => p.start === d.start) ? "peak" : ""}" onclick="openDecade(${d.start},${d.end})"><b>${now >= d.start && now <= d.end ? "📍 지금 여기 · " : ""}명리 계산 나이 ${d.age}~${d.endAge}</b><span>${d.start}~${d.end}년</span><span>${d.gz ? fortuneInterpretation(d.gz, data.pillars).theme.tags.join("·") : "성장과 생활의 바탕"}</span>${peaks.some((p) => p.start === d.start) ? "<span>✦ 전성기 후보</span>" : ""}<span>기록 ${lifeEvents.filter((e) => e.memberId === m.id && e.year >= d.start && e.year <= d.end).length}개</span></button>`).join("")}</div><div id="lifeDrill" class="timeline-detail"></div><div class="title">내 인생의 큰 세 구간</div><div class="map-grid">${[
     [0, 30, "초년운"],
     [30, 60, "중년운"],
     [60, 90, "말년운"],
@@ -964,7 +973,7 @@ function renderLifeMap() {
     })
     .join(
       "",
-    )}</div><div class="title">내 전성기는 언제?</div><p>대운과 각 연도의 균형 참고 점수를 함께 비교한 상대적 후보입니다. 성공 확률이나 보장된 전성기가 아닙니다.</p><div class="map-grid">${peaks.map((d, i) => `<div class="card"><span class="badge good">후보 ${i + 1} · ${d.kind}</span><h3>${d.age}~${d.endAge}세</h3><p>${d.start}~${d.end}년<br>이 구간은 ${d.kind}의 주제에 상대적으로 힘이 실리는 것으로 해석합니다.</p><button class="btn secondary mt" onclick="openDecade(${d.start},${d.end});document.getElementById('lifeDrill').scrollIntoView()">연도별 근거 보기</button></div>`).join("")}</div><div class="title">생활 주제로 살펴보기</div><div class="row wrap">${["현재", "올해", "3년", "10년"].map((h) => `<button class="year-pick" onclick="horizon='${h}';renderCategories()">${h}</button>`).join("")}</div><div id="lifeCategories" class="map-grid mt"></div><div class="title">올해 나에게 중요한 것</div>${annualSummary(data, now)}<div class="title">앞으로 1년·3년·5년·10년</div><div class="map-grid">${[1, 3, 5, 10].map((n) => `<div class="card"><h3>${n}년 앞 · ${now + n}년</h3><p>${plain(yearReading(data, now + n))}</p>${evidence(yearReading(data, now + n))}</div>`).join("")}</div><div class="title">내 인생 실제 기록</div>${eventCards(data)}<button class="btn secondary" onclick="showTab('records')">인생기록 쓰기·시간 후보 비교</button>`;
+    )}</div><div class="title">내 전성기는 언제?</div><p>대운과 각 연도의 균형 참고 점수를 함께 비교한 상대적 후보입니다. 성공 확률이나 보장된 전성기가 아닙니다.</p><div class="map-grid">${peaks.map((d, i) => `<div class="card"><span class="badge good">후보 ${i + 1} · ${d.kind}</span><h3>명리 계산 나이 ${d.age}~${d.endAge}</h3><p>${d.start}~${d.end}년<br>이 구간은 ${d.kind}의 주제에 상대적으로 힘이 실리는 것으로 해석합니다.</p><button class="btn secondary mt" onclick="openDecade(${d.start},${d.end});document.getElementById('lifeDrill').scrollIntoView()">연도별 근거 보기</button></div>`).join("")}</div><div class="title">생활 주제로 살펴보기</div><div class="row wrap">${["현재", "올해", "3년", "10년"].map((h) => `<button class="year-pick" onclick="horizon='${h}';renderCategories()">${h}</button>`).join("")}</div><div id="lifeCategories" class="map-grid mt"></div><div class="title">올해 나에게 중요한 것</div>${annualSummary(data, now)}<div class="title">앞으로 1년·3년·5년·10년</div><div class="map-grid">${[1, 3, 5, 10].map((n) => `<div class="card"><h3>${n}년 앞 · ${now + n}년</h3><p>${plain(yearReading(data, now + n))}</p>${evidence(yearReading(data, now + n))}</div>`).join("")}</div><div class="title">내 인생 실제 기록</div>${eventCards(data)}<button class="btn secondary" onclick="showTab('records')">인생기록 쓰기·시간 후보 비교</button>`;
   renderCategories();
 }
 function renderCategories() {
@@ -1012,7 +1021,7 @@ const originalFlow=renderFlow;
 renderFlow=function(){
  originalFlow();const data=lifeData();if(!data)return;
  const box=document.getElementById('flowContent'),expert=box.innerHTML,peaks=rankedPeriods(data);
- box.innerHTML=`<div class="card"><h3>10년씩 내 삶을 살펴봐요</h3><p>시기를 선택하면 연도별 설명과 12개월 흐름으로 이어집니다. 색상과 후보는 전통 규칙의 상대적 비교입니다.</p></div><div class="map-grid">${data.periods.filter(d=>d.age<=80).map(d=>`<div class="card"><h3>${d.age}~${d.endAge}세 · ${d.start}~${d.end}</h3><p>${fortuneInterpretation(d.gz,data.pillars).theme.good}</p>${peaks.some(p=>p.start===d.start)?'<span class="badge good">전성기 후보</span>':''}<button class="btn secondary mt" onclick="showTab('home');openDecade(${d.start},${d.end});document.getElementById('lifeDrill').scrollIntoView()">해마다·월별 보기</button></div>`).join('')}</div><details><summary>대운 기산·전문 분석과 기존 상세 풀이</summary>${expert}</details>`;
+ box.innerHTML=`<div class="card"><h3>10년씩 내 삶을 살펴봐요</h3><p>시기를 선택하면 연도별 설명과 12개월 흐름으로 이어집니다. 색상과 후보는 전통 규칙의 상대적 비교입니다.</p></div><div class="map-grid">${data.periods.filter(d=>d.age<=80).map(d=>`<div class="card"><h3>명리 계산 나이 ${d.age}~${d.endAge} · ${d.start}~${d.end}</h3><p>${fortuneInterpretation(d.gz,data.pillars).theme.good}</p>${peaks.some(p=>p.start===d.start)?'<span class="badge good">전성기 후보</span>':''}<button class="btn secondary mt" onclick="showTab('home');openDecade(${d.start},${d.end});document.getElementById('lifeDrill').scrollIntoView()">해마다·월별 보기</button></div>`).join('')}</div><details><summary>대운 기산·전문 분석과 기존 상세 풀이</summary>${expert}</details>`;
 };
 const originalCalendar = renderCalendar;
 renderCalendar = function () {
@@ -1209,7 +1218,7 @@ function compareBirthHours() {
 }
 function renderFamilyMap() {
   const box = document.getElementById("familyYears"),
-    now = new Date().getFullYear(),
+    now = todayKST().year,
     valid = members.map((m) => lifeData(m)).filter(Boolean);
   box.innerHTML = `<p>가족별 흐름은 전통 규칙의 참고 해석입니다. 실제 일정과 의견을 먼저 확인하세요.</p>${Array.from(
     { length: 10 },
@@ -1330,6 +1339,1118 @@ renderTerms = function () {
     );
   });
 };
+
+// 미래 탐색: 날짜 상태, 한국 표준시 계산, 개인별 관계를 한 경로로 연결합니다.
+const EXPLORER_SETTINGS_KEY = "family_myeongri_calendar_settings_v1";
+let calendarSettings;
+try {
+  calendarSettings =
+    JSON.parse(localStorage.getItem(EXPLORER_SETTINGS_KEY) || "null") || {};
+} catch {
+  calendarSettings = {};
+}
+calendarSettings = {
+  dayBoundary: "splitJasi",
+  longitudeCorrection: false,
+  longitude: 127.5,
+  time: "12:00",
+  ...calendarSettings,
+};
+if (!["midnight", "jasi", "splitJasi"].includes(calendarSettings.dayBoundary))
+  calendarSettings.dayBoundary = "splitJasi";
+if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(calendarSettings.time))
+  calendarSettings.time = "12:00";
+if (
+  !Number.isFinite(Number(calendarSettings.longitude)) ||
+  calendarSettings.longitude < 120 ||
+  calendarSettings.longitude > 140
+)
+  calendarSettings.longitude = 127.5;
+const momentCache = new Map(),
+  termCache = new Map(),
+  profileCache = new Map();
+const todayKST = () => {
+  const p = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date());
+  const get = (t) => Number(p.find((x) => x.type === t).value);
+  return {
+    year: get("year"),
+    month: get("month"),
+    day: get("day"),
+    hour: get("hour"),
+    minute: get("minute"),
+  };
+};
+const startDateKST = todayKST();
+let selectedProfileId = current,
+  selectedYear = startDateKST.year,
+  selectedMonth = startDateKST.month,
+  selectedDay = startDateKST.day;
+let exploreLevel = "year",
+  activeSection = "home",
+  interest = "전체",
+  futureSpan = 10;
+const DATE_MIN_YEAR = 1800,
+  DATE_MAX_YEAR = 2200;
+function dayCount(y, m) {
+  return new Date(Date.UTC(y, m, 0)).getUTCDate();
+}
+function dateISO(y, m, d) {
+  return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+}
+function kstMillis(y, m, d, h = 0, minute = 0, second = 0) {
+  return Date.UTC(y, m - 1, d, h - 9, minute, second);
+}
+function kstParts(ms) {
+  const d = new Date(ms + 9 * 3600000);
+  return {
+    year: d.getUTCFullYear(),
+    month: d.getUTCMonth() + 1,
+    day: d.getUTCDate(),
+    hour: d.getUTCHours(),
+    minute: d.getUTCMinutes(),
+    second: d.getUTCSeconds(),
+  };
+}
+function kstLabel(ms) {
+  const p = kstParts(ms);
+  return `${dateISO(p.year, p.month, p.day)} ${String(p.hour).padStart(2, "0")}:${String(p.minute).padStart(2, "0")}:${String(p.second).padStart(2, "0")} KST`;
+}
+function exactAge(birth, at = todayKST()) {
+  let n = at.year - birth.year;
+  if (
+    at.month < birth.month ||
+    (at.month === birth.month && at.day < birth.day)
+  )
+    n--;
+  return n;
+}
+function birthSolar(m) {
+  if (!m?.birth) return null;
+  const [year, month, day] = m.birth.split("-").map(Number);
+  if (m.cal !== "음력") return { year, month, day };
+  const engine = window.__myeongriEngines?.kasi;
+  if (engine) return engine.lunarToSolar(year, month, day, !!m.leap);
+  const l = Lunar.fromYmdHms(
+    year,
+    m.leap ? -month : month,
+    day,
+    12,
+    0,
+    0,
+  ).getSolar();
+  return { year: l.getYear(), month: l.getMonth(), day: l.getDay() };
+}
+function calculationOptions() {
+  return {
+    dayBoundary: calendarSettings.dayBoundary,
+    ...(calendarSettings.longitudeCorrection
+      ? {
+          trueSolarTime: {
+            longitude: Number(calendarSettings.longitude),
+            applyEquationOfTime: false,
+            applyHistoricalDst: false,
+          },
+        }
+      : {}),
+  };
+}
+function settingsStamp() {
+  return (
+    JSON.stringify(calculationOptions()) +
+    "|" +
+    !!window.__myeongriEngines?.ready
+  );
+}
+function termsForYear(y) {
+  const key = y + "|" + !!window.__myeongriEngines?.kasi;
+  if (termCache.has(key)) return termCache.get(key);
+  const engine = window.__myeongriEngines?.kasi;
+  let result;
+  if (engine) {
+    result = engine
+      .getSolarTermsOfYear(y)
+      .map((t) => ({ ...t, ms: new Date(t.date).getTime() }));
+  } else {
+    const l = Solar.fromYmdHms(y, 7, 1, 12, 0, 0).getLunar(),
+      table = l.getJieQiTable();
+    const keys = [
+      "小寒",
+      "大寒",
+      "立春",
+      "雨水",
+      "惊蛰",
+      "春分",
+      "清明",
+      "谷雨",
+      "立夏",
+      "小满",
+      "芒种",
+      "夏至",
+      "小暑",
+      "大暑",
+      "立秋",
+      "处暑",
+      "白露",
+      "秋分",
+      "寒露",
+      "霜降",
+      "立冬",
+      "小雪",
+      "大雪",
+      "冬至",
+    ];
+    const kr = [
+      "소한",
+      "대한",
+      "입춘",
+      "우수",
+      "경칩",
+      "춘분",
+      "청명",
+      "곡우",
+      "입하",
+      "소만",
+      "망종",
+      "하지",
+      "소서",
+      "대서",
+      "입추",
+      "처서",
+      "백로",
+      "추분",
+      "한로",
+      "상강",
+      "입동",
+      "소설",
+      "대설",
+      "동지",
+    ];
+    result = keys.map((name, index) => {
+      const t = table[name];
+      return {
+        index,
+        name: kr[index],
+        hanja: name,
+        ms: Date.UTC(
+          t.getYear(),
+          t.getMonth() - 1,
+          t.getDay(),
+          t.getHour() - 8,
+          t.getMinute(),
+          t.getSecond(),
+        ),
+      };
+    });
+  }
+  termCache.set(key, result);
+  return result;
+}
+function transitAt(y, m, d, h = 12, minute = 0) {
+  const key = [y, m, d, h, minute, settingsStamp()].join("|");
+  if (momentCache.has(key)) return momentCache.get(key);
+  const engine = window.__myeongriEngines?.kasi;
+  let pillars, source;
+  if (engine) {
+    const p = engine
+      .calculateFourPillars({
+        year: y,
+        month: m,
+        day: d,
+        hour: h,
+        minute,
+        ...calculationOptions(),
+      })
+      .toObject();
+    pillars = [p.year, p.month, p.day, p.hour].map(normalizeKoreanGz);
+    source = "한국형 기준 엔진";
+  } else {
+    const instant = kstMillis(y, m, d, h, minute),
+      cn = kstParts(instant - 3600000),
+      season = Solar.fromYmdHms(
+        cn.year,
+        cn.month,
+        cn.day,
+        cn.hour,
+        cn.minute,
+        0,
+      ).getLunar();
+    const offset = calendarSettings.longitudeCorrection
+        ? Math.round((Number(calendarSettings.longitude) - 135) * 4)
+        : 0,
+      clock = kstParts(instant + offset * 60000),
+      l = Solar.fromYmdHms(
+        clock.year,
+        clock.month,
+        clock.day,
+        clock.hour,
+        clock.minute,
+        0,
+      ).getLunar();
+    const day =
+      calendarSettings.dayBoundary === "jasi"
+        ? l.getDayInGanZhiExact()
+        : l.getDayInGanZhiExact2();
+    let hour = l.getTimeInGanZhi();
+    if (calendarSettings.dayBoundary === "midnight") {
+      const stems = Object.keys(STEM_INFO),
+        bi = Object.keys(BRANCH_INFO).indexOf(hour[1]),
+        si = stems.indexOf(day[0]);
+      hour = stems[((si % 5) * 2 + bi) % 10] + hour[1];
+    }
+    pillars = [
+      season.getYearInGanZhiExact(),
+      season.getMonthInGanZhiExact(),
+      day,
+      hour,
+    ];
+    source = "lunar-javascript 대체 계산";
+  }
+  const value = {
+    year: y,
+    month: m,
+    day: d,
+    hour: h,
+    minute,
+    ms: kstMillis(y, m, d, h, minute),
+    pillars,
+    source,
+  };
+  momentCache.set(key, value);
+  return value;
+}
+function selectedMoment() {
+  const t = parseTime(calendarSettings.time);
+  return transitAt(selectedYear, selectedMonth, selectedDay, t.h, t.m);
+}
+function solarNextDate(p, days) {
+  return kstParts(kstMillis(p.year, p.month, p.day, 12) + days * 86400000);
+}
+function profileData(m = currentMember()) {
+  if (!m) return null;
+  const key = memberKey(m) + "|" + JSON.stringify(m) + "|" + settingsStamp();
+  if (profileCache.has(key)) return profileCache.get(key);
+  const c = getChart(m);
+  if (!c || c.error) return null;
+  const b = birthSolar(m),
+    p = knownPillars(m, c),
+    yun = c.ec.getYun(m.gender === "male" ? 1 : 0, 1);
+  let periods, origin;
+  if (c.primary?.luckPillars) {
+    const lp = c.primary.luckPillars;
+    const start = Solar.fromYmdHms(
+      b.year,
+      b.month,
+      b.day,
+      parseTime(m.time).h,
+      parseTime(m.time).m,
+      0,
+    )
+      .nextYear(lp.startYears)
+      .nextMonth(lp.startMonths)
+      .next(lp.startDays);
+    periods = lp.pillars.map((d, i) => {
+      const a = start.nextYear(i * 10),
+        z = start.nextYear((i + 1) * 10);
+      return {
+        start: a.getYear(),
+        end: z.getYear(),
+        age: d.age,
+        endAge: d.age + 9,
+        gz: normalizeKoreanGz(d.korean),
+        startMs: kstMillis(
+          a.getYear(),
+          a.getMonth(),
+          a.getDay(),
+          a.getHour(),
+          a.getMinute(),
+        ),
+        endMs: kstMillis(
+          z.getYear(),
+          z.getMonth(),
+          z.getDay(),
+          z.getHour(),
+          z.getMinute(),
+        ),
+      };
+    });
+    origin = "한국형 기준 엔진";
+  } else {
+    periods = yun
+      .getDaYun(11)
+      .filter((d) => d.getIndex() > 0)
+      .map((d, i) => {
+        const a = yun.getStartSolar().nextYear(i * 10),
+          z = a.nextYear(10);
+        return {
+          start: a.getYear(),
+          end: z.getYear(),
+          age: d.getStartAge(),
+          endAge: d.getEndAge(),
+          gz: d.getGanZhi(),
+          startMs: kstMillis(
+            a.getYear(),
+            a.getMonth(),
+            a.getDay(),
+            a.getHour(),
+            a.getMinute(),
+          ),
+          endMs: kstMillis(
+            z.getYear(),
+            z.getMonth(),
+            z.getDay(),
+            z.getHour(),
+            z.getMinute(),
+          ),
+        };
+      });
+    origin = "lunar-javascript 대체 기산";
+  }
+  const result = {
+    m,
+    c,
+    pillars: p,
+    birthYear: b.year,
+    birth: b,
+    periods,
+    origin,
+  };
+  profileCache.set(key, result);
+  return result;
+}
+function periodAt(data, ms) {
+  return data.periods.find((p) => ms >= p.startMs && ms < p.endMs) || null;
+}
+const BRANCH_MAIN_STEM = {
+  子: "癸",
+  丑: "己",
+  寅: "甲",
+  卯: "乙",
+  辰: "戊",
+  巳: "丙",
+  午: "丁",
+  未: "己",
+  申: "庚",
+  酉: "辛",
+  戌: "戊",
+  亥: "壬",
+};
+const FIELD_GROUPS = [
+  { name: "재물·재정", roles: ["정재", "편재"], index: 0 },
+  { name: "직업", roles: ["정관", "편관"], index: 1 },
+  { name: "사업", roles: ["식신", "상관", "편재"], index: 2 },
+  { name: "가족·관계", roles: ["비견", "겁재", "정인", "정관"], index: 5 },
+  { name: "공부", roles: ["정인", "편인"], index: 6 },
+  { name: "안정", roles: ["정재", "정인", "정관"], index: 3 },
+];
+function elementRelation(a, b) {
+  if (a === b) return "같은 기운";
+  if (GEN[a] === b) return "내가 북돋는 상생";
+  if (GEN[b] === a) return "나를 북돋는 상생";
+  if (CTRL[a] === b) return "내가 조절하는 상극";
+  if (CTRL[b] === a) return "나를 조절하는 상극";
+  return "";
+}
+function analyzeMoment(data, t) {
+  const period = periodAt(data, t.ms),
+    gz = t.pillars[2],
+    it = fortuneInterpretation(gz, data.pillars),
+    layers = [
+      { label: "원국", pillars: data.pillars },
+      { label: "대운", pillars: period ? [period.gz] : [] },
+      { label: "세운", pillars: [t.pillars[0]] },
+      { label: "월운", pillars: [t.pillars[1]] },
+    ].map((l) => ({
+      ...l,
+      rels: l.pillars.length ? compareLuckRelations(l.pillars, gz) : [],
+    }));
+  const dayStem = data.pillars[2][0],
+    dayEl = STEM_EL[dayStem],
+    branchRole = tenGod(dayStem, BRANCH_MAIN_STEM[gz[1]]),
+    roles = [
+      it.tg,
+      branchRole,
+      tenGod(dayStem, t.pillars[0][0]),
+      ...(period ? [tenGod(dayStem, period.gz[0])] : []),
+    ];
+  const cats = CATEGORIES.map((c, i) => ({
+    index: i,
+    name: c[0],
+    hits:
+      roles.filter((r) => c[1].includes(r)).length +
+      (i === 8 || i === 9
+        ? layers[0].rels.filter((r) => r.tone === "change").length
+        : 0),
+  }));
+  const sc = schoolComparison(data.pillars),
+    els = [STEM_EL[gz[0]], BRANCH_EL[gz[1]]],
+    strength = els.filter((e) => [sc.st.yong, sc.st.hee].includes(e)),
+    climate =
+      sc.cl.candidate === "세부검토" ? null : els.includes(sc.cl.candidate);
+  return {
+    data,
+    t,
+    gz,
+    it,
+    period,
+    layers,
+    dayEl,
+    branchRole,
+    roles,
+    cats,
+    strength,
+    climate,
+    sc,
+    elementLinks: els.map((e) => ({
+      el: e,
+      relation: elementRelation(dayEl, e),
+    })),
+  };
+}
+function describeRelations(rels) {
+  if (!rels.length)
+    return "이 비교 범위에서 대표적인 합·충·형·파·해가 계산되지 않았습니다.";
+  return rels
+    .map(
+      (r) =>
+        `${r.type} ${r.chars
+          .split("")
+          .map((c) => (STEM_INFO[c] ? stemLabel(c) : branchLabel(c)))
+          .join("·")}: ${r.easy}`,
+    )
+    .join(" ");
+}
+function schoolViews(a) {
+  const str = a.strength.length
+    ? "기본 강약 규칙에서 보완 후보와 겹치는 기운이 있습니다."
+    : "기본 강약 규칙의 보완 후보와 직접 겹치는 기운은 없습니다.";
+  const cl =
+    a.climate === null
+      ? "이 계절은 자동 조후 후보를 정하지 않아 판단을 보류합니다."
+      : a.climate
+        ? "계절 균형 규칙의 보완 후보와 겹칩니다."
+        : "계절 균형 규칙의 보완 후보와 직접 겹치지 않습니다.";
+  const common =
+    a.climate === null
+      ? "계절 관점의 판단이 보류되어 공통 결론을 만들지 않습니다."
+      : Boolean(a.strength.length) === a.climate
+        ? "두 단순 규칙의 보완 후보 부합 여부가 같습니다. 독립 학파의 정밀 검증을 뜻하지 않습니다."
+        : "강약과 계절 관점의 보완 후보 부합 여부가 다릅니다. 한 관점으로 결론을 확정하지 않습니다.";
+  return `<div class="card"><h3>여러 관점으로 보면</h3><p>${common}</p><details><summary>공통점·이견의 계산 근거</summary><p>전체 강약을 보는 방법 · 적천수 계열 참고: ${str} 후보 ${elementLabel(a.sc.st.yong)}·${elementLabel(a.sc.st.hee)}</p><p>계절의 추위·더위를 보는 방법 · 궁통보감 계열 참고: ${cl} ${a.sc.cl.candidate === "세부검토" ? "" : elementLabel(a.sc.cl.candidate)}</p><p class="micro">두 자동 규칙은 고전의 전체 판단법을 구현한 것이 아닙니다. 격국·지장간·통근을 모두 검증한 종합 판정은 보류합니다.</p></details></div>`;
+}
+function boundaryNotice(t, data) {
+  const terms = termsForYear(t.year).filter((x) => {
+    const p = kstParts(x.ms);
+    return p.month === t.month && p.day === t.day;
+  });
+  const clocks = terms.map(
+    (x) =>
+      `${x.name} ${kstLabel(x.ms)} — 선택 시각은 전환 ${t.ms < x.ms ? "전" : "후"}입니다.`,
+  );
+  const notices = [...clocks];
+  if (t.hour === 23 || t.hour === 0)
+    notices.push(
+      "자시·자정 경계입니다. 23시와 0시의 날짜 관법에 따라 일주·시주가 달라질 수 있습니다. 아래 계산 기준에서 비교하세요.",
+    );
+  if (data.m.timeMode === "unknown" || data.m.unknownTime)
+    notices.push(
+      "출생시간 미상: 원국 시주는 제외합니다. 대운 기산은 임시 대표시각의 참고값이며 출생일이 절기 경계이면 년·월주도 불확실할 수 있습니다.",
+    );
+  if (data.m.timeMode === "branch")
+    notices.push(
+      "출생시간은 12지지 시간대의 대표시각입니다. 구간 안의 절입·자시 경계는 추가 확인이 필요합니다.",
+    );
+  if (data.birth.year < 1962)
+    notices.push(
+      "과거 한국 표준시·서머타임을 자동 복원하지 않습니다. 과거 출생시각은 별도 확인이 필요합니다.",
+    );
+  if (calendarSettings.longitudeCorrection)
+    notices.push(
+      `경도 ${calendarSettings.longitude}°의 평균태양시 보정 적용: 135° 기준 1°당 4분. 균시차·과거 서머타임 보정은 적용하지 않습니다.`,
+    );
+  return `<div class="notice ${notices.length ? "strong" : ""}">${notices.join("<br>") || "한국 표준시와 선택한 계산 시각을 기준으로 계산했습니다."}<br>${t.source} · ${calendarSettings.time} KST · 질병·사건 발생을 예측하지 않습니다.</div>`;
+}
+function rulesDisclosure() {
+  return `<details class="card"><summary>색상·주제 강조와 전성기는 어떻게 계산하나요?</summary><p>주제 강조는 일진의 천간·지지 본기, 세운 천간, 대운 천간의 역할이 생활 카테고리와 몇 번 겹치는지 셉니다. 이동·변화는 원국과의 충 신호 수를 더합니다. 같은 기운의 중복 역할은 각각의 비교 항목으로 셉니다.</p><p>초록은 협력·활용 주제, 주황은 조율·변화 신호를 안내합니다. 좋고 나쁜 날 또는 사건 확률을 뜻하지 않습니다. 건강은 별도 점수화하지 않고 수면·과로·생활리듬만 안내합니다.</p><p>전성기 분야 점수 = 세운 천간의 분야 역할 부합 2 + 대운 천간 부합 2 + 세운 지지 본기 부합 1 + 기존 균형 규칙 점수(−3~3). 안정 분야는 충·형 등 재조정 신호가 있으면 최대 2를 차감합니다. 기존 균형 규칙은 보완 후보 천간·지지에 +2 또는 +1, 조절 후보에 −1, 합 관계 +1, 충·긴장 −1입니다. 같은 최고점은 공동 후보입니다.</p><p>이는 전통 규칙을 공개한 비교 지표입니다. 사건 발생 확률·과학적 정확도·실제 행복 점수가 아닙니다.</p></details>`;
+}
+function settingsPanel() {
+  return `<details class="card"><summary>시간·절기·자시 계산 기준 설정</summary><div class="grid2"><div><label for="exploreClock">선택 날짜의 계산 시각 · 한국 표준시</label><input class="field" id="exploreClock" type="time" value="${calendarSettings.time}" onchange="changeCalendarSetting('time',this.value)"></div><div><label for="dayBoundary">날짜가 바뀌는 기준</label><select class="field" id="dayBoundary" onchange="changeCalendarSetting('dayBoundary',this.value)"><option value="splitJasi" ${calendarSettings.dayBoundary === "splitJasi" ? "selected" : ""}>야자시 · 일주는 0시, 시주는 23시</option><option value="midnight" ${calendarSettings.dayBoundary === "midnight" ? "selected" : ""}>자정 · 일주와 시주 모두 0시</option><option value="jasi" ${calendarSettings.dayBoundary === "jasi" ? "selected" : ""}>자시 · 일주와 시주 모두 23시</option></select></div></div><label class="inlinecheck"><input type="checkbox" ${calendarSettings.longitudeCorrection ? "checked" : ""} onchange="changeCalendarSetting('longitudeCorrection',this.checked)">출생·탐색 시각에 경도 평균태양시 보정</label><label for="longitude">출생·탐색 장소 경도 · 동경</label><input class="field" id="longitude" type="number" min="120" max="140" step="0.001" value="${calendarSettings.longitude}" onchange="changeCalendarSetting('longitude',Number(this.value))"><p class="micro">한국 표준시 UTC+9 고정. 년·월주는 실제 절입 순간을 사용하며 경도 보정은 태양시의 일·시 판정에 적용됩니다. 균시차와 과거 표준시·서머타임은 미적용입니다. 기본 선택은 보정 없음입니다. 한 설정을 모든 등록 인물에 공통 적용하므로 서로 다른 출생지는 각각 바꾸어 비교하세요. 미상 시간은 보정해도 확정하지 않습니다.</p></details>`;
+}
+function changeCalendarSetting(key, value) {
+  const panelOpen=document.getElementById("exploreClock")?.closest("details")?.open, scroll=window.scrollY;
+  if (key === "time" && !/^\d{2}:\d{2}$/.test(value)) return;
+  if (
+    key === "longitude" &&
+    (!Number.isFinite(value) || value < 120 || value > 140)
+  ) {
+    alert("경도는 동경 120~140도 범위로 입력해 주세요.");
+    return;
+  }
+  calendarSettings = { ...calendarSettings, [key]: value };
+  try {
+    localStorage.setItem(
+      EXPLORER_SETTINGS_KEY,
+      JSON.stringify(calendarSettings),
+    );
+  } catch {
+    alert(
+      "계산 기준을 이 브라우저에 저장하지 못했습니다. 현재 화면에만 적용합니다.",
+    );
+  }
+  momentCache.clear();
+  termCache.clear();
+  profileCache.clear();
+  verificationCache.clear();
+  renderAll();
+  const panel=document.getElementById("exploreClock")?.closest("details");
+  if(panel)panel.open=!!panelOpen;
+  window.scrollTo(0,scroll);
+}
+function explorationState() {
+  return {
+    familyExplorer: true,
+    selectedProfileId,
+    selectedYear,
+    selectedMonth,
+    selectedDay,
+    exploreLevel,
+    activeSection,
+    interest,
+    futureSpan,
+    scroll: window.scrollY,
+  };
+}
+function normalizeSelection() {
+  if (!members.some((m) => m.id === selectedProfileId))
+    selectedProfileId = members[0]?.id || "";
+  selectedYear = Math.max(
+    DATE_MIN_YEAR,
+    Math.min(
+      DATE_MAX_YEAR,
+      Math.trunc(Number(selectedYear) || todayKST().year),
+    ),
+  );
+  selectedMonth = Math.max(
+    1,
+    Math.min(12, Math.trunc(Number(selectedMonth) || 1)),
+  );
+  selectedDay = Math.max(
+    1,
+    Math.min(
+      dayCount(selectedYear, selectedMonth),
+      Math.trunc(Number(selectedDay) || 1),
+    ),
+  );
+  current = selectedProfileId;
+}
+function storeCurrentHistory() {
+  if (history.state?.familyExplorer)
+    history.replaceState({ ...history.state, scroll: window.scrollY }, "");
+}
+function navigateExplore(patch = {}, level = exploreLevel, tab = "calendar") {
+  storeCurrentHistory();
+  selectedProfileId = patch.selectedProfileId ?? selectedProfileId;
+  selectedYear = patch.selectedYear ?? selectedYear;
+  selectedMonth = patch.selectedMonth ?? selectedMonth;
+  selectedDay = patch.selectedDay ?? selectedDay;
+  exploreLevel = level;
+  activeSection = tab;
+  normalizeSelection();
+  history.pushState(explorationState(), "");
+  renderExplorationSurfaces();
+  activateSection(tab);
+  window.scrollTo(0, 0);
+  if (level === "day")
+    requestAnimationFrame(() =>
+      document
+        .querySelector("#calendarContent .daily-reading")
+        ?.scrollIntoView({ block: "start" }),
+    );
+}
+function activateSection(id) {
+  activeSection = id;
+  document
+    .querySelectorAll(".section")
+    .forEach((el) => el.classList.toggle("active", el.id === id));
+  document.querySelectorAll(".navbtn").forEach((b) => {
+    b.classList.toggle("active", b.dataset.tab === id);
+    b.setAttribute("aria-current", b.dataset.tab === id ? "page" : "false");
+  });
+}
+function explorerTab(id, push = true) {
+  storeCurrentHistory();
+  activeSection = id;
+  if (push) history.pushState(explorationState(), "");
+  if (id === "wholelife") {
+    renderWholeLifeMap();
+  }
+  if (id === "home") renderFutureHome();
+  if (id === "calendar") renderExplorer();
+  if (id === "flow") renderFutureFlow();
+  activateSection(id);
+  window.scrollTo(0, 0);
+}
+function pickProfile(id) {
+  navigateExplore({ selectedProfileId: id }, exploreLevel, activeSection);
+  renderAll();
+}
+function selectYear(y) {
+  navigateExplore({ selectedYear: Number(y) }, "year");
+}
+function selectMonth(m) {
+  navigateExplore({ selectedMonth: Number(m) }, "month");
+}
+function selectDay(d) {
+  navigateExplore({ selectedDay: Number(d) }, "day");
+}
+function goToday() {
+  const t = todayKST();
+  navigateExplore(
+    { selectedYear: t.year, selectedMonth: t.month, selectedDay: t.day },
+    "day",
+  );
+}
+function goThisMonth() {
+  const t = todayKST();
+  navigateExplore(
+    { selectedYear: t.year, selectedMonth: t.month, selectedDay: t.day },
+    "month",
+  );
+}
+function goThisWeek() {
+  const t = todayKST();
+  navigateExplore(
+    { selectedYear: t.year, selectedMonth: t.month, selectedDay: t.day },
+    "week",
+  );
+}
+function exploreBack() {
+  if (exploreLevel === "day" || exploreLevel === "week")
+    navigateExplore({}, "month");
+  else if (exploreLevel === "month") navigateExplore({}, "year");
+  else explorerTab("home");
+}
+window.addEventListener("popstate", (e) => {
+  if (!e.state?.familyExplorer) return;
+  ({
+    selectedProfileId,
+    selectedYear,
+    selectedMonth,
+    selectedDay,
+    exploreLevel,
+    activeSection,
+    interest,
+    futureSpan,
+  } = e.state);
+  normalizeSelection();
+  renderAll();
+  activateSection(activeSection);
+  window.scrollTo(0, e.state.scroll || 0);
+});
+function syncExploreProfile() {
+  if (current !== selectedProfileId) {
+    selectedProfileId = current;
+    normalizeSelection();
+    history.replaceState(explorationState(), "");
+  }
+  if (!members.some((m) => m.id === selectedProfileId)) {
+    selectedProfileId = members[0]?.id || "";
+    normalizeSelection();
+  }
+}
+function profilePicker() {
+  return `<div class="explore-profiles" aria-label="분석할 가족 선택">${members.map((m, i) => `<button class="member-chip ${m.id === selectedProfileId ? "active" : ""}" data-profile-index="${i}" aria-pressed="${m.id === selectedProfileId}">${esc(m.name)}</button>`).join("")}</div>`;
+}
+function wireProfilePickers() {
+  document
+    .querySelectorAll("[data-profile-index]")
+    .forEach(
+      (b) =>
+        (b.onclick = () =>
+          pickProfile(members[Number(b.dataset.profileIndex)].id)),
+    );
+}
+function shortcuts() {
+  return `<div class="row wrap quick-actions"><button class="btn small secondary" onclick="goToday()">오늘</button><button class="btn small secondary" onclick="goThisWeek()">이번 주</button><button class="btn small secondary" onclick="goThisMonth()">이번 달</button><button class="btn small ghost" onclick="explorerTab('wholelife')">태어나서부터 전체 지도</button></div>`;
+}
+function fieldPicker() {
+  return `<label for="interestFilter">관심 분야</label><select class="field" id="interestFilter" onchange="interest=this.value;history.replaceState(explorationState(),'');renderExplorer()">${["전체", ...CATEGORIES.map((c) => c[0])].map((t) => `<option ${interest === t ? "selected" : ""}>${t}</option>`).join("")}</select>`;
+}
+function ageLabel(data, at) {
+  const age = exactAge(data.birth, at);
+  return age < 0 ? "출생 전" : `만 ${age}세`;
+}
+function annualReading(data, y) {
+  const t = transitAt(y, 7, 1, 12, 0),
+    now = todayKST(),
+    contextMs =
+      y === now.year ? kstMillis(now.year, now.month, now.day, 12) : t.ms,
+    period = periodAt(data, contextMs),
+    v = fortuneInterpretation(t.pillars[0], data.pillars);
+  return {
+    ...v,
+    gz: t.pillars[0],
+    period,
+    background: period ? fortuneInterpretation(period.gz, data.pillars) : null,
+    y,
+    t,
+  };
+}
+function fieldScore(data, v, field) {
+  const day = data.pillars[2][0],
+    roles = [v.tg, v.background?.tg, tenGod(day, BRANCH_MAIN_STEM[v.gz[1]])];
+  return (
+    (field.roles.includes(roles[0]) ? 2 : 0) +
+    (field.roles.includes(roles[1]) ? 2 : 0) +
+    (field.roles.includes(roles[2]) ? 1 : 0) +
+    Math.max(-3, Math.min(3, v.score)) -
+    (field.name === "안정"
+      ? Math.min(
+          2,
+          v.rels.filter((r) => ["change", "tension"].includes(r.tone)).length,
+        )
+      : 0)
+  );
+}
+function futureCandidates(data, fromYear = todayKST().year) {
+  const now = todayKST(),
+    age = exactAge(data.birth, now),
+    last = Math.min(
+      DATE_MAX_YEAR,
+      now.year + Math.max(10, Math.min(40, 90 - Math.max(0, age))),
+    );
+  const years = Array.from(
+    { length: last - Math.max(fromYear, now.year) + 1 },
+    (_, i) => Math.max(fromYear, now.year) + i,
+  ).filter((y) => y >= data.birth.year);
+  return FIELD_GROUPS.map((field) => {
+    const all = years
+      .map((y) => {
+        const v = annualReading(data, y);
+        return { year: y, v, score: fieldScore(data, v, field) };
+      })
+      .sort((a, b) => b.score - a.score || a.year - b.year);
+    const top = all.slice(0, 3);
+    return {
+      field,
+      years: top,
+      tied: all.length > 3 && all[3].score === top[2]?.score,
+      last,
+    };
+  });
+}
+function futurePeaksHTML(data) {
+  return `<div class="map-grid">${futureCandidates(data)
+    .map(
+      (p) =>
+        `<div class="card peak-card"><span class="badge good">${p.field.name} · 남은 시기 후보</span><h3>${p.years.map((v) => v.year).join(" · ")}년</h3><p>${p.tied ? "동점 후보 중 가까운 3개 연도입니다." : "탐색 범위에서 상대적으로 주제가 겹치는 연도입니다."} ${todayKST().year}~${p.last}년을 비교했습니다.</p><div class="row wrap">${p.years.map((v) => `<button class="year-pick" onclick="selectYear(${v.year})">${v.year} · ${ageLabel(data, { year: v.year, month: 12, day: 31 })}</button>`).join("")}</div><details><summary>후보별 근거와 점수</summary>${p.years.map((v) => `<p>${v.year}: 비교값 ${v.score}. ${easyTen(v.v.tg)} / 대운 ${v.v.background ? easyTen(v.v.background.tg) : "첫 대운 전"}. ${p.field.roles.map(easyTen).join("·")} 역할과 겹치는지 비교했습니다.</p>`).join("")}<p class="micro">나이는 해당 연도 12월 31일의 만 나이입니다. 현재 연도는 오늘 이후 남은 기간의 참고 후보입니다. 이미 지난 월·일을 미래 후보로 평가하지 않습니다. 연 단위 점수는 달·날짜의 유불리를 뜻하지 않습니다.</p></details></div>`,
+    )
+    .join("")}</div>`;
+}
+function annualFieldCards(data, y) {
+  const v = annualReading(data, y),
+    cats = CATEGORIES.map((c, i) => ({
+      c,
+      i,
+      hits: [
+        v.tg,
+        v.background?.tg,
+        tenGod(data.pillars[2][0], BRANCH_MAIN_STEM[v.gz[1]]),
+      ].filter((t) => c[1].includes(t)).length,
+    }));
+  return `<div class="map-grid">${cats
+    .filter((x) => interest === "전체" || x.c[0] === interest)
+    .map(
+      (x) =>
+        `<div class="card"><h3>${x.c[0]} · ${y}년</h3><p>${x.hits ? `관련 역할 ${x.hits}개가 겹칩니다. ${x.c[2]}` : "이 분류에서 관련 역할이 직접 겹치지 않습니다. " + x.c[2]}</p><p class="mt">조심하면 좋은 점: ${x.c[3]}</p></div>`,
+    )
+    .join("")}</div>`;
+}
+function yearOverview(data, y) {
+  const v = annualReading(data, y),
+    bornBefore = y < data.birth.year;
+  const schoolYear = termsForYear(y).find((t) => t.index === 2);
+  const contextPeriod = v.period;
+  return `<div class="card year-overview" data-year="${y}"><span class="badge blue">${ageLabel(data, { year: y, month: 12, day: 31 })} · 연말 기준</span><h3>${y}년 · ${v.theme.tags.join("·")}</h3><p class="map-lead">${v.theme.good}</p><p class="mt">조심하면 좋은 점: ${v.theme.warn}</p>${bornBefore ? "<p>출생 전 연도입니다. 개인 생애의 실제 운세로 해석하지 않습니다.</p>" : ""}<details><summary>이 연도와 10년 배경을 함께 보면</summary><p>연간 해설은 ${y}년 입춘 이후의 세운 ${v.gz}(${gzReading(v.gz)})을 사용합니다. 입춘: ${kstLabel(schoolYear.ms)}. 1월~입춘 전은 전년도 기운이며 아래 날짜별 계산에 반영됩니다.</p><p>${contextPeriod ? `${y === todayKST().year ? "현재 날짜" : "7월 1일"} 기준 대운 ${contextPeriod.gz}(${gzReading(contextPeriod.gz)}) · 명리 계산 나이 ${contextPeriod.age}~${contextPeriod.endAge}. ${kstLabel(contextPeriod.startMs)}부터 ${kstLabel(contextPeriod.endMs)} 직전까지.` : "이 연도의 배경 기준일은 첫 대운 전 구간입니다."} ${data.periods
+    .filter((p) => kstParts(p.startMs).year === y)
+    .map(
+      (p) =>
+        `이 해 ${kstLabel(p.startMs)}에 대운 경계가 있습니다. 날짜별 배경은 실제 기산 시점으로 다시 판정합니다.`,
+    )
+    .join(
+      " ",
+    )}</p><p>${describeRelations(v.rels)}</p></details></div><div class="title">${y}년의 분야별 주제</div>${annualFieldCards(data, y)}<div class="card"><h3>${y}년은 전성기 후보와 어떻게 연결될까?</h3>${FIELD_GROUPS.map((f) => `<p>${f.name}: 비교값 ${fieldScore(data, v, f)} · ${f.roles.includes(v.tg) ? "이 해의 중심 역할이 분야와 겹칩니다." : "이 해의 중심 역할은 다른 분야입니다."} ${v.background && f.roles.includes(v.background.tg) ? "10년 배경도 관련 역할입니다." : "10년 배경의 직접 부합 여부도 함께 확인하세요."}</p>`).join("")}<p class="micro">연도별 비교값은 동일한 공개 규칙으로 계산합니다. 어떤 해도 성공을 보장하거나 실패를 뜻하지 않습니다.</p></div>`;
+}
+function monthTransitions(y, m) {
+  return termsForYear(y).filter(
+    (t) => t.index % 2 === 0 && kstParts(t.ms).month === m,
+  );
+}
+function monthSegments(y, m) {
+  const t = parseTime(calendarSettings.time),
+    start = transitAt(y, m, 1, t.h, t.m),
+    items = [{ label: "월초", gz: start.pillars[1] }];
+  for (const term of monthTransitions(y, m)) {
+    const p = kstParts(term.ms + 60000),
+      after = transitAt(p.year, p.month, p.day, p.hour, p.minute);
+    if (!items.some((x) => x.gz === after.pillars[1]))
+      items.push({ label: `${term.name} 이후`, gz: after.pillars[1] });
+  }
+  return items;
+}
+function monthSelector(data, y) {
+  return `<div class="monthgrid month-picker" aria-label="${y}년 월 선택">${Array.from(
+    { length: 12 },
+    (_, i) => {
+      const m = i + 1,
+        segments = monthSegments(y, m);
+      return `<button class="monthbox month-choice ${m === selectedMonth ? "chosen" : ""}" onclick="selectMonth(${m})" aria-pressed="${m === selectedMonth}"><b>${y}년 ${m}월</b><p>${segments.map((s) => `${s.label}: ${fortuneInterpretation(s.gz, data.pillars).theme.tags.join("·")}`).join("<br>")}</p><span class="sub">절입 전후를 나눠 보기 →</span></button>`;
+    },
+  ).join("")}</div>`;
+}
+function compactMonthPicker() {
+  return `<div class="month-tabs" aria-label="월 선택">${Array.from({ length: 12 }, (_, i) => `<button class="year-pick" aria-pressed="${selectedMonth === i + 1}" onclick="selectMonth(${i + 1})">${i + 1}월</button>`).join("")}</div>`;
+}
+function monthOverview(data, y, m) {
+  const segments = monthSegments(y, m);
+  return `<div class="card month-overview" data-month="${m}"><h3>${y}년 ${m}월 · 달 안에서도 흐름이 바뀌어요</h3>${segments
+    .map((s) => {
+      const v = fortuneInterpretation(s.gz, data.pillars);
+      return `<p class="mt"><b>${s.label} · ${v.theme.tags.join("·")}</b><br>${v.theme.good}<br>조심: ${v.theme.warn}</p>`;
+    })
+    .join(
+      "",
+    )}<details><summary>월주와 절입 시각</summary>${segments.map((s) => `<p>${s.label}: ${s.gz}(${gzReading(s.gz)})</p>`).join("")}${monthTransitions(
+    y,
+    m,
+  )
+    .map(
+      (t) =>
+        `<p>${t.name}: ${kstLabel(t.ms)}. 이 순간부터 월주가 바뀝니다.</p>`,
+    )
+    .join(
+      "",
+    )}<p>하루 전체가 같은 월주라고 가정하지 않습니다. 날짜를 고른 뒤 계산 시각을 바꾸면 절입 전후 결과도 바뀝니다.</p></details></div>`;
+}
+function calendarGrid(data, y, m) {
+  const t = parseTime(calendarSettings.time),
+    first = new Date(Date.UTC(y, m - 1, 1)).getUTCDay(),
+    days = dayCount(y, m),
+    today = todayKST();
+  return `<div class="card daily-calendar" data-calendar-year="${y}" data-calendar-month="${m}"><div class="row between wrap"><button class="btn small ghost" aria-label="이전 달" onclick="shiftMonth(-1)">←</button><h3>${y}년 ${m}월</h3><button class="btn small ghost" aria-label="다음 달" onclick="shiftMonth(1)">→</button></div><p class="micro">각 날짜는 ${calendarSettings.time} KST로 계산합니다. 작은 점은 해당 날짜의 원국 관계 신호입니다.</p><div class="calendar-weekdays" aria-hidden="true">${["일", "월", "화", "수", "목", "금", "토"].map((d) => `<span>${d}</span>`).join("")}</div><div class="calendar-days">${'<span class="calendar-blank"></span>'.repeat(first)}${Array.from(
+    { length: days },
+    (_, i) => {
+      const d = i + 1,
+        moment = transitAt(y, m, d, t.h, t.m),
+        v = fortuneInterpretation(moment.pillars[2], data.pillars),
+        change = v.rels.some((r) => ["change", "tension"].includes(r.tone)),
+        connect = v.rels.some((r) => r.tone === "connect"),
+        match =
+          interest === "전체" ||
+          (CATEGORIES.find((c) => c[0] === interest)?.[1] || []).includes(v.tg),
+        isToday = y === today.year && m === today.month && d === today.day;
+      return `<button class="calendar-day ${d === selectedDay ? "selected" : ""} ${isToday ? "is-today" : ""} ${!match ? "low-emphasis" : ""}" data-date="${dateISO(y, m, d)}" aria-pressed="${d === selectedDay}" aria-label="${y}년 ${m}월 ${d}일 ${easyTen(v.tg)}${isToday ? " 오늘" : ""}" onclick="selectDay(${d})"><b>${d}</b><span class="day-role">${{ 비견: "주도", 겁재: "협업", 식신: "생산", 상관: "표현", 편재: "기회", 정재: "관리", 편관: "책임", 정관: "신뢰", 편인: "연구", 정인: "배움" }[v.tg]}</span><span class="day-dots" aria-label="${change ? "변화·조율 신호" : connect ? "연결 신호" : "대표 관계 없음"}">${change ? '<i class="signal adjust"></i>' : ""}${connect ? '<i class="signal connect"></i>' : ""}${!change && !connect ? '<i class="signal quiet"></i>' : ""}</span></button>`;
+    },
+  ).join(
+    "",
+  )}</div><p class="micro">초록 점: 원국과 합. 주황 점: 충·형·해 등 조율 관계. 회색 점: 대표 관계 없음. 관심 분야에 해당하지 않는 날짜는 옅게 표시하며 선택은 가능합니다.</p></div>`;
+}
+function shiftMonth(delta) {
+  const p = kstParts(kstMillis(selectedYear, selectedMonth + delta, 1, 12));
+  navigateExplore({ selectedYear: p.year, selectedMonth: p.month }, "month");
+}
+function dailyCard(data, t, { family = false } = {}) {
+  const a = analyzeMoment(data, t),
+    relevant = a.cats
+      .filter((c) => interest === "전체" || c.name === interest)
+      .filter((c) => c.hits > 0),
+    hasRelations = a.layers[0].rels.length > 0;
+  return `<div class="card daily-reading" data-profile="${esc(data.m.id)}" data-date="${dateISO(t.year, t.month, t.day)}"><span class="badge blue">${esc(data.m.name)} · ${ageLabel(data, t)}</span><h3>${dateISO(t.year, t.month, t.day)} · ${a.it.theme.tags.join("·")}</h3><p class="map-lead">${a.it.theme.good}</p><p class="mt">${hasRelations ? (a.layers[0].rels.some((r) => r.tone === "change") ? "원래의 생활 틀을 조정하는 관계 신호가 있습니다. 이동·약속을 정리해 보세요." : a.layers[0].rels.some((r) => r.tone === "tension") ? "관계에서 오해나 반복되는 긴장을 점검하는 신호가 있습니다." : "원국과 연결·협력의 관계 신호가 있습니다.") : "원국과 대표적인 합·충·형·파·해 관계는 계산되지 않았습니다. 없는 관계를 덧붙여 해석하지 않습니다."}</p><div class="badges">${
+    relevant
+      .slice(0, 4)
+      .map(
+        (c) =>
+          `<span class="badge neutral">${c.name} · 역할 ${c.hits}개</span>`,
+      )
+      .join("") ||
+    '<span class="badge neutral">선택 분야에 직접 겹치는 역할 없음</span>'
+  }</div><div class="tips"><div class="tip goodtip"><b>활용하면 좋은 부분</b><br>${a.it.theme.good}</div><div class="tip warntip"><b>주의할 부분</b><br>${a.it.theme.warn}</div></div><p class="mt">컨디션: ${a.layers[0].rels.some((r) => r.tone === "tension") ? "일정과 대화에서 긴장이 쌓이지 않게 휴식과 수면을 챙겨 보세요." : "활동과 휴식을 고르게 배치하고 생활리듬을 살펴보세요."}</p><details><summary>이날의 글자·오행·역할을 쉽게 읽기</summary><p>천간 ${stemLabel(a.gz[0])}: ${STEM_INFO[a.gz[0]].meaning}. ${elementLabel(STEM_EL[a.gz[0]])} · ${easyTen(a.it.tg)} (전문용어: ${a.it.tg})</p><p>지지 ${branchLabel(a.gz[1])}: ${BRANCH_INFO[a.gz[1]].meaning}. ${elementLabel(BRANCH_EL[a.gz[1]])} · ${easyTen(a.branchRole)} (지지 본기 기준: ${a.branchRole}, 지장간 전체 아님)</p>${a.elementLinks.map((l) => `<p>나의 ${elementLabel(a.dayEl)} ↔ 이날 ${elementLabel(l.el)}: ${l.relation}. 상극은 나쁜 궁합이 아니라 조절의 관계입니다.</p>`).join("")}</details><details><summary>원국·대운·세운·월운을 함께 본 근거</summary><p>원국: ${data.pillars.map((g) => `${g}(${gzReading(g)})`).join(" · ")}${data.pillars.length === 3 ? " · 시주 미상 제외" : ""}</p><p>대운: ${a.period ? `${a.period.gz}(${gzReading(a.period.gz)}) · 명리 계산 나이 ${a.period.age}~${a.period.endAge}` : "첫 대운 전 또는 계산 범위 밖"}</p><p>세운 ${t.pillars[0]}(${gzReading(t.pillars[0])}) / 월운 ${t.pillars[1]}(${gzReading(t.pillars[1])}) / 일진 ${a.gz}(${gzReading(a.gz)})</p>${a.layers.map((l) => `<p><b>일진 ↔ ${l.label}</b><br>${l.pillars.length ? describeRelations(l.rels) : "비교할 대운이 없어 이 범위는 해석하지 않습니다."}</p>`).join("")}<p class="micro">일진과 각 범위를 개별 대조했습니다. 여러 층의 모든 글자를 합쳐 하나의 사건을 확정하지 않습니다.</p></details></div>${family ? "" : schoolViews(a)}`;
+}
+function familyDayComparison(t) {
+  const valid = members.map((m) => profileData(m)).filter(Boolean);
+  return `<div class="title">같은 날, 우리 가족은?</div><p>같은 날짜라도 각자의 기준 글자와 원국 관계를 따로 계산합니다. 가족공유 서비스가 아니라 이 브라우저에 등록된 가족끼리의 비교입니다.</p><div class="map-grid">${valid.map((d) => dailyCard(d, t, { family: true })).join("")}</div>`;
+}
+function weekView(data) {
+  const chosen = { year: selectedYear, month: selectedMonth, day: selectedDay },
+    weekday = new Date(
+      Date.UTC(selectedYear, selectedMonth - 1, selectedDay),
+    ).getUTCDay(),
+    monday = solarNextDate(chosen, -((weekday + 6) % 7));
+  const t = parseTime(calendarSettings.time);
+  return `<div class="title">${dateISO(monday.year, monday.month, monday.day)}부터 한 주</div><div class="map-grid">${Array.from(
+    { length: 7 },
+    (_, i) => {
+      const p = solarNextDate(monday, i),
+        moment = transitAt(p.year, p.month, p.day, t.h, t.m);
+      return `<div>${dailyCard(data, moment, { family: true })}<button class="btn secondary" onclick="navigateExplore({selectedYear:${p.year},selectedMonth:${p.month},selectedDay:${p.day}},'day')">이 날짜 자세히</button></div>`;
+    },
+  ).join("")}</div>`;
+}
+function renderExplorer() {
+  const box = document.getElementById("calendarContent"),
+    data = profileData();
+  if (!data) {
+    box.innerHTML =
+      '<div class="card"><h3>날짜 탐색을 준비해요</h3><p>유효한 생년월일과 계산엔진을 먼저 확인해 주세요.</p><button class="btn mt" onclick="explorerTab(\'home\')">가족 정보로 돌아가기</button></div>';
+    return;
+  }
+  normalizeSelection();
+  const t = selectedMoment();
+  box.innerHTML = `${profilePicker()}${shortcuts()}<div class="explore-breadcrumb" aria-label="현재 선택"><button onclick="selectYear(${selectedYear})">${selectedYear}년</button><span>›</span><button onclick="selectMonth(${selectedMonth})">${selectedMonth}월</button><span>›</span><button onclick="selectDay(${selectedDay})">${selectedDay}일</button></div><div class="row wrap between"><button class="btn small ghost" onclick="exploreBack()">← 이전 단계</button><label class="year-control">탐색 연도 <input class="field" aria-label="탐색 연도" type="number" min="1800" max="2200" value="${selectedYear}" onchange="selectYear(this.value)"></label></div>${fieldPicker()}${exploreLevel === "year" ? yearOverview(data, selectedYear) + '<div class="title">' + selectedYear + "년 12개월</div>" + monthSelector(data, selectedYear) : compactMonthPicker() + monthOverview(data, selectedYear, selectedMonth)}${exploreLevel !== "year" ? calendarGrid(data, selectedYear, selectedMonth) : ""}${exploreLevel === "week" ? weekView(data) : exploreLevel === "day" ? boundaryNotice(t, data) + dailyCard(data, t) + familyDayComparison(t) : ""}${settingsPanel()}${rulesDisclosure()}`;
+  wireProfilePickers();
+}
+function yearAgeRange(data, y) {
+  const a = exactAge(data.birth, { year: y, month: 1, day: 1 }),
+    b = exactAge(data.birth, { year: y, month: 12, day: 31 });
+  return b < 0
+    ? "출생 전"
+    : a === b
+      ? `만 ${b}세`
+      : `만 ${Math.max(0, a)}~${b}세`;
+}
+function upcomingYears(data, n) {
+  const today = todayKST(),
+    years = Array.from({ length: n }, (_, i) => today.year + i);
+  return `<div class="future-years" aria-label="현재부터 ${n}년 연도 선택">${years
+    .map((y) => {
+      const v = annualReading(data, y);
+      return `<button class="life-stop ${y === today.year ? "now" : ""} ${y === selectedYear ? "chosen" : ""}" onclick="selectYear(${y})"><b>${y === today.year ? "📍 지금 여기 · " : ""}${y}년</b><span>${y === today.year ? ageLabel(data, today) + " · 현재" : yearAgeRange(data, y) + " · 연중"}</span><span>${v.theme.tags.join("·")}</span><span>${v.period ? "명리 계산 나이 " + v.period.age + "~" + v.period.endAge : "첫 대운 전"}</span></button>`;
+    })
+    .join("")}</div>`;
+}
+function renderFutureHome() {
+  const box = document.getElementById("lifeMap"),
+    data = profileData(),
+    m = currentMember(),
+    now = todayKST();
+  document.getElementById("heroSmall").textContent =
+    (m?.name || "나") + "님의 미래 인생지도";
+  if (!data) {
+    document.getElementById("heroTitle").textContent =
+      "지금부터의 나를 만나봐요";
+    document.getElementById("heroText").textContent =
+      "생년월일을 입력하면 현재 나이에서 앞으로의 흐름을 탐색할 수 있어요.";
+    document.getElementById("heroBadges").innerHTML = "";
+    box.innerHTML =
+      '<button class="btn mt" onclick="editMember(current)">생년월일 입력·수정</button>';
+    return;
+  }
+  const age = exactAge(data.birth, now),
+    moment = transitAt(now.year, now.month, now.day, 12, 0),
+    period = periodAt(data, moment.ms),
+    annual = annualReading(data, now.year);
+  document.getElementById("heroTitle").innerHTML =
+    `${age < 0 ? "출생 전이에요" : `지금 만 ${age}세`}<br><span style="font-size:.85em">앞으로의 나는?</span>`;
+  document.getElementById("heroText").textContent = period
+    ? `현재 10년은 ${fortuneInterpretation(period.gz, data.pillars).theme.tags.join("·")}을 삶의 주제로 살펴볼 시기입니다. 올해부터 하루까지 나의 흐름을 탐색해 보세요.`
+    : "첫 대운이 시작되기 전의 생활 바탕을 살펴봅니다. 올해부터 하루 단위까지 흐름을 탐색해 보세요.";
+  document.getElementById("heroBadges").innerHTML =
+    `<span class="badge blue">양력 생일 ${dateISO(data.birth.year, data.birth.month, data.birth.day)}</span><span class="badge neutral">${period ? "대운 명리 계산 나이 " + period.age + "~" + period.endAge : "현재 만 나이와 대운 나이는 달라요"}</span>`;
+  box.innerHTML = `${shortcuts()}<div class="notice mt">현재 나이는 양력 생일을 기준으로 계산한 만 나이입니다. 대운의 ‘명리 계산 나이’와 구분합니다. 전통 해석은 실제 사건을 확정하거나 과학적 예측을 뜻하지 않습니다.${data.m.timeMode === "unknown" ? " 출생시간 미상: 시주 제외, 대운 시작은 임시 시각의 참고값입니다." : ""}</div><div class="title">올해와 내년, 무엇을 주목할까?</div><div class="map-grid">${[
+    now.year,
+    now.year + 1,
+  ]
+    .map((y) => {
+      const v = annualReading(data, y);
+      return `<div class="card"><span class="badge ${y === now.year ? "good" : "blue"}">${y === now.year ? "올해" : "내년"} · ${y}년</span><h3>${v.theme.tags.join("·")}</h3><p>${v.theme.good}</p><p class="mt">${v.theme.warn}</p><button class="btn secondary mt" onclick="selectYear(${y})">${y}년과 12개월 탐색</button></div>`;
+    })
+    .join(
+      "",
+    )}</div><div class="title">지금 내 나이부터 미래로</div><div class="row wrap">${[3, 5, 10].map((n) => `<button class="year-pick" aria-pressed="${futureSpan === n}" onclick="futureSpan=${n};renderFutureHome()">앞으로 ${n}년</button>`).join("")}</div>${upcomingYears(data, futureSpan)}<div class="title">앞으로 남은 분야별 전성기 후보</div>${futurePeaksHTML(data)}${rulesDisclosure()}<details class="card"><summary>나는 어떤 사람인가 · 기본 성향</summary><p>${STEM_INFO[data.pillars[2][0]].meaning}에 비유하는 성향으로 해석합니다. 실제 성격은 경험과 환경을 함께 살펴보세요.</p><p class="micro">전문용어: 일간 ${stemLabel(data.pillars[2][0])} · ${elementLabel(STEM_EL[data.pillars[2][0]])}</p></details><button class="btn secondary" onclick="explorerTab('records')">내 실제 인생기록과 비교하기</button><button class="btn ghost mt" onclick="explorerTab('wholelife')">전체 인생지도 · 초년·중년·말년</button>`;
+}
+function renderFutureFlow() {
+  const data = profileData(),
+    box = document.getElementById("flowContent");
+  if (!data) {
+    box.innerHTML = "<p>생년월일을 입력해 주세요.</p>";
+    return;
+  }
+  originalFlow();
+  const legacy = box.innerHTML;
+  box.innerHTML = `${profilePicker()}<div class="title">현재부터 3년·5년·10년</div>${[3, 5, 10].map((n) => `<details class="card" ${n === 3 ? "open" : ""}><summary>앞으로 ${n}년의 연도별 흐름</summary>${upcomingYears(data, n)}</details>`).join("")}<div class="title">앞으로의 분야별 전성기</div>${futurePeaksHTML(data)}<div class="title">남은 10년 배경과 실제 만 나이</div><div class="map-grid">${data.periods
+    .filter(
+      (p) =>
+        p.endMs > kstMillis(todayKST().year, todayKST().month, todayKST().day),
+    )
+    .map((p) => {
+      const start = kstParts(
+          Math.max(
+            p.startMs,
+            kstMillis(todayKST().year, todayKST().month, todayKST().day),
+          ),
+        ),
+        end = kstParts(p.endMs - 1000);
+      return `<div class="card"><h3>${dateISO(start.year, start.month, start.day)}~${dateISO(end.year, end.month, end.day)}</h3><p>${ageLabel(data, start)}~${ageLabel(data, end)}<br>${fortuneInterpretation(p.gz, data.pillars).theme.good}</p><p class="micro">대운 ${p.gz}(${gzReading(p.gz)}) · 명리 계산 나이 ${p.age}~${p.endAge}. 기산: ${data.origin}</p><button class="btn secondary mt" onclick="selectYear(${start.year})">이 구간 탐색</button></div>`;
+    })
+    .join(
+      "",
+    )}</div>${rulesDisclosure()}<details class="card"><summary>기존 대운·세운 상세 풀이 · 기산 방식 비교</summary><p class="notice">기존 lunar-javascript 방식의 참고 화면을 보존했습니다. 이 안의 대운 기산·순행/역행·명리 계산 나이는 위 한국형 기준 엔진의 실제 만 나이와 구분하며 절기 시각·기산 방식 차이가 있을 수 있습니다.</p>${legacy}</details><button class="btn ghost" onclick="explorerTab('wholelife')">과거를 포함한 전체 인생지도</button>`;
+  wireProfilePickers();
+}
+function renderExplorationSurfaces() {
+  renderFutureHome();
+  renderExplorer();
+  if (activeSection === "flow") renderFutureFlow();
+  renderMembers();
+  wireProfilePickers();
+}
+// 기존 기능의 공개 진입점도 동일한 날짜 선택 상태로 연결합니다.
+showTab = explorerTab;
+let renderLifeMap = renderFutureHome;
+renderFlow = renderFutureFlow;
+renderCalendar = renderExplorer;
+lifeData = profileData;
+yearReading = annualReading;
+openLifeYear = selectYear;
+openDecade = function (start, end) {
+  navigateExplore(
+    { selectedYear: Math.max(start, Math.min(end, todayKST().year)) },
+    "year",
+  );
+};
+monthCards = monthSelector;
+const legacyRenderMembers = renderMembers;
+renderMembers = function () {
+  legacyRenderMembers();
+  document
+    .querySelectorAll("#memberScroller .member-chip")
+    .forEach((b, i) => (b.onclick = () => pickProfile(members[i].id)));
+};
+const initialHistory = history.state;
+if (initialHistory?.familyExplorer) {
+  ({
+    selectedProfileId,
+    selectedYear,
+    selectedMonth,
+    selectedDay,
+    exploreLevel,
+    activeSection,
+    interest,
+    futureSpan,
+  } = initialHistory);
+  normalizeSelection();
+}
+history.replaceState(explorationState(), "");
+document
+  .querySelectorAll(".navbtn")
+  .forEach((b) => (b.onclick = () => explorerTab(b.dataset.tab)));
 
 renderAll();
 </script>
